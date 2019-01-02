@@ -1,0 +1,5 @@
+turing completeness
+ethereum
+solidity
+
+
