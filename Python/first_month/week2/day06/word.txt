@@ -1,5 +1,17 @@
+HackerRank
+πÈ¡ÿ æÀ∞Ì∏Æ¡Ú
+
+Python 3.7.2 Documentation
+
+Jupyter notebook
+
+<±≥¿∞ «√∑ß∆˚>
+Coursera
+edx.org - CS50 or introduction to computer science and programming
+udacity
+
 turing completeness
 ethereum
 solidity
-
+python tutor
 
