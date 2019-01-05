@@ -1,0 +1,26 @@
+class Singer {
+    String name;
+ }
+
+SInget [] getSingerList(String type){
+
+    Singer[] list = new Singer[2];
+    for(int i =0; i < list.length; i++
+            list[i] = new Singer();
+    }
+
+    
+    if(type == "트로트") {
+
+          list[0].name = "장윤정";
+          list[1].name = "송대관";
+
+    } else if(type == "발라드") {
+
+          list[0].name = "헤이즈";
+          list[1].name = "아이유";
+
+    }
+     return list;
+
+ }

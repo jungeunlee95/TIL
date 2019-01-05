@@ -1,0 +1,55 @@
+2. Mission-Web-MVC01 -기능 추가하기
+
+LoginController생성, forward시킬 jsp생성
+index에 로그인 href 추가
+bean.properties에 key value추가 
+
+이제 login.jsp에서 action가는 경로도 .do로 끝나야해 
+form action="<%=request.getContextPath()%>/loginProcess.do" method="post">
+
+경로 설정하고, bean.properties(file)에 추가한뒤
+java Resources 에 LoginProcessController.java 만들어서 상속받아 controller
+loginProcess.jsp 도 만들어줘
+
+->LoginDAO&VO 만들어서
+
+-----------------------------------------------------------------------
+< 로그인, 로그아웃 >
+
+session 에 로그인 정보 저장해야되는데  servlet 은 세션을 내장객체로 갖고있지 않아
+   -> HttpSession session = request.getSession();    세션 객체를 얻어와야 데이터 넣을 수 있어
+->  index.jsp :  ${empty userVO }  c태그로 로그인,로그아웃 나타내기
+
+--> 로그아웃 kr.co.mlec/LogoutController.java
+ /login/logout.jsp
+
+--> LogoutController.java
+ 이제 session 지워야지 로그아웃   session.removeAttribute("userVO"); 
+            또는 session.invalidate();   -> 세션에 있는 객체 모두 지우기 ! 
+-----------------------------------------------------------------------
+<책에는 command? >
+
+/board/list.do?command=ListController   
+-> 커맨드 패턴이 나오고 나서  properties가 나왔음. 책에는 커맨드 패턴이 많이 있지만, 
+      properties를 잘 이해하면 돼 ! 
+
+-----------------------------------------------------------------------
+----->문제점 
+: 매번 uri를 만들때마다. Controller를 만들잖아 , 
+ 사실 이 클래스들 안에는 많은 코드가 들어있지않아, 그리고 다 handleRequest밖에 없잖아
+ : url이 50개면? class도 50개 만들어야돼. 이거 좋아? 좋냐고!!!!!!!!!!!!! 비효율적이잖아. 
+ 이제 우린 새로운 기술을 응용한다. @ 어 노 테 이 션. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

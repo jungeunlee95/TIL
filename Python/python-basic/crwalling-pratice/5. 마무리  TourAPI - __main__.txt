@@ -1,0 +1,73 @@
+3. 마무리  TourAPI - __main__ 
+
+노 준 강사님 이메일 : realfunlady@naver.com
+
+TourAPI -> 패키지 analysis 폴더 만들기 
+		- analyzer.py
+
+--------------analyzer.py----
+->데이터 분석 담당 코드 작성 
+-> init 설정
+
+-----------__main__에서 호출----------
+
+
+TourAPI -> config.py
+--> 크롤링 정보 설정! 설정만 
+
+-----------__main__에서 호출----------
+test하고 이제
+
+
+
+
+
+-----------__main__에서 호출----------
+데이터 수집 (크롤링) 코드 작성
+
+
+---------------------------------------
+    # 트래픽 초과로 인한 경로 직접 설정 (load)
+
+
+
+
+
+-----------------------analyzer.py----------------------------
+    results = []
+    for filename in resultfiles['foreign_visitor']:
+        with open(filename, 'r', encoding='utf-8') as infile:
+            json_data = json.loads(infile.read())  -> 파일 읽어들이는 코드
+
+import scipy.stats as ss  -> pip install scipy   인스톨 ~~
+
+
+
+----------------__main__.py-----------------------------
+
+    # 데이터 시각화 (visualize)
+
+
+
+투어API -> 패키지 만들기 visualize
+			  -> 파이선파일 visualizer.py
+
+
+--------------visualizer.py---------------------------
+코드 작성 후 
+__init__.py  설정!  from .visualizer import graph_scatter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

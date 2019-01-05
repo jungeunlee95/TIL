@@ -1,0 +1,57 @@
+1. ajax - xml, jquery
+
+$(httpRequest.ewsponseXML).find('member')[0]     : javascript객체
+$(httpRequest.ewsponseXML).find('member').eq(0) " jquery객체
+
+------------------------------------------------------------------
+jquery 가 ajax통신을 위해 필요한 함수 --->  $.ajax();
+$.ajax(); 에서 파생된 함수 : $.get()   $.post()   -> get방식, post방식!
+------------------
+examl01 - hello03
+$.ajax( {} )  ajax안에는 JSON객체 {} 가 들어갈 수 있음
+
+JSON 의 {} 안에 들어갈거
+type 	: 메소드(문자열)
+url  	: 요청 주소(문자열)
+data 	: C가 S쪽으로 넘기는 파라미터(문자열, JSON{}객체)
+success : 수신 성공 (readystate==4면서, status==200인거!) -> 함수
+error	: 수실 실패 (함수)
+async	: 동기/비동기 설정!(기본값 : 비동기)
+
+data: 파라미터가 없으면 굳이 안써도 되고
+async도 비동기가 기본값이니까 안써도 됨! 
+
+--------------examl03폴더 -param3.html / param3.jsp----------------------
+한글 입력했을때, g@#@%ERW$@ 이상하게 나와서 
+encode했지만 디코딩도 해줘야함
+success에서 데이터 받을 때,  data = decodeURIComponent(data); 이렇게 !!
+
+ BUT, 이렇게 하잖아,. 그럼? 그냥 이건 보여주기식처럼 그때만 해결하는거지 
+          나중에 서버에서 웹의 입력값을 갖고 일을 처리할때, 처리하기가 어렵단말야.
+
+ 내가 넘긴 데이터를 java에서 DB에서 값을 비교하거나 해야될때가 있기때문에,
+ jsp에서도 decode를 해줘야돼!! 
+ 웹에서만 인코딩 디코딩하면, 나중에 서버에서 값 비교할때 어떡하라구~~
+ <%%> 에서 디코딩하면 넘겨 받을 값을 내 쪽에서 디코딩 시킨것!!1
+
+--근데.. post일때는 encode decode 안해도 됨.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

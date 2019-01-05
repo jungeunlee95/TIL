@@ -1,0 +1,33 @@
+System.currentTimeMillis();  -> 시스템 발동 시간
+
+long start = System.currentTimeMillis();
+long end = System.currentTimeMillis();
+end - start => 프로그램을 출력하는데 걸린 시간
+
+
+
+[[[StringMain06]]]에서 String클래스는 여러개를 처리하는데 시간이 너무 오래걸림
+str값을 변경할때, 계속 새로운 공간을 만듦
+
+반면에, 
+
+StringBuffer or StringBuilder 를 사용해야함-> 근데 무조건 인스턴스 객체를 넣어줘야함
+		StringBuffer sb = new StringBuffer();
+-----버퍼는 값이 바뀔 때 마다, 
+         공간을 계속 만드는게 아니라, 자신의 공간을 계속 늘리는것임
+
+---------------
+append()
+---------------
+String s = "abc";
+ s = s + "12345";
+
+위에랑 아래랑 같은 거 시키는 식임
+
+StringBuffer sb2 = new StringBuffer("abc") //버퍼는 인스턴스 객체 소환
+sb2.append("12345")
+
+
+
+
+

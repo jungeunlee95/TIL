@@ -1,0 +1,146 @@
+ 2. 공공데이터포털사용
+- 오픈 API = 출입국관광통계서비스
+-> 인증키 발급
+
+
+python 
+    - directory : TourAPI생성 
+	- test_api.py
+	- python package : collection
+		-python package :  api 
+			-api.py
+
+
+--> 미리보기 word문서 
+인증키 : ****
+
+REST(URI) :
+http://openapi.tour.go.kr/openapi/service/EdrcntTourismStatsService
+/getEdrcntTourismStatsList?YM=201201&NAT_CD=100&ED_CD=D
+&serviceKey=TEST_SERVICE_KEY
+
+----------------------- api.py-----------------------------
+from urllib.parse import urlencode     #인코드 임포트
+def pd_gen_url(endpoint, service_key, **params):
+    return '$s?%s&serviceKey=%s' % (endpoint, urlencode(params), service_key)
+
+
+----------------------- test_api.py-----------------------------
+import collection.api as pdapi
+url = pdapi.pd_gen_url(
+    'http://openapi.tour.go.kr/openapi/service/EdrcntTourismStatsService/getEdrcntTourismStatsList' # endpoint
+    '***************', # 인증키
+    YM='{0:04d}{1:02d}'.format(2018, 1),  # 년도 4자리, 월 2자리
+    NAT_CD='130',  # 국가코드
+    ED_CD='E',   # 입국or출국?
+    _type='json'    # 제이슨 형태로 받을거야
+    )
+print(url)
+
+
+==> 경로 다시 설정하러 
+----------------------------api - __init__.py ------------------------
+from .api import pd_gen_url
+
+
+
+-----------------------------test.api.py ----------------------
+실행하면 잘 나와
+
+
+
+
+
+------------------공공데이터포털 --------------------------------
+
+관광자원통계서비스 - > 신청
+
+
+
+REST(URL) : http://openapi.tour.go.kr/openapi/service/TourismResourceStatsService/getPchrgTrrsrtVisitorList?YM=201201&SIDO=부산광역시&GUNGU=해운대구&RES_NM=부산시립미술관&serviceKey=TEST_SERVICE_KEY
+
+
+
+------------TourAPI--------------------------
+__results__   -> 디렉토리 만들ㅇㅓ
+ 	-> crawling 디렉토리 만듬
+collection - 파이썬파일 crawler.py
+
+
+
+--------------api.py---------------------------
+
+관광자원 통계 서비스 url 코드
+
+
+--------api디렉토리 폴더에 json_request.py만듬----------------
+제이슨 요청 처리할거야  이거 만들고
+다시 api.py가서   from .json_request import json_request 임포트 ! 
+
+
+
+-------------------------------api.py -------------------------
+
+        #결과메세지 성공 여부 판단
+        json_response = json_result.get('response')
+        json_header = json_response.get('header')
+        result_message = json_header.get('resultMsg')
+
+        if 'OK' != result_message:
+            print('%s : Error[%s] 요청 오류 [%s]' % (datetime.now(), result_message, url), file=sys.stderr)
+여기 적고 위에다가 sys랑 datetime 임포트 해줘 
+
+---------<<<<<
+
+json_body = json_response.get('body')
+        numofrows = json_body.get('numOfRows')
+        totalcount = json_body.get('totalCount')
+
+        if totalcount == 0 :
+            break
+        last_pageno = math.ceil(totalcount/numofrows)
+        if pageno == last_pageno
+            hasnext = False
+        else:
+            pageno += 1
+
+적고 임포트해줘 ! 
+
+import math
+
+
+
+
+
+-----------------------api.py 출입국 관광 통계 서ㅂㅣ스------------------
+코드적고
+
+------------------crawler.py-----------------------
+밑에 데이터 수집 코드 작성하고 
+위에 가져오는 데이터 요소 이름 수정 코드 rename ! 
+
+------------------------
+api -> imnit.py에 임포트 추가
+------------------------
+
+------------------crawler.py-----------------------
+
+
+-----------------test.api ----------------------------
+호출코드
+
+
+-------------# collection/api/ __init__.py------------------
+컬렉션 디렉토리에 api디렉토리에도 이닛에 임포트 해야 돼 
+
+
+
+
+
+
+
+
+
+
+
+

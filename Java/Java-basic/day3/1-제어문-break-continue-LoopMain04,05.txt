@@ -1,0 +1,22 @@
+제어문 
+
+
+[break] (switch에서 봤었음) - 중간에 빠져나오는 입력문
+
+for(int i = 1; i <=3; i++)
+    print("HELLO");
+      break;
+    println();
+
+
+
+
+[continue]
+
+for(int i = 1; i <=3; i++)
+    print("HELLO");
+      continue;     
+//컨티뉴 만난 순간 밑에 절대 안가고 무조건 가장 가까운 
+                loop문으로 올라가서 바로 i++(증가/감소문)로감
+//증가감소문 만나고 조건 i<=3으로 가서 조건보고 만족하면 반복 만족X바로println
+    println();

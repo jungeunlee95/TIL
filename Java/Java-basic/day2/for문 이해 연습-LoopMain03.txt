@@ -1,0 +1,96 @@
+
+LoopMain03 선생님 소스 확인하기 
+
+
+
+***
+***
+***
+***
+  ->가로 위주의 반복성 먼저 찾기
+     for(int i = 1 ; ; ) {        ->세로로 반복하는 공식
+        for(int j = 1 ; ; ) {     ->가로로 반복 공식
+           sysout("");
+        }
+        System.out.println();
+     }   
+
+------------------원리 알기-------------------------------
+
+
+         for(int i = 1; i <= 4; i++){
+
+	   for(int j = 1; j <=3; j++) {
+
+	    	System.out.print("*");
+
+	    }
+		
+	System.out.println();
+
+	}
+
+바깥 for문이 행(총 세로로 몇줄 찍을꺼니?)
+안쪽 for문이 열(println이 나오기 전에. 다음 행으로 넘어가기 전에 
+               총 가로로 몇번 찍을꺼니?)
+  
+
+ j= 12345
+i=1 *****
+i=2 *****
+i=3 *****
+i=4 *****
+i=5 *****
+
+
+--------
+
+package Day3Homework;
+/*
+ 
+----*
+---***
+--*****
+-*******
+*********
+-*******
+--*****
+---***
+----*
+
+
+ */
+
+public class Number2 {
+
+	public static void main(String[] args) {
+		for(int i = 1; i <= 9; i= i+2) {    
+			//행 9줄 찍을껀데, 5열부터 규칙이 바뀌기때문에 5열까지만 찍을거
+			for(int j = 9; j >= i; j= j-2) {
+				System.out.print("-");
+			}
+			for(int k = 1; k <= i; k++) {
+				System.out.print("*");
+			}
+			
+			System.out.println();
+		} 
+//		for(int i = 1; i <= 7; i=i+2) {
+//			for(int j = 1; j <= i; j=j+2) {
+//				System.out.print("-");
+//			}
+//			System.out.print("-");
+//			for(int k = 7;k>= i; k--) {
+//				System.out.print("*");
+//			}
+//			System.out.println();
+//		
+//		}
+
+	}
+
+}
+
+
+
+

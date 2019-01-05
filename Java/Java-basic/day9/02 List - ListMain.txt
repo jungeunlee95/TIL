@@ -1,0 +1,66 @@
+02 List - ListMain
+
+--------------------------------------------
+ List  -같은 타입의 데이터룰 모아놈, 가변적인 배열!
+--------------------------------------------
+- ArrayList  -> 배열. 값을 넣으면 알아서 공간을 늘려서 값을 넣을 수 있게 해줌
+  앞의 값을 지우면 배열 공간도 줄어듦, 필요한 개수가 고정이 아닌 가변적으로 변함!!
+   => 연속적인 공간
+ new ArrayList<Integer>();   //나는 인티저를 모아놓은 배열을 만들꺼야!@!@
+                                                    <>안에있는 타입의 값만 받을 수 있어
+
+-LinkedList -> 서로 데이터의 집합인 것 처럼 보이게 만드는 것 
+  => 뜨문뜨문 만들어진 공간
+    
+--------------------
+add -  순차적으로 저장
+--------------------
+new ArrayList<String> () ;
+
+list.add("봄");
+list.add("여름");
+
+String val = list.get(0); -> 0번지 값 출력해라 -> 봄 출력
+
+int size = list.size( ); -> 갖고있는 원소의 개수 출력 -> 봄여름 두개니까, 2 출력     
+
+list.remove(0);  -> 0번지의 데이터를 삭제해라  ->봄 삭제되고 여름이 0번지로 됨
+list.remove(0); ->한번 더하면 이번에는 여름이 삭제됨.
+
+list.remove("봄");  -> ()에 Object가 들어가면 동일한 값을 갖고있는 데이터 삭제 : 봄삭제
+
+list.clear();   ->리스트의 모든 데이터를 한번에 다~ 삭제!
+
+boolean b = list.contains("봄");  -> 이 데이터가 있으면 true, 없으면 false  
+
+boolean b = list.isEmpty();  -> 배열에 원소가 들어있니? 
+             r                              -> size가 0 이면 true, size가 0초과하면 false   
+ 
+list.addAll(sub);   -> 두개의 ArrayList를 합쳐서 하나의 ArrayList로 만드는 것
+ex) list 0봄, 1여름     sub 0가을, 1겨울 이 있으면,
+       list.addAll(sub); -> 0봄 1여름 2가을 3겨울   
+       -> list.size = 4
+       -> sub.size = 2    : sub값이 없어지는게 아니라 list에 복사하는 것임!!!!!!!
+
+
+-----------------------------------------------
+    iterator(순환자) 주요 메소드
+-----------------------------------------------
+hasNext()  - 너 다음 데이터 갖고있어? : 데이터의 존재여부를 판단 (true or false)
+next()  : 데이터 얻기		 
+-----------------------------------------------
+System.out.println("< iterator를 이용한 출력 >");
+Iterator<String> ite = list.iterator();
+		
+while(ite.hasNext()) {  //이터레이터가 데이터 갖고있어?
+	System.out.println(ite.next());  //그럼 그 데이터 찍어
+ }
+===>  이렇게 나와요 순서대로 
+< iterator를 이용한 출력 >
+ONE
+TWO
+THREE
+FOUR
+FIVE
+
+

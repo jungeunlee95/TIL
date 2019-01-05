@@ -1,0 +1,38 @@
+/*
+	작업순서 :
+		1. DB접속  
+		2. t_board 테이블에서 게시물 조회
+		3. DB접속 해제
+		4. 화면에서 게시물 출력
+	*/
+	Connection conn = ConnectionFactory.getConnection();
+	
+	StringBuilder sql = new StringBuilder();
+	sql.append("select no, title, writer, to_char(reg_date,'yyyy-mm-dd')as reg_date ");
+	sql.append(" from t_board ");
+	sql.append(" order by no desc ");
+	
+	PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+	
+	ResultSet rs = pstmt.executeQuery();
+	
+	List<BoardVO> boardList = new ArrayList<>();
+
+	while(rs.next()){
+		
+		int no = rs.getInt("no");
+		String title = rs.getString("title");
+		String writer = rs.getString("writer");
+		String regDate = rs.getString("reg_date");
+				
+		BoardVO board = new BoardVO();
+		board.setNo(no);
+		board.setTitle(title);
+		board.setWriter(writer);
+		board.setRegDate(regDate);
+		
+		boardList.add(board);	
+	
+	}
+	
+	JDBCClose.close(conn, pstmt);

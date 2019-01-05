@@ -1,0 +1,50 @@
+2. 페이지 이동-forward
+ 
+		--action - forward -- 단방향!
+	- 호출된 페이지 에서 다른 페이지로 요청 처리가 이동
+	- 파라미터와 공유영역(request)을 통해 데이터를 공유
+	- 구문 
+	<jsp:forward path = "파일경로" />
+
+	<jsp:forward path="파일경로">
+	         <jsp:param name="msg" value="test" />
+	</jsp:forward>
+
+  활용 : JSP페이지에서 조건에따른 페이지 이동
+
+------------------   Lecture-Web-jsp-forward   ------------------------
+
+forward :  결과화면 안뜸
+		
+include    : 결과화면 뜸
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+3. Servlet -어노테이션
+
+---------------------------/servlet = test.html--------------------------
+servlet 방법으로 web.xml귀찮 -> 어노테이션 기법 사용
+
+---------------------- MethodExam --------------------------------------
+java클래스에 @WebServlet("examMethod")   -> 연동을 시켜준다
+         @WebServlet(urlPatterns = {"/examMethod","/examM"})  //여러개  쓸 때
+
+hobby는 여러개가 나올수도있음. 여러개를 찾을수있게 해줘야함
+  -> String[] hobby = request.getParameterValues("hobby");
+     System.out.println("hobby : " + Arrays.toString(hobbys));   배열로 콘솔창에 출력
+
+근데 out.println로 문장+문장+문장+... 계속 쓰면 속도 느려지잖아 -> StringBuilder 로 !
+
+
+  <<  어노테이션쓰면 이제 web.xml 쓸일이 없어 >>
+
+
+근데 서블릿은 계속 html, head 이렇게 계속 적어야되잖아 -> 너무 복잡해 -> JSP! 이용!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

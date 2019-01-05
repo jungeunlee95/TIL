@@ -1,0 +1,43 @@
+4. javascript - prototype,은닉성,내장객체 - exam27~30
+
+--------------------------------
+prototype   - exam 27
+--------------------------------
+만약 여러개의 객체를 만들어야할때
+
+var person = new Person('홍길동', '010-1111-2222', '서울시 서초구');
+var person2 = new Person('홍길순', '010-1111-2222', '서울시 서초구');
+var person3 = new Person('홍길천', '010-1111-2222', '서울시 서초구');
+var person4 = new Person('홍길양', '010-1111-2222', '서울시 서초구');
+이렇게 만드는 것 보다 prototype 을 만들어서 
+ Person객체들이 서로 하나의 공간을 공유할 info() {} 을 만드는 것이 좋겠다.
+
+-> 생성자 함수는 prototype을 만들 수 있고
+     일반 함수는 만들 수 없음
+
+-> 모든 객체는 object의 prototype을 갖고있음
+
+-----------exam18, 은닉성 _name을 위해 get,set변수명 사용------------------
+그냥 name은 name값 쉽게 바꿀 수 있는데, _ 붙이면 
+
+get name() {
+    return this._name;
+   }   이런식으로 하고 
+set name()  으로 값 고쳐야함 -> 선생님 코드 보아라
+
+
+-----------------------------exam 29 Array-------------------------
+자바 스크립트 내장 객체 : Date, Number, String, Array, Math
+array.reverse();    array순서 반대로
+
+
+-----------------------------exam30 String----------------------
+ var str = new String("Hello World");
+
+ console.log('길이 : ' + str.length);
+ console.log('str의 3번지 글자 ' + str.charAt(3));
+ console.log(str.concat(' @!@!'));        추가
+ console.log('l이 검색된 첫번 째 위치 : '  + str.indexOf('l'));
+
+31에 오늘 날짜 프린트하기
+

@@ -1,0 +1,24 @@
+
+1.sping Maven-Project 설정
+
+1. maven project만들기
+   group id : kr.co.mlec
+   Artifact id : Mission-Web-Spring
+   packaging : war
+--------------------------- Mission-Web-Spring--------------------------
+2.  src/main/webapp/WEB-INF - web.xml 붙여넣기
+3.  src/main/resources/config/spring/spring-mvc.xml 넣기
+4.  pom.xml ->  <dependencies> 붙여넣기 servlet-api, jsp-api, spring-webmvc
+5.   build path로 버전 맞춰주기 properties에서 project facets에 java버전을 1.5->1.8로 변경!
+6.   servers에 add 하기
+
+--------------------------------------------------------------------
+
+
+
+
+
+
+
+
+

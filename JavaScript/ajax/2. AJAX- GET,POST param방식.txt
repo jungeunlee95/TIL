@@ -1,0 +1,64 @@
+2. AJAX
+
+--------------------ajax - exam03 - param,jsp--------------------------
+C -> S html    요청할때는
+S -> C jsp      응답할때는
+
+responseText : 서버의 응답결과를 문자열로 받ㄱ ㅣ 
+->영문도 받고, 한글도 받을껀데,
+
+crome에서는 한글 잘 되는데, 익스플로러에서는 error~!!~!~
+     -> 파라미터 인코딩해줘야함!
+
+param = encodeURIComponent(param);   -> 이거 써주는게 좋은거야 이렇게 써야돼
+항상 파라미터는 무 ! 조 ! 건 ! 인코더~!~!~!~
+
+param01 - GET방식
+param02 - POST 방식
+
+
+-------------------
+ post 방식 param02
+-------------------
+이때는 URL주소를 open이 아닌 send에 null이 아니라 넘기려는 인자를 적어줘야함
+ GET 은 경로에 ?name = 붙은데,
+
+  POST는 header쪽에 내가 뭘 넘기려는지 content type을 설정해줘야함
+ param02 29line httpRequest.setHeader('content-type','application/x-www-form-urlencoded');	
+
+
+
+------------파라미터가 여러개 일때 ! exam04 ---------------------------
+name으로 데이터 뽑으려면 <form>태그 써여돼!!
+만약, id 속성쓸꺼면 그냥 getElementById 해도됨!
+
+--------------------------------------
+ module.jsp, httpRequest.js, sample.jsp
+--------------------------------------
+sendProcess는 어차피 계속 쓰니까, 계속 쓸 수 있게 따로 만들어줄꺼야
+ ->>> ajax- exam04- httprequest.js!!!
+
+    JSON일때의 
+    String 일때와
+    httpRequest와 module의 sendProcess 확인하기, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

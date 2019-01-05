@@ -1,0 +1,109 @@
+4. MVC 패턴(model 2) 
+    : Model View Controller
+Controller : 요청이 들어오면, 요청 분석 : 들어온 url에 따라 각각 일처리를 하는 것
+                    : 내가 어떤 동작을 할 지 부탁을 하면 알아서 분석해서 데려다줌
+View : 화면단 출력하는 jsp코드 
+Model : 여러개의 멤버변수의 정보를 갖고있는 데이터 집합의 값들을 표현하기 위한 단위
+             VO클래스들을 다 Model이라고 함!
+
+모든 요청들을 다 커버할 수 있는 대표 서비스를 만들고싶어 : 대표 servlet 이 받겠다
+        ex) 은행에 전화하면 1,2,3,4,5 누르면 알아서 알맞은 상담원 바꿔주듯이. 
+대표 servlet이 각각의 url을 분석해서 요청에 맞는 처리를 할 수 있게 데려다줌
+--> servlet은 오직 한개만 만들겠다.
+
+--------------------spring 2.5 ver : xml, properties ------------------
+Mission-Web-MVC01 -> web.xml 수정
+
+ REST방식   뒤에 /board  : 다같은 url을 갖고있는데 방식에따라 CRUD형태를 갖게함
+ -GET
+ -POST
+ -PUT
+ -DELETE 
+but, 지금은 2.5ver먼저니까 .do패턴으로!!
+
+web.xml에서 
+<url-pattern>*.do</url-pattern>    뒤에가 .do로 끝나면 
+<servlet-class>kr.co.mlec.FrontControllerServlet</servlet-class> 무조건 여기 실행하겠다!
+라는 뜻 ! 
+
+kr.co.mlec - FrontControllerServlet.class !  
+                  -> 여기서 이제 들어오는 uri를 case에 맞게 일을 처리 할거야!!
+
+---------------- FrontControllerServlet.class -------------------
+/Mission-Web-MVC01  <- 근데 이건 계속 중복되잖아
+ -> 이걸 뽑아낼 수 있는 request.getContextPath(); 코드가 있음 
+     -> subString 으로 뽑아내면 좋겠지?
+ex) /Mission-Web-MVC01★/★board/list.do
+    별표 안에 있는 / 부터 뽑아내야 함 !
+       uri = uri.substring(context.length());
+       *.do 에서 이미 url처리해서 , 어떤 요청이 왔는지 알았으니까
+
+-> 컨트롤러는 .java여도 됨 (servlet일 필요 없어)
+listController.class  -> 요청이 들어오면 처리할 class
+controller 는 항상 request와 response객체를 받아야 응답을 해줄 수 있음
+
+WebComtent - board = list.jsp
+
+foward 는 경로가 달라
+
+---------------------------------------------------------------
+	FrontController.java  -> 대표 컨트롤러
+	index.jsp 		     -> main화면
+-ListController.java 	 -> 요청받는 곳
+-list.jsp  			 -> 응답하는 곳
+-writeFormController.java      -> 요청받는 곳
+-writeForm.jsp 		 -> 응답하는 곳
+
+
+-----------------------BoardDAO,VO-------------------------------
+전체게시글 조회
+
+ListController.java 에서 만든 데이터를 list.jsp에서 사용하고싶어 -> 공유영역
+S에서 공유영역 request 만들어서 
+
+C가 ------ /board/list.do요청---> S 에 
+        FrontControllerServlet.java에서 받음 -> ListController.java -> DAO
+                         ↓↓↓↓ ↓                                          <-      DAO에서 값 전달     <-
+           FCS가 JSP에 forward 
+그럼 C <--/board/list.jsp 응답 -- list.jsp!
+
+
+
+
+<요약>
+----------------------------------------------------
+FrontController.java                -> 대표 컨트롤러
+index.jsp 		                   -> main화면
+-ListController.java 	 -> 요청받는 곳
+-list.jsp  			 -> 응답하는 곳
+----------------------------------------------------
+1. client -> server 에 /board/list.do를 요청하면,
+2. FrontControllerServlet.java에서 요청을 받음
+3.  switch 문으로 uri 요청처리를 해서 알맞은 경로로 요청 처리
+4. ListController.java에서 DAO CRUD 후 DAO값을 request공유 영역에 등록 후
+5. F.C.S에서 callPage 로 받아온 값을 
+6.  FrontControllerServlet.java에서 list.jsp에 dispatcher.forward!
+7. 그럼? list.jsp 에서 client에게 /board/list.jsp 를 응답 ! 
+8. 화면 출력 
+
+  근데 왜 index.jsp에서 <a href>를 클릭하면 FrontControlServlet로 가나?
+-> /WEB-INF/web.xml 에서 뒤에가 .do로 끝나는 uri는 모두 F.C.S로 보내기로 했잖아
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

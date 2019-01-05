@@ -1,0 +1,39 @@
+iArr
+
+iArr ☞ □□□□□
+        0 1 2 3 4 
+      -? iArr[0]
+      -? iArr[1]
+      -? iArr[2]
+      -? iArr[3]
+      -? iArr[4]
+
+double dArr = new double[5];
+dArr[0] ~ dArr[4]  //더블형도  변수값은 달라도 번지이름은 다 같음
+
+-----------
+Arry 기본
+-----------
+
+int[] iArr; 
+iArr = new int[5];  
+System.out.println("iArr : " + iArr);
+for(int i = 0; i < 5; i++) {
+			System.out.print(iArr[i]+ " ");
+		}
+		System.out.println();
+
+
+변수를 만들면~? 
+
+int size = 5;
+iArr = new int[size];
+->for(int i = 0; i < size; i++) {
+			System.out.print(iArr[i]+ " ");
+
+
+--------
+length - 변수의 갯수
+---------
+iArr 의 변수가 x개면?
+iArr.length = ? x개.

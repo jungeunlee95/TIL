@@ -1,0 +1,48 @@
+--------------------
+Arrays.toString()  -> 이 메소드는 [ , , , ] 이런 형태로 출력을 해줌
+--------------------
+System.out.println(" <Arrays.toString()을 이용한 출력> ");
+		System.out.println(Arrays.toString(strArr));
+
+==>>>>>출력값 :
+
+ <Arrays.toString()을 이용한 출력> 
+
+ [청취, 자바, 교육]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

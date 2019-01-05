@@ -1,0 +1,378 @@
+3. 파이썬 - 연산자 02_DataType
+
+#논리 비교
+print([] or 'hello')
+print('hello' or [])
+print('hello' and 'operator')
+print(None and 1)
+print(None or 1)
+
+#비트연산자
+print(~3)   #4의 2진수 뒤집기
+print(~-1)
+print(2<<4)
+print(48>>4)
+print(3&2)
+print(16|2)
+print(16^2)
+
+num1 = 10
+num2 = 4
+result = num1 ^ num2
+print(result)
+
+result = result ^ num2
+print(result)
+
+# Swap
+a = 10
+b = 6
+
+# 1 - 메모리를 하나 더 사용하지만, 속도가 빠르다.
+'''
+temp = a
+a = b
+b = temp
+'''
+# 2 - 메모리를 사용하지 않지만, 속도가 느리다.
+'''
+a ^= b
+b ^= a
+a ^= b
+'''
+# 3 - 파이썬의 문법을 활용
+'''
+b, a = a, b
+'''
+print(a,b)
+
+key = 34892374
+password = 1234
+sub = 0
+re = 0
+
+# 암호화 
+sub = password ^ key
+print(sub)
+
+# 복호화 
+re = sub ^ key
+print(re)
+
+# 문자열(str)
+s1 = ''
+s2 = 'Hello'
+s3 = 'Python'
+print(type(s1), type(s2), type(s3))
+
+# 다중 라인 문자열 표현
+s4 = '''Hello
+abcd
+안녕하세요
+1234 '''
+print(s4)
+
+s5 = ''' Hello
+    abcd
+        반가워
+1234'''
+print(s5)
+
+# 문자열 연산
+str1 = 'Hello'
+str2 = 'Python'
+print(str1 + ' ' + str2)
+print(str1 * 2)
+print(str1 * 3)
+print(str1[0]) # index연산
+print(str1[1:4]) # 1번지부터 4번지 전까지
+
+# str1[0] = 'G' # 변경불가(Immutable)
+# print(str1)
+
+val = 10
+# print('val : ' + val) # 문자열과 정수의 + 연산 불가능
+print('val : ' + format(val, 'd')) #서식을 활용함
+
+# tuple 활용 :  ()
+f = 'name : %s, age : %d'
+print(f % ('박서준', 29))
+print(f % ('제니', 23))
+
+# dict(Dictionary) 활용
+f = 'name : %(name)s, age : %(age)d'  # key를 Mapping시키는 역할
+print(f)
+print(f % {'name' : '박신혜', 'age' : 26})
+print(f % {'name' : '박보영', 'age' : 29})
+
+# list
+myList = [10, 3.14, 'hello']
+
+print(myList[0], myList[1], myList[2])
+print(myList[-1], myList[-2], myList[-3]) #역순
+print(myList[1:3]) #list방식으로 1번지부터 3번지 전까지 추출 -> list
+print(myList + [1,2,3])
+del myList[1] # 요소 삭제
+print(myList)
+print(10 in myList) # myList안에 10이 있는지 !
+
+# 수정
+myList[0] = 20 # 변경가능(Mutable)
+print(myList)
+myList[0:2] = [10, 20]
+print(myList)
+
+subList = [1,2,3,4,5]
+# myList = subList
+myList[0:] = subList # 0번지부터 삽입
+print(myList)
+
+myList[2:2] = ['a'] #2번지 삽입
+print(myList)
+myList[3:] = [123, 456]  #2번지부터 삽입
+print(myList)
+myList[:0] = [1,2,3]    #맨 앞에 삽입
+print(myList)
+
+print('-----------------------------------------------------')
+# list 주요 메소드
+oriList = [1,2,3,4,5]
+print(oriList)
+oriList.append(6)    #뒤에 6이 붙음
+print(oriList)
+oriList.insert(1, 5) #1번지에 5를 삽입 !
+print(oriList)
+oriList.reverse()    #역순으로 뒤집어.
+print(oriList)
+oriList.sort()       #정렬
+print(oriList)
+oriList.remove(3)    #3인 데이터를 삭제 : 특정 요소 삭제
+print(oriList)
+subList = [9, 10, 11]
+oriList.extend(subList) #subList를 추가 
+print(oriList)
+
+# 정렬
+oriList.reverse()    #뒤집어
+print(oriList)
+#oriList.sort()
+#oriList.sort(key=int) #key : 정렬 기준 ->  >>>[1, 2, 4, 5, 5, 6, 8, 9, 10]
+oriList.sort(key=str)  #key : 정렬 기준 ->  >>>[1, 10, 11, 2, 4, 5, 5, 6, 9]
+print(oriList)
+
+#set
+mySet = {10, 20, 30}
+print(mySet, type(mySet))
+print(len(mySet))
+print(30 in mySet) #True
+print(40 not in mySet) #True
+
+#set 주요 메소드
+mySet.add(40)
+mySet.add(50)   # 집합만 의미하기 때문에 순서가 없음 
+print(mySet)    # {40, 10, 50, 20, 30}
+#mySet.remove(30) 삭제
+print(mySet)   
+mySet.discard(30) #삭제
+print(mySet)    # {40, 10, 50, 20}
+mySet.clear()   # 모두 삭제 
+print(mySet)
+
+oriSet = {1, 2, 3, 4, 5}
+subSet = {3, 5, 7}
+result = oriSet.union(subSet)  #합집합
+print(result)
+
+subSet = {1, 4, 7}
+result = oriSet.intersection(subSet) #교집합 
+print(result)
+
+result = oriSet.symmetric_difference(subSet) #대칭차집합 
+print(result)
+
+subSet = {2, 3}
+print(oriSet.issuperset(subSet)) #확대집합 -> ori에 sub데이터들이 포함되어있냐? 
+print(subSet.issubset(oriSet))   #부분집합 -> sub 가 ori의 부분집합이야?
+
+print('-----------------------------Tuple--------------------------------')
+#tuple
+myTuple = (1, 2, 3)
+print(myTuple, type(myTuple))
+
+print(myTuple[0], myTuple[1], myTuple[2])
+print(myTuple[-1], myTuple[-2], myTuple[-3])
+
+print(myTuple[1:3]) # 2, 3
+print(myTuple + (4,5,6)) #연결
+print(myTuple * 2) #반복
+print(4 in myTuple) #False
+
+# myTuple[0] = 5 #변경 불가 (Immutable)
+
+#Tuple 주요 메소드
+oriTuple = (1,2,3,4,5)
+print(oriTuple, type(oriTuple))
+subTuple = set(oriTuple) #set으로 변환 
+print(subTuple, type(subTuple))
+subTuple = list(oriTuple)
+print(subTuple, type(subTuple))
+
+#tuple (packing, unpacking)
+data = 1,2,3, 'BIT' #나열한 데이터 
+print(data , type(data)) #tuple 형식, packing
+
+a, b, c, d = data #각각의 변수로 대입, unpacking
+print(a, b, c, d)
+
+#a, b, c = data   #나머지 데이터를 받을 변수가 없다. 부족하다.(error)
+#print(a,b,c)
+
+a, *b = data # a에 하나 대입 후 , 나머지는 b 변수가 받아라 !
+             # a : 1
+             # b : [2, 3, 'BIT']
+print(a,b)
+
+*a, b = data
+print(a, b) # a : [1, 2, 3], b : BIT
+
+a, *b, c = data
+print(a,b,c)  # a : 1, b : [2, 3], c : BIT
+
+d=tuple(b) #tuple로 변환
+print(d, type(d))
+
+# dict
+oriDict = { 'name' : 'BIT', 'age' : 20 }
+print(oriDict, type(oriDict))
+print(oriDict['name']) # key 'name' 대한 value 'BIT'
+print('age' in oriDict) #True
+print('addr' not in oriDict) # True
+
+myDict = dict() # empty dict
+print(myDict)
+
+# 1. keywird arguments
+myDict = dict(one = 1, two = 2 )
+print(myDict) #{'one': 1, 'two': 2}
+
+# 2. tuple list
+myDict = dict([('one' , 1), ('two' , 2 )])
+print(myDict)
+
+# 3. key-value
+keys = ('one','two') # key tuple -> list도 가능
+values = (1,2) #value tuple
+myDict = dict(zip(keys, values))
+print(myDict)
+
+
+myDict = {}
+print(myDict, type(myDict))
+myDict[10] = '10'
+myDict['name'] = 'BIT'
+print(myDict)    #{10: '10', 'name': 'BIT'}
+
+myDict[(1,2)] = 'number'    #tuple을 key로 설정
+print(myDict)     #{10: '10', 'name': 'BIT', (1, 2): 'number'}
+# myDict[[1,2]] = 'number'   #  ->  unhashable error
+# print(myDict)   
+
+keys = myDict.keys() #key 들을 추출
+print(keys, type(keys))
+
+#foreach 출력
+for key in keys :
+    print('{0}:{1}'.format(key, myDict[key]))
+
+values = myDict.values()  # value들을 추출   
+print(values, type(values))
+
+items = myDict.items() # 요소 모두 추출, tuple list
+print(items)
+
+result = myDict.get('name')  # key값으로 value추출
+print(result)
+result = myDict['name']
+print(result)
+
+#데이터 냅다 꺼내버리기! stack의 pop과 유사 
+result = myDict.pop('name')
+print(result)
+print(myDict)
+
+print('-------------------------------------------------------------')
+
+result = myDict.popitem()  #key, value 모두 뽑아
+print(result)
+print(myDict)
+
+myDict.update({'aaa':'123', 'bbb':'456'})
+print(myDict)
+
+myDict.clear()
+print(myDict)
+
+
+myDict = {'b' : 2 , 'c' : 3 , 'a' : 1 }
+# 자동으로 key를 추출
+#for key in myDict :
+#    print(key, end = ' ' )
+# -> b c a 이렇게 key값이 그냥 추출 됨
+
+# b:2 c:3 a:1  -> 키와 밸류값 추출 
+#for key in myDict :
+#    print(str(key) + ':' + str(myDict[key]), end = ' ' )
+
+# b:2 c:3 a:1 
+#for key in myDict :
+#    print('{0}:{1}'.format(key,myDict[key]), end=' ')
+
+# b:2 c:3 a:1 / 동시에 2개의 데이터를 가져오고 바꿀수있음 # a,b = 10,20 특성
+# key,value = ('b',2)
+for key, value in myDict.items() :
+    print('{0}:{1}'.format(key,value), end = ' ' )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

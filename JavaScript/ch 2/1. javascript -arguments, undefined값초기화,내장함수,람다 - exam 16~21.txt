@@ -1,0 +1,121 @@
+ 1. javascript -arguments, undefined값초기화,내장함수,람다 - exam 16~21
+
+--------------------------exam16----------------------------------
+ arguments: 함수에 날라오는 매개변수들을 기억하는 함수
+  -> 속성  : 배열
+
+console.log(arguments); 로 찍어보면 웹브라우져 F12에서 어디에 몇개인자가 있는지 알 수 있음
+
+function func() {
+	switch (arguments.length) {
+	case 0:
+		alert('call...');
+		break;
+	case 1:
+		alert('data : ' + arguments[0]);
+		break;
+	case 2:
+		alert('sum : ' + (arguments[0] + arguments[1]));
+		break;
+	}
+}
+func();
+func('A');
+func(10, 20);
+--------------> 이렇게 밑에 변수들을 소환하고싶을때는, switch로 case마다 
+
+
+
+--------------------------exam17----------------------------------
+alert(`num1 : ${num1}, num2 : ${num2}, num3 : ${num3}`); 일때 인자 2개만 보내면 
+ 마지막 인자는 undefined! 정의되지 않은 값들은 다 이걸로 보면 됨
+
+이 undefined 값을 0으로 초기화 하고 싶어
+<<< 방법 1 >>>
+ if(!num1) num1 = 0;
+ if(!num2) num2 = 0;
+ if(!num3) num4 = 0;
+
+ <<< 방법 2 >>>
+num1 = num1 || 0;   -> num1이 참이면 num1출력, num1이 false면 0출력!
+
+<<< 방법 3 >>>  -> Exmascript6
+ function func(num1=0, num2=0, num3=0) {    -> 값이 undefined이면 0출력
+	alert(`num1 : ${num1}, num2 : ${num2}, num3 : ${num3}`);
+ }
+
+
+-----------------exam18[ javascript 내장함수]----------------------------------
+
+------------
+ 1. 타이머  
+------------
+<1>    : setTimeout( function, ms)  : 어느 일정 시간이 지나면 function을 수행하겠다
+ex) setTimeout( function () {} , 1000); -> 1초가 지나면 저 함수 호출해라
+   -> 이렇게 직접 함수를 정의할수도있고, 
+       코드가 길어지면, 함수 먼저 선언하고
+            var func = function() {alert('1초 타이머 끝...')}
+              setTimeout(func,1000);   이렇게 함수를 호출해도 돼
+
+<2>   : setInterval(function ,ms)   : 어느 일정 시간 마다 계~!속 function을 수행
+ex)  setInterval(function() {
+	document.write('현재시간 : ' + new Date + '<br>');
+      }, 1000);
+   -> 이러면 계속 찍히니까, 위에 식에 var id = setInterval( ---) 찍어주고
+       위에 식 위에 , setTimeout( function() { clearInterval(id);}, 5000);
+         적어주면 5초뒤에 clear 멈춰라!!!!
+
+---------------
+2. 코드 실행 함수 ---------------------exam19
+---------------
+ "alert('hello');"  -> 얘는 경고창이아니라 그냥 문자 안에 찍히는건데,
+       ""안에 있어도 자바스크립트 안에 있는 함수면, 경고창으로 실행하게 만들어줌
+      :eval(string)
+ex) 
+	var str = 'alert("Hello");';
+	
+	eval(str);
+
+
+-----------------
+3. 숫자 변환 함수 -------------------------- exam20 
+-----------------
+       :parseInt(string)   -> 숫자
+       :parseFloat(string)   -> 실수 . 까지
+ex)
+	var won = '1000원';
+	var dollar = '1.5$';
+	
+ 	alert('parseInt : ' + parseInt(won));
+ 	alert('parseFloat : ' + parseFloat(dollar));
+
+
+----------------------------exam 21 람다---------------------------------	
+	var bbb = function () {}      // 이거랑 밑에랑 같은거 
+
+	var bbb = () => {
+		alert('bbb');	
+	}
+	
+	bbb();	
+ 	aaa();
+
+	var sum = (a, b) => a + b; 이렇게 한번에 정의할 수 있음 -> 이 자체가 return 값을 가짐
+	alert(sum(10,20));    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

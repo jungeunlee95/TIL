@@ -1,0 +1,21 @@
+package kr.co.mlec.practice;
+
+import java.util.Scanner;
+
+public class Q2 {
+
+	public static void main(String[] args) {
+		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("초를 입력하십시오.");
+		int num = sc.nextInt();
+		
+		if(num < 60) {
+			System.out.println(num + "초");
+		} else if(num >= 60 && num < 3600) {
+			System.out.println(num / 60 + "분" + num % 60 + "초");
+		} else 
+			System.out.println(num / 3600 + "시간" + (num % 3600) / 60 + "분" + (num % 3600) % 60  + "초");
+		
+	}
+}

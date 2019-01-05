@@ -1,0 +1,29 @@
+
+  3. Mission-Web
+  WebComtent 
+   -index.jsp
+   -css - layout.css
+   -jsp-include-footer.jsp, topMenu.jsp
+
+-----------------------------------------------------------------------
+ http://localhost:8000/Mission-Web/jsp/board/aaa.jsp
+-----------------------------------------------------------------------
+
+include, forward, xml에서의 /경로
+ <%@ include file="/jsp/board/aaa.jsp" %>
+ <jsp:forward page = "/jsp/board/aaa.jsp"
+--> 얘네빼고는 다  /Mission-Web/jsp/board/aaa.jsp 
+
+
+list.jsp & n=board.css
+
+
+
+
+
+
+
+
+
+
+

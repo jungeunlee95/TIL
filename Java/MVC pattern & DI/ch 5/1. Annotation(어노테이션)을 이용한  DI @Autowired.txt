@@ -1,0 +1,72 @@
+
+1. Annotation(어노테이션)을 이용한  DI @Autowired
+
+->그전에는 xml을 이용했는데, xml파일이 너무 커지는 것을 방지
+-> 자동 주입 기능 사용시 스프링이 알아서 의존 객체를 찾아서 주입
+->사용법 : XML파일에 <context:annotation-config />설정 추가
+			          스프링                   자바
+                 java파일의 의존주입대상에 @Autowired 또는 @Resource 설정 !
+
+--------------------------@Autowired----------------------------------
+- 변수설정
+- 생성자설정
+  <constructor-arg ref="tire"></constructor-arg>
+- set메서드 설정
+  <property name="Tire" ref="tire"></property>
+
+원래는 저렇게 해야되는데, 어노테이션 사용할때는 저거 안써도 됨 
+
+
+-------------------------di_anno01 /DriverMain------------------------- 
+스프링을 이용한 DI - @Autowired 어노테이션을 이용한 자동 주입
+
+src/main/resources/di_anno01.xml
+
+Car.java
+//생성자 주입 방식 @Autowired -> 이거 넣으면 외부에서 만들어진 tire변수를 여기에 주입할수있음, 
+기본생성자가 아니라 매개변수가진 생성자를 호출할수있도록
+
+--> 이거 쓰려면 xml에 <context:annotation-config /> 소스 넣어줘야함 ->이 소스 넣으려면
+       beans에 주소 하나 추가해야돼 xmlns:context="http://www.springframework.org/schema/context"
+   : xmls에서 제일 첫출에 적은 것이 디폴트값이 됨 그래서 원래 <beans:bean>으로 적어야되는데 지금은 기본이 beans라서 <bean>그냥 이렇게 해도됨
+    근데 만약 context가 제일 위에 있으면, <annotation-config />그냥 이렇게 써도됨 
+      그니까 제일 첫줄이 디폴트값이되어서 그 안의 태그들은 : 이거 안쓰고 바로 써도 됨
+--> xsi:schemaLocation에도 이거 추가
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-4.3.xsd
+
+--> 이렇게 하면 @Autowired하는 순간 자동 주입
+
+  Car.java 에서
+	@Autowired
+	private Tire tire;       
+  이렇게 멤버변수에 오토와이드하면 밑의 생성자, 메서드 다 필요가 없어짐
+
+
+그런데 !
+-------> xml어디에도 ref로 주입대상을 정해준적이없음. spring이 알아서 뒤져서 넣어줌
+                 어떤 객체를 어디에 넣을지가 애매해짐..
+
+"di_anno01-1.xml"
+<Type매칭을 먼저 함 , 타입이 들어갈수있는 객체가 있으면 그 객체를 바로 주입>
+ -> 만약 객체가 2개면, 둘 중 어느 것을 넣어야 할 지 모르잖아, 그럼 id비교로 
+
+"di_anno01.xml"
+<xml의 객체 id - 변수명과 같은 id가 없으면 ERROR ! !! >
+ : Car.jva의 변수명이 tire면, xml에서 id="tire"인것을 찾아서 넣어줌.
+   
+"di_anno01-1.xml"
+-> 만약 AmericaTire의 id가 tire일지라도, Tire를 상속받지 않았기때문에 Tire타입이아님
+     이런경우에는 id가 없더라도 Tire 타입을 넣을 수 있는 KoreaTire가 주입됨 ! 
+
+-------> 타입비교가 우선순위, 그다음 id ! 
+
+
+
+
+
+
+
+
+
+

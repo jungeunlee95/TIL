@@ -1,0 +1,32 @@
+[아이스크림 DAY5과제]
+
+[2018/07/10] DAY6 노트필기 보기
+
+
+Integer.parseInt("1200") -> string의 숫자문자를 int형으로 바꿔주는 것
+그래서 이제 nextInt대신 nextLine으로 씀
+=> 버퍼를 지워주는 키워드가 sc.nextInt이기 때문에 
+
+int num = Integer.parseInt(sc.nextLine());
+-> 받는 숫자문자값을 int형으로 바꿔줌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

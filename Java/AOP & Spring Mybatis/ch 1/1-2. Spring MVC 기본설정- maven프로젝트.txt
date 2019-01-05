@@ -1,0 +1,45 @@
+1-2. Spring MVC 기본설정
+
+------------------------web-workspace-------------------------------
+환경설정 - 교재 spring 65p
+maven project 만들기 -> jar(java) / war(web)
+@@spring-mvc project@@
+
+fom.xml depency하려고
+http://mvnrepository.com/search?q=spring-mvc
+spring-mvc
+Spring Web MVC ≫ 4.3.18.RELEASE
+
+Java Servlet API
+Java Servlet API ≫ 3.1.0
+
+Jsp API
+JavaServer Pages(TM) API ≫ 2.3.3
+
+위의 3가지 dependency 하기 ! pim.xml 에! 
+
+src \ main \ resources 하위에 config \ spring 폴더 작성 -> 수업자료 3개 넣기
+/ spring-mvc / src / main / webapp 에 WEB-INF 폴더 생성  -> web-xml 넣기
+
+--> web-xml  에 필터, DispatcherServlet, CharacterEncodingFilter, classpath:config
+이렇게 이미 만들어져 있는 framework가 있어 그래서 dispacherServlet도 만들어서 코드짤필요없어
+--> 컨트롤러만 만들면 됨 !!~!~! 
+
+--->spring-mvc.xml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

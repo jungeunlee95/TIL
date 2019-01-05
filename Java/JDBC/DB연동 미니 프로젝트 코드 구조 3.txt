@@ -1,0 +1,67 @@
+ 데이터베이스버전으로
+
+ Board-DB        oracle연동
+ 1. 게시글 저장할 테이블 만들기 
+     sql-> 테이블 만들어 
+
+ [sql]
+BoardVO와 정보 연동하고싶어
+create table tbl_board (
+    no number(5) 만자리 primary key ( 중복안돼) 
+    , title
+    , writer
+    , view_cnt
+     , reg_date
+  ); 
+
+--게시물 번호를 위한 일련번호 sequence 생성
+ create sequence tbl_board_no;
+
+insert into tbl_board(no,title,writer)
+ values(tbl_board_no.nextval, 'aaa', 'bbb');
+
+
+[DAO]만 다시 짜면돼,-> oracle tbl_board에 저장된 게시글들을 CRUD하기위한 클래스
+새로운 게시글 sql에 저장 : insertBoard
+저장된 전체 게시글 조회 : selectAllBoard
+저장된 게시글 중 글번호에 해당하는 게시물 조회 : selectBoard
+sql에 사용자가 검색한 게시글 수정하는 기능 :updateBoard
+sql에서 사용자가 입력한 글번호에 해당 게시글 삭제 deleteBoard
+-------->위에꺼 다 1~5단계 써줘야함
+
+[DAO]
+inertBoard 에서 
+	JDBC쓰려면 무조건 jar파일 추가시켜줘야함
+              [jar]패키지에  파일러로 자바의 kr.ck.mlecConne jdbcutil 파일 넣어줘야해
+                    path hebc,유틸 추가해 -> 패키지 복사
+try catch로 오라클과 연동시켜 
+
+try{ 
+    스트링 빌더: no,title,writer 넣어줘
+        번호는 일련번호, 타이틀과 글쓴이는 입력받을 값
+   pstmt = sql 문자열로 뽑아내고
+  ?에 변수 값 넣어줘 
+
+  pstmt.excuteUpdate();
+   }
+-> d이렇게 하면 원래 DAO가 boardList를 갖고 있었는데, 지금은 DB오ㅏ 연동하여 DB값을 불러내는것
+
+[전체게시글]
+
+selectAllBoard
+
+return 값을 배열로 해야함
+List<BoardVO> boardList = new List<>;
+
+
+
+
+
+
+
+
+
+
+
+
+

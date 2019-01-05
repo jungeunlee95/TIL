@@ -1,0 +1,40 @@
+과제 id password -> 리스트로
+
+class Person {
+	private String id;
+	private String password;
+	
+	Person(String id, String password) {
+		this.id = id;
+		this.password = password;
+	}
+}
+
+List<Person> list = new ArrayList<Person>();
+list.add(new Person("aaa", "1111"));
+list.add(new Person("bbb", "2222"));
+list.add(new Person("ccc", "3333"));
+list.add(new Person("ddd", "4444"));
+
+
+
+
+
+로또
+Lotto program 
+
+게임 수를 입력하세요 : 4 입력값만큼 
+로또번호가 총 4회차 출력
+ 1~45사이의 중복되지 않은 숫자 6개 랜덤으루
+
+게임1 :23 7 43 12 8 3
+게임2:  2 34 35 24 13 32 43
+게임3: 11 7 22 45 3 26
+게임4: 7 23 8 24 5 2
+
+최소 3가지 이상의 다양한 방법으로 만들어보기, 배운거 다 써서 최소최소 ~세가지~
+
+
+
+
+

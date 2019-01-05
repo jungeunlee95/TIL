@@ -1,0 +1,35 @@
+0.EL 의 4가지 영역
+
+client1□   ------- request 나 a.jsp보여줘! ----->  server□
+                <------------response ------------- 
+client2□   ------- request 나 a.jsp보여줘! ----->  server□
+                <------------response ------------- 
+
+-> client에서 하나의 jsp를 요청했을때, server에서 여러개의 jsp를 거쳐서 응답할때 있음
+-> 응답은 a.jsp 하나만 response
+
+1.pageContext , pageScope
+ 등록한 객체 파일에서만 그 객체를 볼 수 있는 것 
+ 객체를 등록시킨 파일에서만 그 객체에 접근할 수 있는 것
+                                                   
+2.request, requestScope
+ 한번 요청이 와서 응답이 올때까지 서로 연결되어 있는 파일들끼리 다른파일에 등록된
+ 서로 같은 객체들을 사용할 수 있음  -> 서로 객체들을 공유시키는 것이 목적
+	
+ 
+3.session, sessionScope
+ 한번 서버에 요청해서 응답을 하면 공유영역에 등록된 객체는 무조건 사라짐.
+ 내가 접근할수있는 접근권한이 response전까지. 
+ 한번 request해서 접근한 객체는 respones가 되면 다시 request한다고 다시 못접근함.
+ (쇼핑몰에서 한번 장바구니에 담아놓으면 볼수있지만, 로그아웃하면 다시 로그인하지않으면 못봄)
+ --> client1이 server에 객체를 소환하면 웹 종료할때까지 계속 그 객체 이용할수있지만
+        client2가 server에 객체를 소환하면 1이 소환했던 객체는 볼 수 없음
+
+4.application, applicationScope  -> 우리는 쓸일이 거의 없음.
+ client 1, 2 둘다 server에서 전송받은 객체 다 사용가능 1이 사용하던것도 2가 사용되고
+ 2가 사용하던것도 다 1이 사용할 수 있음.
+
+
+
+
+

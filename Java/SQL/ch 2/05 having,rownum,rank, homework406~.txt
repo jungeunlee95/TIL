@@ -1,0 +1,54 @@
+having,rownum,rank, homework406~
+---------------------------------
+having 406~425    -> 그룹에 대한 조건
+ where->from에 대한 조건
+---------------------------------
+
+
+-----------------------------------
+row_number() 함수    순서매기기 458~
+-----------------------------------
+row_number() over ( [partition by 컬럼명] order by 컬럼명)
+
+partition by:지정된 컬럼에 해당하는 그룹 설정
+order by: 지정된 컬럼에 대한 위치/순서 지정
+
+
+ex)
+ --salary 기준으로 정렬 한 뒤에 rownum구하기
+select e.*, rownum
+    from(   
+        select employee_id, first_name, department_id,salary
+        from employees
+        order by salary desc
+        )e;
+   --위에랑 아래랑 똑같음
+select employee_id, first_name, department_id,salary
+    , row_number() over(order by salary desc) rnum
+from employees;
+
+
+
+-----------------------------------
+rank_over() 함수   순위구하기    -> work2 171
+-----------------------------------
+rank() over( [partition by 컬럼명] order by 컬럼명)
+  -> 공동순위가 누적되면 그 다음 순위가 떨어짐 2등두명이면 그다음은 4등
+
+dense_rank() over( [partition by 컬럼명] order by 컬럼명)
+  -> 공동 순위가 누적되지않아서 2등 두명이여도 3등
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

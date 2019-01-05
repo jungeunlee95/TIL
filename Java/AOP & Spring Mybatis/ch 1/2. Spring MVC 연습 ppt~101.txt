@@ -1,0 +1,137 @@
+2. Spring MVC 연습
+
+
+★java Resources - src/main/java -package kr.co.mlec.hello; - class HelloController
+ spring-mvc.xml에서 설정해준
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/jsp/" suffix=".jsp" />
+	</mvc:view-resolvers>
+
+-->HelloController의 forward주소가 ("hello/hello") 니까 그대로 만들어줘야함 
+-/ spring-mvc / webapp / WEB-INF 에 jsp / hello 폴더 생성
+-index.jsp에  <a href="<%=request.getContextPath() %>/hello/hello/do" hello > hello</a><br>
+
+
+★java Resources - src/main/java -package kr.co.mlec.ㅡmethod - MethodController
+//처음 글쓰기할때(writeForm) a태그로 접근하면 get방식이고
+//글쓰고 등록하면(write) submit이니까 post방식 이렇게 비교 
+//return type이 String 으로 넘기면 jsp 주소구나
+//ModetAndView면 공유영역에 올리고 포워드하는구만~ 
+
+★jsp파일 만들기 -/ spring-mvc / webapp / WEB-INF / jsp 에 method 폴더 생성
+   -생성된 폴더에 methodForm.jsp, methodProcess.jsp 생성
+
+★index에서 href추가하고 넘기면, (어떤방식으로 넘기냐에 따라서 url을 나눠줌)
+	get으로 넘긴 /method/method.do는 methodForm으로,
+  	post로 넘긴 /method/method.do는 methodProcess로!
+
+
+------입력받기-------------------
+  jsp 만들기 
+-/ spring-mvc / webapp / WEB-INF / jsp 에 form 폴더 / joinForm.jsp 생성
+   컨트롤러 만들기
+-/ spring-mvc / src / main / java /kr.co.mlec.form 에 MemberController 생성
+
+-package kr.co.mlec.form;/ MemberVO 만들고
+-MemberController 에 join.do메소드 추가 
+==> 그럼 파람 날라가는거 확인할수있음 ! 
+--> MemberController에서 
+	//날라오는 인자값 매번 적기가 너무 귀찮고 힘들어 ㅠ 
+	    이렇게 아예 여기다 저장해달라고 spring한테 시키는거야 대신 어노테이션 달아
+			@RequestParam("id") String id, 
+			@RequestParam("password") String password,
+			@RequestParam("name") String name
+
+--> 이것도 귀찮아 !  날라오는 인자값을 받아서 아예 한번에 memberVO에 저장해버리고싶어 
+         MemberVO에 저장하고 request공유영역에 등록을 해야지 jsp에서 쓸수있어
+	request.setAttribute("member", member);
+
+[..그런데 대박사건 !]  
+근데 스프링은 굳이 request에 안넣어도 MemberVO이름을 첫글자 소문자로 알아서
+ 지가 공유영역에 등록함
+근데 공유영역에 등록하는 이름 바꾸고 싶으면 @ModelAttribute("하고싶은이름") 이렇게 하면 됨 
+				이거 안붙이면 클래스이름 첫소문자로 들어감
+  @RequestMapping("/join.do")
+  public String join(@ModelAttribute("member")MemberVO member) {
+	return "form/memberInfo";
+  }
+-> 이러면 jsp에서 굳이 memberVO.name 할 필요도 없이 member로 해도됨!! 
+
+
+
+그런데 ~!~
+	@RequestMapping("/join.do")
+	public ModelAndView join(MemberVO member) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("form/memberInfo");
+		mav.addObject("member", member);
+		return mav;
+	}
+
+이렇게 해주면 jsp에서 접근할때
+id : ${member.id}
+id : ${memberVO.id}
+--> 둘다 됨 ^^
+
+
+
+
+
+----------------------------------------------------------------------
+회원가입이 완료되었습니다 msg뜨게하고싶어 
+MemberController-
+@RequestMapping("/join.do")
+	public String join(MemberVO member) {
+	return "redirect:/form/joinForm.do";
+//왜 리다이렉트냐면, 그냥 보내면 우리가 설정한 xml때문에 .do.jsp로 가서 경로 에러나서
+      , redirect를 붙여야해 !!!
+  }
+
+----------------------------------------------------------------
+redirect를 쓰면 !!!!!!! request영역에 올리는 것은 의미가 없어 ! 
+컨트롤러에서 그냥 Model객체를 보내도 공유영역에 등록 안해도 jsp에서 받을 수 있음 
+	
+public String join(MemberVO member, Model model) {
+	System.out.println("id : " + member.getId());
+	System.out.println("password : " + member.getPassword());
+	System.out.println("name : " + member.getName());
+	
+	model.addAttribute("msg", "hello");
+	return "form/memberInfo";
+}  --> 이렇게 해도 jsp 에서 ${msg} 로 받을 수 있어
+
+--> joinForm.jsp에 스크립트로 출력 param.msg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

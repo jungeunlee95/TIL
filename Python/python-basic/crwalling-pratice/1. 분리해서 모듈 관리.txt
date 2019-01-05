@@ -1,0 +1,51 @@
+1. 분리해서 모듈 관리
+
+module - basic - myMath.py
+제곱을 구하는 pow
+
+pow(2, 3) -> 2의 3승 
+
+
+
+# calculator -> myMath -> program
+program에서 다 주석처리하고, 
+---------------------------2018/09/06---------------------------
+ myMath print코드 
+-----------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------
+# DAO, VO(DTO), Service, ... 분리해서 모듈 관리 ! 
+-----------------------
+module - new Directory exam
+                                    - new Directory ptrhon-modules
+			- calcurator
+			- myinput
+	 	- program.py(main)
+
+----------- program.py(main)-------
+program.py(main)코드 먼저 짜기 
+   -> # TDD(Test Drive Development) -테스트 주도 개발 방식
+	   - 짧은 사이클을 반복하며 개발하는 방법 
+	   - 테스트 코드를 작성한 후 해당 코드가 정상 동작하도록 내부 구현 
+
+------------myinput -> Scanner같이 입력 받는 것 --------------------
+     그냥 
+	inVal = input('입력 : ')
+	print(inVal) 
+     이렇게 쓰면 바로 입력 받고 출력됨
+
+
+
+
+
+
+
+
+
+
+
+
+
+

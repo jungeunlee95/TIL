@@ -1,0 +1,66 @@
+
+homework 207~~~292
+
+upper
+lower
+length
+nvl - null값 다른 값으로
+
+ [[substr-몇번째부터 몇번째값에 들어있는 값 찾을 때 사용]]
+substr - 특정문자 필요 부분만 잘라줌
+               substr('문장', 시작 인덱스, 몇개뽑을지 개수)
+ ex)  select substr('2018년 7월 20일', 1, 5)
+         from dual;              이러면 '2018년'만 출력됨
+
+
+trim
+replace   -글 대체 하는 것
+instr
+
+to_char(last_day(sysdate),'dd') 마지막 날 
+
+
+ select sysdate 현재날짜
+    ,add_months(sysdate, 1) "현재날짜 + 한달"
+    ,add_months(sysdate, 6) "현재날짜 + 6개월"
+        --이러면 년도도 자연스럽게 바꿔줌
+  from dual;
+
+
+ --현재날짜에서 가장 가까운 요일의 날짜를 조회
+next_day(sysdate, '목요일')
+
+--------
+  조건문
+--------
+case when     then 
+         else 
+         end 
+
+
+-----------------
+테이블 총 레코드 수 - 여러개는 못찍음 하나의 레코드씩. 
+-----------------
+count(*)
+
+
+-------
+중복제외
+-------
+distinct
+
+
+--------------
+최대,최소,합,평균
+--------------
+max()
+min()
+sum()
+avg()
+반올림 round(avg(salary),2)    -> 소수점 2자리까지.
+
+
+
+
+
+

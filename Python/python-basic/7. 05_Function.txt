@@ -1,0 +1,195 @@
+3. 05_Function
+
+#05_Function.py
+'''
+    1. def 키워드를 활용해 정의
+    2. 선언부는 ':'로 종료
+    3. 들여쓰기 주의 !! 
+'''
+print('-----------------------------------------------------------------------')
+
+# return
+'''
+    1. 함수의 종료와 값을 반환
+    2. 객체 반환 시 tuple방식 사용
+    3. return 단일 사용 시 None이 반환
+'''
+def add(a,b):
+    return a + b
+print(add(3,7))
+
+# None반환
+def rtnNone():
+    return
+print(rtnNone())
+
+print('-----------------------------------------------------------------------')
+# 1개 반환
+def maxNum(a, b):
+    if a>b:
+        return a
+    else:
+        return b
+print(maxNum(3,7))
+
+# 2개 tuple반환
+def swap(a, b):
+    return b, a
+result = swap(3, 7)
+print(result, type(result))
+
+#unpacking으로 그냥 7 3 반환
+def swap(a, b):
+    return b, a
+c, d = swap(3, 7)
+print(c, d)
+
+print('-----------------------------------------------------------------------')
+
+# parameter(callby) 호출방식
+#   Call By Value : 값에 의한 호출 방식 -> foo
+#   Call By Reference : 참조에 의한 호출 방식 -> goo
+
+# Call By Value 형식
+def foo(val):
+    val = 20
+a = 10
+foo(a)
+print(a)
+
+# Call By Value 형식
+def goo(val):
+    val = (1, 2, 3)
+a = (4, 5, 6)
+goo(a)
+print(a)
+
+#★☆ Call By Reference 
+def hoo(val):
+    val[0] = 0              # 전달된 list의 주소 참조
+    #val = [40, 50, 60]     # 새로운 list 치환
+a = [10, 20, 30]
+hoo(a)
+print(a)
+
+print('-----------------------------------------------------------------------')
+# Scope
+#   Local Scope     : 함수 내부
+#   Global Scope    : 모듈 내부
+#   Built-in Scope  : 파이썬에서 제공하는 내장 영역
+#   탐색 순서        : 1.Local찾아보고 없으면, 2.global에도 없으면, 3.Built-in
+
+a = 10 # a-Global
+def foo(b): # b-Local
+    return a + b
+print(foo(20))
+
+a = 10      #a-Global
+def goo(b):
+    a=20    #a-Local
+    return a+b  #a를 사용하겠다? -> 탐색순서
+print(goo(30))
+
+print('-----------------------------------------------------------------------')
+val = 2
+def foo():
+    #val = 10
+    global val   # 함수 내부에서 Global Scope 선언 - 선언과 동시에 초기화 불가 
+    val = 10    # 나중에 선언된 global이 값으로 
+    print(val)
+def goo() :
+    val = 20  # Local
+    print(val)
+foo(); goo()
+
+print('-----------------------------------------------------------------------')
+# 존재하는 Scope 확인
+print(dir())
+
+print('-----------------------------------------------------------------------')
+# Built-in Scope영역확인
+print(dir(__builtins__))
+
+print('-----------------------------------------------------------------------')
+# parameter, arguments
+def foo(a, step=1): #고정 값(기본 값), 기본 인수
+    # foo(a, step)
+    # step = 1  이렇게 한거랑 같다고 보면 돼
+    return a + step
+print(foo(5))
+
+# 키워드 인수
+def goo(a, b):   # 매개변수 이름이 키워드!!!!!!!
+    return a + b
+# print(goo(a=10, b=20))
+print(goo(b=10, a=20))   #이름으로 매칭 시키기 때문에 순서 상관없음
+
+print('-----------------------------------------------------------------------')
+# 가변 인수
+def hoo(a , *b) :  # a, *b = [1,2,3,4]
+    print(a,b)
+hoo(1, 2, 3, 4)
+
+print('-----------------------------------------------------------------------')
+# 정의되지 않은 키워드 인수 => dict
+def f(width, height, **data) :
+    print(width, height)
+    print(data)
+f(10, 20, depth=10, dimension=3)  # 키워드 인수 전달 ( 함수에는 정의 X )
+
+
+print('-----------------------------------------------------------------------')
+def g(a, b, *args, **data) : # 단, dict 키워드 인수는 마지막에 써줘!!! **data
+    print(a, b)
+    print(args)
+    print(data)
+g(1, 2, 3, 4, 5, c=6, d=7)
+
+print('-----------------------------------------------------------------------')
+# 함수 객체 (문자열 처리)
+import re
+names = ['Python', 'python?', 'PyThon!', '#pyThon']
+def clr_strings(datas):
+    results = []
+    for data in datas:
+        data = data.strip() #양쪽 공백 제거, trim()
+        print(data, end=' ')
+        
+        data = re.sub('[!#?]', '', data)
+            #패턴과 일치하는 문자열 변경 []를 ''로
+        print(data, end=' ')
+        
+        data = data.title() #제목 형식
+        print(data)
+        
+        results.append(data)
+    return results
+names = clr_strings(names)
+print(names)
+
+
+print('-----------------------------------------------------------------------')
+addrs = ['Seoul', ' BUSAN', 'cheonAn ']
+def clr_strings(datas, *funcs):     # funcs=> 함수 객체들의 집합
+    results = []
+    for data in datas:              # data에는 addrs가 들어감
+        for func in funcs:          # funcs에는 str.strip, str.title 이 들어감
+                                    # 함수 집합의 함수를 하나씩 순회하며 활용해라! 
+            data = func(data)
+        results.append(data)
+    return results
+addrs = clr_strings(addrs, str.strip, str.title)    # 함수 이름으로 전달 
+print(addrs)
+
+
+print('-----------------------------------------------------------------------')
+# Hello Func Object
+def foo(func):
+    func()
+def goo():
+    print('goo() function called...')
+foo(goo) # 인자로 함수 자체를 전달하겠다
+
+
+
+

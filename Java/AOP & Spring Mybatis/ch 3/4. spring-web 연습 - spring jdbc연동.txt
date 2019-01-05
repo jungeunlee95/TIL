@@ -1,0 +1,146 @@
+4. spring-web 연습 
+
+------Assert.assertNotEquals------------
+--------------------DBTest DB접속테스트()------------------------------
+//notnull이 성공
+//Assert.assertNotNull(ds);
+
+//ds값이 null이 아니냐? -> 성공하면 ? ds는 null이 아니다
+Assert.assertNotEquals(null, ds);
+
+
+
+----------------------------------------------------------------------
+인터페이스 만들기  kr.co.mlec.board.dao  / BoardDAO interface
+
+
+----------------------BoardDAOImpl.java-------------------------------
+db와 관련된 dao애들은  @Repository !!!!!!! 씀
+BoardDAOImpl
+
+DBTest에서 했던 DB관련은 이제 BoardDAOImpl로 가져와
+
+//객체 얻어와야함 근데 spring-mvc에서 만들어놨으니까 그냥 어노테이션으로 가져오면돼
+@Autowired
+private SqlSessionTemplate sqlSessionTemplate;
+
+@Override
+public List<BoardVO> list() {
+	List<BoardVO> list 
+	= sqlSessionTemplate.selectList("kr.co.mlec.board.dao.BoardDAO.selectAll");
+	return list;
+}
+
+src/main/java
+----------------------------------------------------------------------
+service만들기
+BoardService.java - interface
+
+BoardServiceImpl.java 만들기 (보드서비스 상속)
+-> 어떤 동작들을 유연하게 하는 중간에 끼임새의 클래스들은 ===> @Service!!!!!!!
+
+//서비스 입장에서는 DAO가 하나밖에 없는게 아니니까 DAO를 선언해주는 것이 좋아 !!!
+private BoardDAO boardDao;
+
+@Override
+public List<BoardVO> selectAllBoard() {
+	List<BoardVO> boardlist = boardDao.list();
+	return boardlist;
+}
+-->Test하는건 BoardTest 에서 Assert.assertNotNull(boardService); 이 아니면 성공 ! 
+
+
+src/main/java
+--------kr.co.mlec.board.controller/BoardController------------------
+컨트롤러 만들기 ! 
+
+VO에는 보통 @안붙임
+
+@Controller
+public class BoardController {
+}
+
+
+---------------------index.jsp---------------------------------
+경로 만들어주기 
+<a href="${pageContext.request.contextPath }/board/list.do">게시판</a>
+
+REST방식의 URI
+
+web.xml -> 
+  <servlet-mapping>
+	  <servlet-name>dispatcher</servlet-name>
+	  <url-pattern>/*</url-pattern>  
+  </servlet-mapping>
+
+--> index.jsp
+<a href="${pageContext.request.contextPath }/board">게시판</a>
+
+
+--> BoardController
+@Autowired
+private BoardService boardService;
+
+@RequestMapping("/board")
+ public void selectAll() {
+		
+  }
+
+--->jsp 만들기
+src/main/webapp/WEB-INF/jsp/board/list.jsp
+
+--> BoardController
+@RequestMapping("/board")
+public ModelAndView selectAll() {
+	List<BoardVO> boardList = boardService.selectAllBoard();
+	
+	ModelAndView mav = new ModelAndView("board/list");
+	mav.addObject("boardList", boardList);
+	
+	return mav;
+	
+  }
+
+--------------------------------------------------------------
+http://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl -> jstl검색
+pom.xml에 붙이기
+<!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/jstl -->
+<dependency>
+    <groupId>javax.servlet.jsp.jstl</groupId>
+    <artifactId>jstl</artifactId>
+    <version>1.2</version>
+</dependency>
+ 
+-------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,53 @@
+select * from t_board;  모든 필드값 조회
+
+두개만 보고싶을때
+ select no, title
+  from t_board;
+
+헤드라인 이름 수정                              공백들어가면 쌍따옴표""
+  select no as 글번호, title 제목, content "내    용", view_cnt 조회수, reg_date 등록일
+   from t_board;
+
+[산술연산자 이용으로 컬럼 만들기]
+ --조회수에 100을 더한 "hit 조회수" 컬럼 조회
+ 컬럼 자동으로 만들고  view_cnt + 100 이름을 as로 hit조회수로 바꿈
+   select no, view_cnt, view_cnt + 100 as hit조회수
+     from t_board
+
+[컬럼과 내용을 합쳐 컬럼의 내용을 다르게] 합산연산자
+--조회수 뒤에 00회 붙이고싶어
+ select no, view_cnt || '번 조회' as 조회수
+   from t_board;   //갖고올테이블
+
+
+약간 ||이게 + 이느낌
+--오늘은 7월 18일 입니다.       
+ select '오늘은 7월 18일 입니다.' as 현재날짜 from dual;
+ select '오늘은 ' || 7 || '월' || 18 || '일 입니다.' as 현재날짜 from dual;
+
+
+ select '날짜정보 : ' || sysdate as 날짜정보
+   from dual;
+
+
+
+이 값에 속한다면? in!!!
+
+ select *
+  from employees 
+ where department_id in (80,90,100);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

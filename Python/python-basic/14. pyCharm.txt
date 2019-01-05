@@ -1,0 +1,38 @@
+6. pyCharm 
+module - 디렉토리
+python project => basic
+-----
+program.py
+calculator.py
+------
+
+module
+basic 
+my-module
+python-modules
+->circle.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

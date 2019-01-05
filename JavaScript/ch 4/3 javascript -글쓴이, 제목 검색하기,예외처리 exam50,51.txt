@@ -1,0 +1,62 @@
+3 javascript -글쓴이, 제목 검색하기,예외처리 exam50,51
+--------------------------exam50--------------------------------------
+글쓴이, 제목 검색하기
+
+document.searchForm.searchType
+
+<select name=?"searchType">
+?<option value>?선택하세요?</option>?
+<option value=?"title">?제목?</option>?
+<option value=?"writer">?글쓴이?</option>
+</select>?
+ 
+
+
+선택하세요 : document.searchForm.searchType.selectedIndex : 0
+글쓴이 : document.searchForm.searchType.selectedIndex : 2
+
+-> 검색항목을 제대로 선택하게 하기 위해서는
+  if(form.searchType.selectedIndex == 0){
+	alert('검색항목을 선택하세요.');
+	form.searchType.focus();            -> 어느 창을 선택해야하는지 사용자에게 보여주기 위해서 그 창이 강조됨 
+	return false;
+   }
+
+-> 검색어를 꼭 입력해야함
+  if(form.searchWord.value == "") {
+	alert('검색어를 입력하세요');
+	form.searchWord.focus();          -> 여기서는 마우스 커서가 검색창으로
+	return falsse;
+	}
+	return true;
+}
+
+-> 글쓴이일지, 제목일지 뭘 입력해야 할지
+  if(form.searchWord.value == "") {
+	alert('검색할 ' + words[form.searchType.selectedIndex] + '을(를) 입력하세요');
+	form.searchWord.focus();
+	return false;
+	}
+	return true;
+  }
+
+
+-----------------------exam51-----------------------------------------
+예외처리
+  try {
+	throw new Error("error!!!!!!!!!!!!!!!!");    ->throw가능
+	//var str ="hello".indexof(3);
+	var array = new Array(9393939454884548488488448);
+  } catch(e) {
+	alert('예외발생');
+	console.log(e.message);
+  } finally {
+ 
+ }
+
+
+
+
+
+
+

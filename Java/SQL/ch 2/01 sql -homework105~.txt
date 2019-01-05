@@ -1,0 +1,51 @@
+
+  [nvl ,  형변환]
+
+ nvl(manager_id, 0)   - null값이 들어간 곳에 0을 넣겠다.
+        이 둘이 형태가 같아야함,
+        만약number형인데, 문자 넣고 싶으면 형변환
+        to_char()해줘야함!
+ nvl(to_char(manager_id), '매니저 없음')
+ -이렇게 하면 number 형인데 문자 넣을 수 있음
+
+
+같지않음 : !=,  ^=,  <>      세가지 다 사용 가능
+ 
+
+
+-----------------------------------------------------
+  in(00,00,00) <->  not in (00,00,00)
+->하나의 컬럼이 아닌, 여러개의 컬럼을 비교할수도있음(14일차 5번문제-work2sql)
+
+--  to_char() :  숫자형, 날짜형을 문자형으로 변경
+--  to_char(날짜, '포맷문자')   yy(년), m(월), d(일)
+--                           h(시), mi(분), s(초) 
+--  to_char(숫자, '포맷문자') 9(자리수)     0(비어있는 자리수를 0으로 채움)
+--                                      ,(액수 표현 시 3자리 마다 ,표현)
+--                                      .(실수 소수점 자리수 표현)
+--  to_char(hire_date, 'yyyy') 연도만 뽑아줌 
+
+
+
+ex)
+-- 5 사원테이블에서 직원(job_id)별 최대급여 받는 사원 조회
+
+  select first_name, job_id, salary
+    from employees
+    where (salary, job_id) in (
+                        select max(salary), job_id
+                        from employees
+                        group by job_id
+                    )
+    order by 2;
+--------------------------------------------------------
+
+
+to_number()
+
+
+to_date()
+
+
+
+

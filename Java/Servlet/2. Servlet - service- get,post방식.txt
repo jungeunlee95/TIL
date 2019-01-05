@@ -1,0 +1,83 @@
+2. Servlet - service- get,post방식 
+ 
+404에러 FIle Not Found           -> 경로에러
+405에러  Method Not Allowed -> servlet쪽 에러  
+ ->init와 destroy메소드는 필수는 아니지만, service는 반드시 필요함!!!!
+ 
+-> 클라이언트가 서버에 요청할때 -> get방식과, post방식 두가지 유형이 있음
+유일하게 post를 요청할때는 폼태그를 쓸때만 가능!, 폼태그 아니면 절대 post불가능
+일반적인 요청방식은 대부분 get방식!@!!@!@! 
+ 
+★★
+ -> service는 안에서 자체적으로 get 방식과 post 방식 두가지 처리 유형을 갖고있음
+ service -> doGet // doPost 이렇게 두개로 분리 시킴 !!!!!!!!
+
+
+
+ -------------------servlet - method.html-----------------------------
+ ->javaResource/MethodServlet 클래스파일 생성
+    web.xml -클래스와 맵핑 해야댐
+    -> servlet/method.html 실행
+
+---------------------get방식과 post 방식! ----------------------------
+request : 클라이언트가 나한테 어떤 정보를 넘기는지 알고싶잖아 request!!!
+--------------------------------------------------------------------
+
+---------->>>>>REQUEST
+ 
+String method = request.getMethod();        
+ 	//어떤 메소드가 날라오는지
+StringBuffer url = request.getRequestURL(); 
+ 	//어떤 url이 날라오는지
+String uri = request.getRequestURI();      
+ 	//프로토콜,주소 빼고 uri만 ! -> 이서버에서 어느 경로를 찾을건데!
+
+                                               //이런걸 파라미터라고함
+ ----t사용자 입력 받을 때, ?id=aaa  <- 주소값 뒤에 입력값이 이렇게 날라옴
+ -> get방식에 날라온 id에 해당하는 값을 뽑아내야겠지? servlet은 뽑아낼수있어!
+  -> 하나만 날라온다는 보장있어? 없잖아, 
+
+ request.getParameter("id");   
+       name="id"인 애의  파라미터들을 뽑아내. 그럼 return으로 입력값이 올거야!
+  
+ ---> 이렇게 request로 받은 데이터를 , 다시 클라이언트에게 reponse!
+ 
+ 
+---------->>>>>RESPONSE
+서버에서 C로 보내줄때는 
+OutPutStream or Writer 형태로 날라가야함
+   -> Writer string객체를 얻어와야함! PrintWriter객체로 = responese.getwriter()가져와
+ 
+ 
+ <<<<<<<<<<<<<<<<<<<<<<<POST방식>>>>>>>>>>>>>>MethodServlet - 69줄부터
+post방식은 뒤에 ?로 날라오는 파라미터가 없음
+ -> id나 password같이 정보가 중요한데, 이때 이 값들이 url에 보이면 안되잖아, 그니까 post방식은 보안에 좋음
+-> post방식은 인코딩을 꼭 해야함 한글이 깨져서 request.setCharacterEncoding("utf-8");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+
+
+
+    

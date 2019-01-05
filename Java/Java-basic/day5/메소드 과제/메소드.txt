@@ -1,0 +1,29 @@
+StringUtil util = new StringUtil();
+util.max(12,5)
+12하고 5중에 큰 수 구하고 싶을때
+
+class StringUtil {
+     int max(int i, int j)
+   } 만드는게 문제
+
+유틸에서
+char c = 'A';
+util.StringUtil(c);
+
+입력은 다 메인, 유틸에서 입력 받는건 X 넘겨받는 것만 비교하는거임!!!!!!!!!!!!!!!
+
+class Stringutil {
+  boolean isupperchar(char k) {
+   if(k) = 'A' && k <='Z') {
+       return true;
+   }
+    return false;
+  }
+}
+
+main () {
+   char c = sc.nextLine().charAt(0);
+   Stringutil util = new Stringutil();
+   boolean bool = util.isupperchar(c) ;
+  if(bool) 대문자
+   소문자

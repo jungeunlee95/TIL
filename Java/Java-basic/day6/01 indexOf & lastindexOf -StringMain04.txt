@@ -1,0 +1,37 @@
+  [문자열 탐색] - 01 indexOf & lastindexOf -StringMain04
+   -index값이 없으면 -1로 하기로 약속했음
+
+
+-------------
+  int indexOf
+-------------
+  int lastindexOf
+ String str="Hello";
+ int i = str.indexOf('e');       //str = "Hello"에서 'e'라는 문자가 몇번째에 있니? 1번지
+    i = 1
+ str.indexOf('p')   //p는 없는데, 이럴 때 값이 없다는 뜻은 -1
+
+int i = str.indexOf('el');  //이면 첫번째나온 e의 번지값인 
+  i = 1
+-------------------
+str.indexOf('o', 6)
+-------------------
+6번지부터 검색해서 o가 몇번째에 있는지 찾아
+
+-------------
+ int lastindexOf
+-------------
+ 0번지부터 찾는게 아니라 끝에서부터 찾는게 lastindexOf();
+ int i = str.lastIndexOf('e')
+    i = 3
+
+-----------
+from index
+-----------
+
+
+
+
+
+
+

@@ -1,0 +1,497 @@
+
+ /*
+1. 112, 118부서를 대상으로 과장과 사원의 이름, 직급, 급여, 부서ID를 조회하되, 
+   급여는 1500 이상 4000 이하인 직원만 
+   출력되도록 하시오. 
+   단, 급여가 많은 사람부터 화면에 출력합니다.
+*/
+ 
+ select name as 이름, title as 직급, salary as 연봉, dept_id as부서ID
+  from s_emp
+ where (title = '과장' or title =  '사원') 
+  and (dept_id = 112 or dept_id = 118)
+  and (salary >= 1500 and salary <= 4000)
+ order by salary desc;
+ 
+ --위랑 아래랑 같음, 밑이 더 간단함
+  select name as 이름, title as 직급, salary as 연봉, dept_id as부서ID
+  from s_emp
+ where title in( '과장', '사원') 
+  and dept_id in( 112, 118)
+  and salary between 1500 and 4000
+ order by salary desc;
+ 
+
+/*
+
+2. 관리자가 없는 직원의 이름, 직급, 급여를 조회하시오. 
+   (힌트. manager_id 컬럼이 자신의 상사가 누구인지 알 수 있는 컬럼입니다.)
+*/
+ select * 
+ from s_emp;
+ 
+ select name as 이름 , title as 집급 , salary as 급여
+ from s_emp
+ where manager_id is null;
+ 
+/*
+3. 직급이 부장이면서 급여가 3000 이상인 직원의 이름, 직급, 급여를 조회하시오. 
+*/
+select name as 이름, title as 직급, salary as 급여
+from s_emp
+where title like '%부장' 
+  and salary >= 3000; 
+
+
+/*
+4. 직급이 부장과 과장인 사람들을 대상을 이름, 직급, 급여를 조회하시오. 
+   단, 112, 113, 117, 118 부서에 소속되어 있는 사원 중에서 급여가 2300 ~ 3000 사이인 직원만 조회되도록 하시오.
+*/
+ select name as 이름, title as 직급, salary as 연봉
+ from s_emp
+ where (title like '%부장' or title = '과장')
+ and dept_id in (112,113,117,118)
+ and salary between 2300 and 3000;
+ 
+ 
+ 
+
+/*
+5. 직급이 부장 혹은 과장이면서 03월에 입사한 직원의 이름, 직급, 급여, 입사일을 조회하시오. 
+*/
+  select name as 이름, title as 직급, salary as 급여, start_date as 입사일
+ from s_emp
+ where (title like '%부장' or title = '과장')
+ and start_date like '%03%';
+ 
+
+/*
+6. 직원의 연봉에 1000 을 더한 값을 조회하시오. 
+   연봉은 급여에 16을 곱하면 됩니다. 
+   단, 연봉은 ALIAS를 지정하여 화면에 출력시 "직원연봉" 으로 출력되도록 합니다. 
+*/
+  select name as 이름, salary as 급여, salary * 16 as 직원연봉, salary * 16 + 1000 as 보너스
+ from s_emp;
+    
+/*
+7. 출력결과가 다음과 같도록 조회하시오. 
+
+직원 급여 
+--------------------------------- 
+박구곤 사장의 급여 5,000 
+손명성 기획부장의 급여 3,000 
+이은선 영업부장의 급여 3,500 
+서의홍 총무부장의 급여 3,000 
+김심선 인사부장의 급여 3,200 
+... 
+... 
+이름 타이틀 연봉
+*/
+select name || ' ' || title || '의 급여' || salary as "직원 급여"
+from s_emp;
+
+/*
+8. 커미션을 받으면서 자신을 관리하는 관리자가 있는 직원을 대상으로 급여가 2500 이상인 직원을 조회하시오. 
+   화면에 출력 시 직원의 연봉이 낮은 사람부터 출력합니다.  
+ */
+  select *
+ from s_emp
+ where commission_pct is not null
+ and manager_id is not null
+ and salary >= 2500;
+ 
+ 
+ 
+ ---day2 
+ /*
+ employees 테이블에서 사원번호, 사원이름, 매니저번호 조회
+ 단, manager가 없는 경우는 0으로 출력
+ */
+                                                
+ select employee_id 사원번호, first_name 사원이름, nvl(to_char(manager_id), '매니저 없음') 매니저번호
+ from employees;
+ 
+ --부서번호가 80,90,100번에 해당하지 않는 사원목록 조회 
+ select *
+ from employees
+ where department_id != 80
+ and department_id ^= 90
+ and department_id <> 100;
+ 
+ select *
+ from employees
+ where department_id not in (80,90,100)
+ order by department_id asc;
+ 
+ -- 월급이 많은 사원 순으로 조회
+ select *
+ from employees
+ order by salary desc;
+
+ --샐러리를 먼저 적고 나머지 정보 적을때
+ select e.salary 월급, e.*
+ from employees e
+-- order by e.salary desc;
+--  order by 월급 desc; 
+ order by 1 desc;
+ --sql은 컬럼이 1부터 시작함, 나 1번째 컬럼을 정렬할거야! 이렇게 사용가능
+ 
+ /*
+ 연봉이 높은 사원순으로 조회
+ 단, 연봉이 같은 경우는 last_name을 기준으로 사전순으로 조회 a~z순
+ */
+ select e.salary, e.last_name, e.*
+ from employees e
+ order by 1 desc
+  , 2 asc;
+ 
+--  to_char() :  숫자형, 날짜형을 문자형으로 변경
+--  to_char(날짜, '포맷문자')   yy(년), m(월), d(일)
+--                           h(시), mi(분), s(초) 
+--  to_char(숫자, '포맷문자') 9(자리수)     0(비어있는 자리수를 0으로 채움)
+--                                      ,(액수 표현 시 3자리 마다 ,표현)
+--                                      .(실수 소수점 자리수 표현)
+--  to_char(hire_date, 'yyyy') 연도만 뽑아줌 
+ 
+select sysdate
+ , to_char(sysdate,'yy/mm/dd') 현재날짜
+ , to_char(sysdate, 'hh:mi:ss') 현재시간
+ , to_char(sysdate, 'hh24:mi:ss') "현재시간(24h)"
+from dual;
+ 
+ 
+ --전체 사원 목록 조회 단, 입사년도 출력시 18/07/20 -> 18.07.20 으로 변경하여 조회
+ select employee_id, last_name, to_char(hire_date, 'yy.mm.dd') 입사년도
+ from employees;
+
+--사원중 2005년 9월에 입사한 목록 조회
+select *
+from employees
+where to_char(hire_date, 'yyyy/mm') = '2005/09'; 
+ 
+--연봉을 3자리마다 , 표시
+select employee_id, last_name , to_char(salary, '999,999') salary
+  , to_char(salary, '000,000') "salary(공백 0 표시)"
+from employees;
+
+--입사년도가 2001, 2002, 2003인 사원목록 조회
+select employee_id, last_name, hire_date
+from employees
+where to_char(hire_date, 'yy') in ('01','02','03')
+order by hire_date asc;
+
+---------위에꺼 다른버전으로---------------------------------------------------- 
+ create table t_year (
+    year number(4)  
+ );
+ 
+ insert into t_year values(2001);
+ insert into t_year values(2002);
+ insert into t_year values(2003);
+ 
+ select * from t_year order by year;
+ 
+ select employee_id, last_name, hire_date
+ from employees
+ where to_char(hire_date, 'yyyy') in (select year from t_year);
+                              --위에 만든 테이블에 있는 값이니까 이렇게 해도 똑같이 나옴
+  -->> 이런 것을 서브쿼리 : 하나의 select에 또 하나의 절이 들어간 것                             
+
+
+--입사년도가 2001,2002,2003 인 사원중에 부서번호가 90인 사원목록 조회
+select employee_id, last_name, hire_date, department_id
+from employees
+where to_char(hire_date, 'yy') in ('01','02','03')
+and department_id = 90;
+ 
+
+select 'Hello World', upper('Hello World') upper, lower('Hello World') lower, length('HelloWorld')문자길이
+from dual;
+ 
+ select substr('2018년 7월 20일', 1, 5)
+  , substr ('2018년 07월 20일', 7, 3)
+  from dual;
+ 
+ select '       trim전         ', length('       trim전         ')
+     , trim('       trim후         '), length(trim('       trim후         '))
+     , ltrim('       ltrim후         ')
+     , rtrim('       rtrim후         ') 
+ from dual;
+ 
+ select replace('가나다라마바사', '다라', '떠러')
+    , instr('가나다라마바사','다라')        
+    , instr('가나다라마바사', '다바')
+ from dual;
+ 
+ select replace('정은영택아람한기', '한기', '태훈')
+ ,instr('정은영택아람태훈','태훈')
+ ,instr('정은영택아람태훈','한기')
+ from dual;
+
+ --last_name에 'en'이 포함된 사원목록 조회 
+ select employee_id, last_name 
+ from employees
+-- where lower(last_name) like  '%en%';
+    --lower하면 대문자도 찾음
+ where instr(lower(last_name), 'en') <> 0;
+ --en을포함하고있지 않으면 0이니까 포함하면 0 이겠지?
+ 
+ 
+ select sysdate from dual;
+ 
+ --현재 달의 마지막 날이 몇일???   7월의 마지막날은? 32일
+ select to_char(sysdate, 'mm') || '월의 마지막 날은 ' || to_char(last_day(sysdate),'dd')|| '일 입니다' as "7월의 마지막 날"
+  from dual;
+  
+  select sysdate 현재날짜
+    ,add_months(sysdate, 1) "현재날짜 + 한달"
+    ,add_months(sysdate, 6) "현재날짜 + 6개월"
+  from dual;
+  --이러면 년도도 자연스럽게 바꿔줌
+ 
+ --현재날짜에서 가장 가까운 요일의 날짜를 조회
+ select next_day(sysdate, '토요일') 
+  from dual;
+  
+  
+select to_number('1234')
+from dual;
+
+select 100+200, '100' + '200'
+from dual;
+
+select '20170411'
+    , to_date('20170411', 'yyyymmdd') 날짜변환1
+    , to_date('20170411', 'yyyyddmm') 날짜변환2
+    , to_char(to_date('20170411', 'yyyymmdd'), 'yyyy-mm-dd') 날짜변환3
+from dual;
+
+--salary 가 20000이상이면,   '고액 연봉자'
+--        10000~20000면,   '보통 연봉자'
+--         10000미만이면,   '저액 연봉자'
+select employee_id, last_name, salary
+    , case when salary >= 20000 then '고액연봉자'
+           when salary >= 10000 then '보통연봉자'
+           else '저액연봉자'
+       end as "salary type"
+from employees
+order by 3 asc;
+
+--employees테이블의 총 레코드 개수 -> 총 사원 수
+select count(*)
+from employees;
+
+--부서번호가 80인 사원수 조회
+select count(*)
+from employees
+where department_id = 80;
+
+--job_id조회 (단, 중복금지. 종류별로 하나씩만)
+select count(distinct job_id)
+from employees;
+
+--employees테이블에서 최대급여,최소급여 조회
+select max(salary) 최대급여, min(salary) 최소급여
+        ,sum(salary) 급여총액
+        ,round(avg(salary),2) 급여평균
+from employees;
+--round쓰면 소수점자리 제한주기
+
+--------------------------------------------------------------------------------------------------------
+
+create sequence seq_01;
+
+select seq_01.nextval 
+from dual;
+--dual쓴 이유 : 그 테이블에 있는 레코드 개수만큼 다 나와서 
+
+select seq_01.currval 
+from dual;
+--마지막 시퀀스가 몇번인지 
+
+create sequence seq_02
+start with 201808000001;
+
+select seq_02.nextval
+from dual;
+
+select seq_02.currval
+from dual;
+
+create sequence seq_03
+increment by 5;
+
+select seq_03.nextval
+from dual;
+
+select seq_03.currval
+from dual;
+
+alter sequence seq_03
+ increment by 3;
+
+----------------------------------------------------------------------------
+select * from t_board;
+
+insert int t_board(no,title,content)
+ values(3,'삽입예제','삽입안됨');
+
+create sequence seq_t_board_no;
+
+--복구 가능, ㅋㅓ밋만 안하면 살릴 수 있음
+delete from t_board;
+--복구 불가능, 자동 커밋이라 못살림 -> 개발자들 잘 안씀
+truncate table t_board;
+
+insert into t_board(no, title, content)
+ values(seq_t_board_no.nextval, '제목1', '시퀀스에 의한 삽입');
+ 
+ select * from t_board;
+ 
+ select * from employees;
+-- employees의 위에서 다섯개의 데이터만 추출하고 싶을 때,
+ select * 
+ from employees
+ where rownum <= 5;
+
+ select * 
+ from employees
+ where rownum = 1;
+ 
+ select * 
+ from employees
+ where rownum = 5;
+  
+  --급여가 많은 사원순으로 상위 5명 조회
+ select e.salary, e.*
+ from employees e
+ where rownum <= 5
+ order by e.salary desc;
+ --> 이렇게 하면 정렬을 먼저 하고 연봉을 정렬하기때문에 상위5명의 연봉순으로 나오게됨.
+ 
+ 
+ -->그래서 이렇게 프롬절로 연봉을 먼저 정렬하고, 그 위의 상위5개를 뽑어야함.
+ select e.salary, e.*
+ from(
+    select * 
+     from employees 
+    order by salary desc
+ ) e
+ where rownum <= 5;
+ 
+ -- 중복되지 않는 부서번호 조회
+  select  distinct department_id
+  from employees
+  order by department_id asc;
+ 
+-- 부서별 부서번호 조회
+ select department_id
+ from employees
+ group by department_id
+ order by department_id asc;
+ 
+ -- 부서별 사원 수 조회
+ select department_id 부서번호, count(*) 사원수
+ from employees
+ group by department_id
+ order by 1 asc;
+ 
+ -- 부서별 최대 급여, 최소급여, 평균급여 조회
+ select department_id 부서번호, count(department_id) 사원수, max(salary) 최대급여, min(salary) 최소급여 , round(avg(salary),2) 평균급여
+ from employees
+ group by department_id
+ order by 1 ;
+ 
+ --부서별 평균급여 조회 단, 평균 급여가 5천 이상인 부서만 조회
+  select *
+     from(
+        select department_id, round(avg(salary),1) as avg_salary
+        from  employees
+        group by department_id
+       )
+   where avg_salary >= 5000
+   order by avg_salary desc;
+ ---------------------------------------------------------------------------------------------------
+ --having
+   select department_id, round(avg(salary),1) as avg
+   from  employees
+   group by department_id
+   having avg(salary) >= 5000;
+ 
+ --부서번호를 가지는 부서 중 사원수가 5명 이상인 부서를 조회
+ -- 단, 부서는 부서번호 오름차순으로 정렬
+select department_id 부서명, count(department_id) 사원수
+from employees
+group by department_id
+having count(department_id) >= 5
+order by department_id asc;
+         --<<선생님 코드>>
+select department_id 부서명, count(*) 사원수
+ from employees
+ where department_id is not null
+ group by department_id
+ having count(*) >= 5
+ order by department_id asc;
+ 
+ --한 화면에 사원을 5명씩 출력한다 가정했을때의 
+ --첫번째 페이지에 출력할 사원목록 조회
+ select *
+ from employees
+ where rownum <= 5;
+ 
+ --두번째 페이지에 출력할 사원 목록을 조회
+select *
+from( 
+      select e.*, rownum as rnum
+      from employees e     
+    )
+--  where rnum >= 6 and rnum <= 10;
+where rnum between 6 and 10;
+
+--급여를 내림차순으로 정렬했을 때의 두번째 페이지에 조회될 사원목록
+--먼저 salary순으로 정렬하고, 그걸로 rownum구하고, 그걸로 6~10번 뽑아내기
+ select *
+   from(
+        select e.* , rownum rnum
+        from (
+              select *
+              from employees 
+              order by salary desc
+             ) e
+       )
+   where rnum between 6 and 10;
+   
+--   //rownum 을 구하기 편한 함수 rownum_number()
+select employee_id, first_name, department_id
+   , row_number() over( order by department_id desc) rnum
+   from employees;
+
+
+
+--salary 기준으로 정렬 한 뒤에 rownum구하기
+select e.*, rownum
+    from(   
+        select employee_id, first_name, department_id,salary
+        from employees
+        order by salary desc
+        )e;
+        
+   --위에랑 아래랑 똑같음
+select employee_id, first_name, department_id,salary
+    , row_number() over(order by salary desc) rnum
+from employees;
+
+
+--순위매기기   (공동2등이 두명이면 3등은 없다)
+select employee_id, first_name, department_id, salary
+    , rank() over(order by salary desc) rnum
+from employees;
+  
+--순위매기기 (공동 2등이 많아도 누적되지않고 그 다음은 3등)   
+select employee_id, first_name, department_id, salary
+    , dense_rank() over(order by salary desc) rnum
+from employees;   
+
+
+   
+   

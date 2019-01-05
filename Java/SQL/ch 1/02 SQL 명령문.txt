@@ -1,0 +1,41 @@
+ desc t_board;     -> 이걸 해야지 보인다~!!
+describe t_board;    --desc t_board;   
+똑같음 각각의 필드 내용을 보여달란 내용
+
+default 0    --0으로 집어넣어
+default sysdate --년월일시분초를 포함한 현재시간
+not null --null값 안돼 반드시 존재해야돼
+unique -- 중복되면 안된다
+
+ 중복되지 않으면서 반드시 존재해야함
+ not null + unique   -> primary key  
+하나 혹은 두 개의 컬럼을 갖고 조건을 주는 것
+
+테이블이름바꿀때
+ rename board_t to t_board;
+
+테이블에 필드 추가. 
+  alter table t_test
+    add col_03 varchar2(20);
+
+필드2개 추가 괄호 넣으세욤
+    alter table t_test
+    add (col_04 date, col_04 number(2));
+
+필드 정보 변경   varchar2(20) 에서 (10)으로 변경할래
+    alter table t_test
+    modify col_03 varchar2(10);
+
+필드삭제
+    alter table t_test
+     drop column col_04;
+
+
+필드명변경-  5에서 4로
+    alter table t_test
+     rename column col_05 to col_04;
+
+
+
+
+

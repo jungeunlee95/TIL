@@ -1,0 +1,102 @@
+window - web browser
+
+-----------
+exam02 
+------------
+링크 연결 <a href="프로토콜://호스트주소:포트"> </a>
+<a href="http://www.naver.com">네이버</a>  포트는 생략 가능
+
+<a> : 내가 갖고있는 url 주소를 입력값으로 바꿔줌
+
+-----------------------------------------------------------------
+
+-> 새탭으로 링크 연결하기  target="_blank"
+<a href="http://www.naver.com" target="_blank">네이버</a> 
+
+-----------------------------------------------------------------
+exam03
+------------
+대표적 block - 한 행씩
+        , inline - 한 줄에
+-----------------
+div단락구분
+span 하나의 단락 내에 
+--------------------
+style -> 컬러넣깅
+<div style="background-color : blue" > div영역 </div>
+
+------------------------------------------------
+exam04
+ br - 시작이면서 종료 태그 - 라인 바꿔줄때 (엔터키같은역할)
+------------------------------------------------
+&nbsp; - 공백한칸
+---------------------------------------------------
+
+----------------
+exam05 - <hr>
+----------------
+-선그리기 
+       <hr width = "200px">  이 픽셀 크기로
+       <hr width = "30%">   선의 30% 크기로
+
+       <hr width="600px" color="orange" size="5">
+
+-----------------------------
+글씨크기 : h1~6 : 왼쪽정렬, 두꺼운글씨  -exam06   -block 태그임
+div소속
+------------------------------
+<h1 align = "center"> : 가운데 정렬
+<h1 align = "right"> : 오른쪽 정렬
+
+<div align = "center" style="font-size:24pt; font-weight: bold">안녕하세요</div>
+<h1 align = "center"> 안녕하세요</h1>
+=>이거 두개 같은 조건코드임
+
+
+-----
+& ㅇㅇㅇ ;   exam07
+-----
+&nbsp;    공백
+&lt;           <
+&gt;          >
+&amp;       &
+
+<pre></pre>  : 띄어쓰기, 엔터키를 자유롭게 인식할수있도록 만들어줌
+
+<b>홍길동</b>  굵은문자로
+<strong>홍길동</strong> 굵은문자로
+
+<q>의적</q>         쌍따옴표"의적"
+<blockquote></blockquote> : 인용문 들여쓰기
+
+
+----------
+img -시작태그면서 종료태그   exam08
+----------
+
+<img src="이미지 주소" border="1" : 테두리 style="border-color: violet" 테두리색깔>
+
+<img src="images/dog3.jpg" alt = "강아지 사진"> : 없는 사진일때 글씨출력
+
+
+------------
+이미지 클릭하면 새창으로
+--------------
+<a href="http://www.daum.net" target="_blank"> <img src="https://t1.daumcdn.net/daumtop_chanel/op/20170315064553027.png"
+	   border = "5" style="border-color: violet"> </a> 
+                         title = "클릭해봐"    <-마우스 대면 설명뜸
+
+
+<figure></figure> : 사진에 설명 달고 싶을때 캡슐로 만들어서 같이 다니게
+<figcaption>
+	<figure>
+	<img src="images/cat2.jpg">
+	<figcaption>귀여운 꼬냥이</figcaption>	
+	</figure>
+
+
+
+
+
+
+

@@ -1,0 +1,184 @@
+1. DI
+
+Dependenct Injection
+- 각 Bean간의 의존관계 설정을  xml파일에 등록
+-프로그램 코드에서는 직접 빈을 획득하기 위한 코드를 사용할 필요가 없음
+-Container 가 자체적으로 필요한 객체를 넘겨줘서 사용하는 방식
+ [사용방식 1. constructor Injection 2.Setter Injection ]          
+
+---------------------spring-workspace-----------------------------
+
+--------------------di_java01 --------------------------------
+-DriverMain.java
+-Car.java        
+
+- Tire -interface
+-KoreaTire.java   ->Tire상속
+- NexenTire
+
+-driver.sqd (sequence Diagram)
+-객체관계도.cld
+----------------driver.sqd (sequence Diagram)-----------
+ 운전자가 자동차를 구매하는 것이 목적
+
+-----------객체관계도.cld-----------------------
+Car는 Tire없이는 아무것도 못함 -> 의존관계 발생(마름모)
+Car클래스가 Tire클래스에 대해 의존성을 기지고 있음(의존성을 가진 부분에 마름모붙음)
+
+의존관계 둘이 서로 lifecycle이 같냐 ?
+흰색마름모:Aggregation  : 의존성객체가 있던 없던 자체에 영향은 없는 것 
+                                           (네비게이션없다고 자동차 운행 못하는거 아니야)
+검은색마름모:composite   : 의존성객체가 없으면 영향이 큼
+                                           (타이어가 없으면?.. 자동차 운행 불가능)
+
+----------------------------------------------------------------
+의존성을 갖고있는 Car클래스 Tire에 외부에서 먼둘오잔 객체를 만들어서 넘겨주는 것
+->외부에서 날라오는 객체를 주입시키겠다.! ! ! ---> 주 입 ! -> 의존주입 ! ! ! 
+                  
+	 [의존 주입 사용방식
+	 1. constructor Injection
+	 2. Setter Injection ] 
+
+
+
+
+--------------------di_java02 --------------------------------
+
+JAVA에서의 DI : 생성자 주입방식
+ /생성자 주입 행동
+ public Car(Tire tire) {
+	this.tire = tire;
+ }
+
+-DriverMain
+-운전자가 타이어 브랜드 선택
+-차를 주문하면 선택된 브랜드로 타이어를 장착
+
+--Car.java : 의존성을 가진 객체에 외부에서 가져온 객체를 넣어주겠다
+01에서는 Car.class의 객체를 계속 바꿔줬어야했는데,
+02에서는 DriverMain에서 객체를 바꿔주면 됨 Car.class의 코드 고칠 필요 XXX
+
+
+
+
+
+--------------------di_java03 --------------------------------
+JAVA에서의 DI : setter 주입방식(속성주입방식)
+ 	-운전자가 타이어 주문
+ 	-운전자가 자동차를 주문 (타이어는 옵션이라 타이어 없이 배달이 옴)
+ 	-운전자가 직접 자동차에 타이어를 장착
+
+ public void setTire(Tire tire) {
+	this.tire = tire;
+ }
+
+Car.java -> setTire메소드 
+Main - > serTire로 객체 주입 
+
+
+
+
+
+----------------- 각 Bean간의 의존관계 설정을  xml파일에 등록--------------
+
+-------------------------package di_xml01;-------------------------
+	스프링을 이용한 DI : 속성주입방식(setter주입)
+- 쇼핑몰에서 타이어 구입
+- 쇼핑몰에서 자동차 구입
+- 운전자가 직접 자동차에 타이어를 장착
+:자동차랑 타이어가 어디서 만들어지는지 관심 ㄴㄴ 오직 쇼핑센터에서만 접근함 ! 
+
+Lecture-Spring/src/main/resources 에 di_xml01.xml 파일 만들기
+ -> 컨테이너 객체관리가 목적
+
+xml에 이렇게 하면
+	<bean class="di_xml01.KoreaTire" id="koreaTire"/>
+	<bean class="di_xml01.NexenTire" id="nexenTire"/>
+	<bean class="di_xml01.Car" id="car"/>
+Main클래스에서 getBean으로 객체 가져올수있음
+
+
+-------------------------package di_xml02;-------------------------
+- 쇼핑몰에서 타이어 구입
+- 쇼핑몰에서 자동차 구입
+-쇼핑몰에서 사용자가 주문한 타이어를 자동차에 장착시켜줌
+-쇼핑몰이 사용자에게 타이어가 장착된 자동차를 전달
+
+
+---------------[[ di_xml02.xml 파일 만들기 ]]---------------------------
+여태까지 직접 클래스에서 setTire했는데, 
+이제 car클래스가 tire형으로 의존객체를 갖고있는
+그 의존객체를 지금 di로 주입하려해  -> 아예 xml에서 setter까지 해버릴거야 
+
+   Car car = (Car)context.getBean("car");
+    car.setTire(tire);    
+-위의 두 식을 xml에서 처리할거야! 
+
+ <bean class="di_xml02.Car" id="car" >
+	<property name="tire"//setTire  
+	  ref="koreaTire" //new KoreaTire/>
+ </bean>
+
+--> 이러면 메인에서 tire객체는 만들필요없어,  Car객체만 가져오기만하면돼!
+   이미 모든 설정이 xml에서 다 끝났으니까!  -> xml속성에서 어떻게 주입하는지가 중요!
+
+
+
+
+
+
+
+
+------------------------package di_xml03;-------------------------
+ 	스프링을 이용한 DI : 생성자주입방식
+ 	쇼핑몰에서 자동차 구입
+ 	쇼핑몰에서 타이어를 주문	
+ 	쇼핑몰에서 사용자가 주문한 타이어를 자동차에 장착시켜줌
+ 	쇼핑몰이 사용자에게 타이어가 장착된 자동차를 전달
+
+---------------[[ di_xml03.xml 파일 만들기 ]]-------------------------
+<bean>은 객체를 만들어주는데,
+생성자 주입을 이용한 Car클래스에 의존주의 객체를 주입하고싶어
+객체를 생성할때 <bean class="di_xml03.Car" id="car" >
+객체를 가지고 있는 코드를 필요로함 <constructor-arg ref="koreaTire"></constructor-arg>
+
+<!--  생성자는 xml파일에서 내가 무슨 객체를 주입하겠다는 코드가 필요함 -->
+     ---> <constructor-arg> 코드 필요 ! 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

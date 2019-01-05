@@ -1,0 +1,32 @@
+6. 루프 배열 - exam13
+
+var names = ['홍길동', '강길동', '박길동', '최길동', '한길동'];
+
+                <<<<<<<<<for문>>>>>>>>>>>>
+  for(var i = 0 ; i < names.length; i++) {
+	document.write(names[i] + '<br>');
+  }
+
+                 <<<<<<<<1.5for문>>>>>>>>>>>
+var i -> 배열 안에 있는 index
+  //names에 들어있는 index 라는 뜻.
+  for(var i in names) {
+	document.write(names[i] + '<br>');
+  }
+
+	//ecmascript6에서 추가된 방법
+  for(var name of names){
+	document.write(name + '<br>');		
+  }
+//const : 못고치게    let:지역변수로 가져서 for문 밖에서는 사용 X
+
+console.log(name);  -> F12개발자 도구로 확인가능 : 맞는 코드인지 체크할때 사용
+
+
+
+
+
+
+
+
+

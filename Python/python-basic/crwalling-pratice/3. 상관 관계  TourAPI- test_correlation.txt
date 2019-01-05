@@ -1,0 +1,20 @@
+1. 상관 관계  TourAPI/  test_correlation
+
+pd_fetch_foreign_visitor
+짜고
+
+
+
+--------TourAPI 에 New Python File -> test_correlation.py-----------
+
+파이썬 설치 경로 D:\lecture\bin 여기서 shift누르고 우클릭하고
+여기에 powerShell열기 pip install matplotlib 해서 다운받기 ! @!@! 
+
+pyCharm 안에 Terminal에서 pip install matplotlib 설치해도됨 
+
+
+
+
+
+
+

@@ -1,0 +1,97 @@
+3. 세션(session)-jsp-session
+
+------
+ 특성  : 
+------
+- 정보저장위치: 서버
+	->서버의 부하가 가중됨, 보안상의 문제 발생 소지를 줄여줌
+- 정보저장 최대 유효기간이 부라우저가 닫힐 때 까지 이다.
+   <-> 쿠키는 웹 종료해도 쿠키 유지 할 수 있는데, 세션은 무조건 정보 사라짐 -> 서버 부하가 심해지니까 꾸준히 갖고 있을 수 없음
+- 정보 저장 시 객체 타입이 가능! <-> 쿠키는 문자열만 가능했는뎅..
+- 웹 컨테이너에서 클라이언트의 정보를 보관할때사용
+- 오직 서버에서만 생성
+- 클라이언트 마다 세션이 생성됨 !!!!!
+	 -> 동일한 클라이언트가 접속할때 계속 동일한 값을 응답함!
+
+--------
+   설정
+--------
+세션이 존재하지 않을 경우 세션, 세션이 존재할 경우 이미 생성된 세션을 사용
+디폴트값: true 
+<%@ page session = "true or false" %>
+
+-------------------
+ 세션 종료. 타임아웃 - 만약 아무것도 안하고 가만히 브라우저 키고있으면 기본30분뒤에 자동으로 세션 종료함!
+-------------------
+세션 타임아웃 시간 설정 
+
+- web.xml 에 설정!
+<session - config>
+    <session - timeout>
+	30 : 분 단위 설정 할 수 있음
+    </session - timeout>
+</session - config>
+
+- 프로그램에서 설정(API 활용 - 초단위)
+ -> 몇분동안 내가 쓰겠다. 
+session.setMaxInactiveInterval(int interval);
+
+------------------------
+   세션 주요 API 메소드
+------------------------
+-세션 객체 얻기
+-javax.servlet.http.HttpServletRequest.getSession()
+-javax.servlet.http.HttpServletRequest.getSession( boolean create)
+
+//세션이 없을 경우 새롭게 생성, 존재한다면 존재하는 객체 반환
+HttpSession session = request.getSession();       -> 얘를 제일 많이 씀!!!!
+HttpSession session = request.getSession(true);
+-두 개 같은 말
+
+//세션이 없을 경우 null, 존재한다면 존재하는 객체 반환
+HttpSession session = request.getSession(false);
+
+
+------------------jsp/session-type01-apiTest.jsp---------------------------
+
+	//마지막 접근 시간 확인하기
+	session.getLastAccessedTime()
+
+
+
+
+
+------------------jsp/session-type02-makeForm.jsp---------------------------
+
+-세션 속성 삭제
+ : session.removeAttribute("세션이름");
+
+-모든 세션 삭제
+ : session.invalidate();
+
+-set.jsp/ makeForm.jsp / get.jsp / remove.jsp
+
+---------> 세션은 object형이라 형변환필요
+	String id = (String)session.getAttribute("id");
+	String password = (String)session.getAttribute("password");
+
+
+
+
+
+
+------------------------jsp/session-type03--------------------------------
+
+->java Resources - src - ki.co.mlec.Member - MemberVO.class
+ id와 password를 한번에 VO객체로 받고 삭제하기 가능!!
+
+
+
+
+
+
+
+
+
+
+

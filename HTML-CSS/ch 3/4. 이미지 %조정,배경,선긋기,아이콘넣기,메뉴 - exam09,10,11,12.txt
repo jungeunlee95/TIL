@@ -1,0 +1,46 @@
+ 이미지 %로 조정,배경,선긋기,아이콘넣기,메뉴 - exam09,10,11,12
+
+   ./ 내폴더
+  ../ 상위폴더
+ 
+-------------------------------------------------------------
+exam10
+배경사진에 사진넣기
+background-image: url('images/back.jpg');  -> 이러면 사진하나가 여러개
+background-repeat: no-repeat;    반복하지마! 하면 하나만 나옴
+background-repeat: repeat-x;  x축만 반복!
+background-repeat: repeat-y;  y축만 반복!
+ background-position: 100px 50px;  왼쪽 위를 기준으로 반복
+background-position: top right; 오른쪽 위를 기준으로 !!!
+background-size:  cover or 몇%; 이미지 하나가 확대되서 하나의 전체화면으로
+
+-------------------------------------------------------------
+
+exam11 
+선그을때 repeat같은걸로 이미지 하나를 연결시킨다 보면됨
+
+-------------------------------------------------------------
+
+exam12  리스트 태그들 아이콘넣기,메뉴
+
+
+<ul> : 순서없이 땡땡
+<ol> : 순서대로 1,2,3,4,5,6, 이런식!
+
+list-style-type: square;   동그라미 모양 바꾸기
+list-style-image: url('images/dogicon.jpg');
+list-style-position: inside;: 들여쓰기
+
+
+list-style-type: decimal-leading-zero; 숫자나 알파벳으로
+
+
+
+
+
+
+
+
+
+
+

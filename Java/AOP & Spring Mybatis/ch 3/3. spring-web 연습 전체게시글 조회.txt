@@ -1,0 +1,160 @@
+3. spring-web 연습
+
+만약 user setting -> 저장 경로 maven-repository 아니면
+C:\Users\leeap\.m2\repository 들어가서 \.m2\repository  비우고 다시하는게 좋아
+
+src/test/java
+kr.co.mlec /DBTest.java
+
+
+--------------------config - mybatis -sqlMapConfig.xm-----------------------
+spring-mybatis 연동 xml
+config - mybatis -sqlMapConfig.xml 만들기
+
+http://www.mybatis.org/mybatis-3/ko/getting-started.html#
+XML에서 SqlSessionFactory 빌드하기의 아래 코드 복사
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+</configuration>
+붙여넣기
+
+------------------------spring-mvc.xml---------------------------------
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<property name="dataSource" ref="dataSource" />
+	<property name="configLocation" value="classpath:config/mybatis/sqlMapConfig.xml" />
+	
+</bean>
+
+<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSessionFactory" />
+	
+</bean>
+
+--------------------------pom.xml에 복사-------------------------------
+OJDBC6 <dependency> 넣기
+<!-- https://mvnrepository.com/artifact/com.jslsolucoes/ojdbc6 -->
+<dependency>
+          <groupId>com.jslsolucoes</groupId>
+          <artifactId>ojdbc6</artifactId>
+          <version>11.2.0.1.0</version>
+</dependency>
+
+
+
+------------src/main/resources/config/sqlmap/oracle폴더------------------
+--------------------sqlmap-board.xml 파일 만들어------------------------
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+</mapper>
+---------------------spring-mvc.xml---------------------------
+ id="sqlSessionFactory"에 넣기 
+<property name="mapperLocations" value="classpath:config/sqlmap/oracle/sqlmap-board.xml" />
+--> xml이 하나가 아닐수도 있잖아
+<property name="mapperLocations" value="classpath:config/sqlmap/oracle/*.xml" />
+
+---------------------sqlmap-board.xml------------------------
+	<!-- 전체 게시글 조회 -->
+	<select id="selectAllBoard">
+		select no, title, writer, content, view_cnt as viewCnt
+		       , to_char(reg_date, 'yyyy-mm-dd') as regDate
+		   from t_board
+		  order by no desc
+	</select>
+
+---------------------------------------------------------------
+<패키지 구성>
+kr.co.mlec
+	.board
+		.controller
+		.service
+		.dao
+		.vo
+		        BoardVO
+	.member
+		.controller
+		.service
+		.dao
+		.vo
+		         MemberVO
+---------------------------------------------------------------
+
+
+
+src/main/java  kr.co.mlec.board.vo
+-----------------------------BoardVO 만듬-----------------------------
+
+
+
+---------------------sqlMapConfig.xml에 <typeAliases> ------------------------
+<typeAliases>
+	<typeAlias type="kr.co.mlec.board.vo.BoardVO" alias="boardVO"/>
+</typeAliases>
+
+
+전체게시글 조회
+---------------------sqlmap-board.xml-resultType-----------------------
+<select id="selectAll" resultType="boardVO">
+	select no, title, writer, content, view_cnt as viewCnt
+	       , to_char(reg_date, 'yyyy-mm-dd') as regDate
+	   from t_board
+	  order by no desc
+</select>
+
+
+
+----------------------DBTest.java----------------------------------
+@Test
+public void 전체게시글조회() throws Exception{	
+	List<BoardVO> list    	  //sqlMap 의 nameSpace + <select>의 id
+	= sqlSessionTemplate.selectList("kr.co.mlec.board.dao.BoardDAO.selectAll");
+	
+	for(BoardVO board : list) {
+		System.out.println(board);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

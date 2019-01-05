@@ -1,0 +1,62 @@
+ [[[  JDBC  ]]]
+- 자바에서 데이터베이스를 표준화된 방법으로 접속
+
+[DriverManager]
+-JDBC드라이버를 선택하고 연결 객체를 얻어옴
+
+[Connection]
+-실제 데이터베이스와 연결하는 동작
+
+[Statement]
+-실행하려는 쿼리를 작성하고, 쿼리(SQL)를 실행
+
+[ ResultSet(select) ]
+-한개이상의 쿼리 0개이상의 클래스 관리
+
+------------------
+-JDBC프로그램 순서-
+-------------------
+Class.forName(...) :1단계: JVM이 인지해야함
+DriverManager Connection  :2단계 : SQL데이터베이스연결
+Statement  :3단계 : 쿼리 실행
+ResultSet 4단계:결과얻기
+close          5단계: 닫기 : 외부장치를 다시 사용하게 하려면 꼭 close
+
+내컴퓨터끼리 : io
+다른컴퓨터꺼쓰고싶으면? network
+
+데이터베이스 드라이버 로드
+Class.forName("oracle.jdbc.driver.OracleDriver"); 
+->접근제한자:: public, 성격: static
+
+데이터베이스 연결
+Connection conn = DriverManger.getConnection(JDBC_url,"아이디","비밀번호");
+:클래스를 호출하는 것
+
+------------------
+-JDBC프로그램 순서-
+-------------------
+// 1단계 : JDBS 드라이버 로딩 - 예외잡고, .jar
+try {
+	Class.forName("oracle.jdbc.driver.OracleDriver");
+} catch (Exception e) {
+	e.printStackTrace();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

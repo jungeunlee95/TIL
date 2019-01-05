@@ -1,0 +1,72 @@
+5. javascript - 배열 정렬,JSON -exam32~34
+
+-----------------------------exam32----------------------------
+books.sort();   - 사전순으로 정렬
+  -> 숫자는 정렬이 안됨
+
+ [숫자정렬 공식]
+	nums.sort(function(left, right){
+		return left - right; 오름차순
+		return right -left; 내림차순
+	});
+
+
+-----------------------------exam33----------------------------
+-------------------
+forEach()
+-------------------
+nums.forEach();   nums가 갖고있는 요소들을 각가 하나씩 분리시키는 것
+nums.forEach(function() {
+    document.write('#');
+});   -> 요소만큼 #####
+
+
+//EcmaScript5 에서 추가됨
+element : 요소 , index : 번지수 nums:  -> var nums = [10, 20, 30, 40, 50];
+nums.forEach(function(element, index, nums) {
+	document.write(index + '번째 정수 : ' +  element + '<br>');
+	console.log(arguments);
+  });
+
+-------------------
+map()
+-------------------
+복사본 만들고 싶을 때   var copyNums = nums.map();
+ex)
+	var copyNums = nums.map(function(element){
+		return element + 100;
+	});
+이렇게 하면 nums 의 element들에게 각각 100씩 더한 값을 받을 수 있음
+
+
+-----------------------------exam34 - JSON----------------------------
+★★JSON★★
+JSON.parse()  : 문자열을 자바스크립트 객체로 변환시켜줌
+
+
+JSON.stringify()   : 자바스크립트 객체를 문자열로 변환
+name : "홍길동"
+phone : "010-1111-2222"
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+JSON.stringify(person)
+
+  "{"name":"홍길동","phone":"010-1111-2222"}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

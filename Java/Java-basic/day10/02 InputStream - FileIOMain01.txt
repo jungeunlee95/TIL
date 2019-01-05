@@ -1,0 +1,11 @@
+[ OutputStream]  - FileIOMain01
+
+ void write(int c) 뒤에는 무조건 
+ void flush()          를 써야함
+
+ InputStream
+
+  int c = is.read();   => 문자를 읽어올 때, 1byte씩 옮기기 때문에 한글은(2byte)에러남
+   그래서 byte를 합쳐서 char로 만들어지게 해야함!@!@!@@!!@!@@!!@
+      필터클래스 ===>>> InputStreamReader   <<<=== 혼자 사용은 못함
+

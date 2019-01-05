@@ -1,0 +1,52 @@
+2. MVC02 lsitener영역
+
+---------------------------------------------
+ServletContext   : 모든 서블릿끼리 서로 공유하는 영역
+---------------------------------------------
+    <-> servletconfig : 하나의 서블릿마다 자기의 환경 설정 
+- 서버가 실행되는 순간에 해야 안전함   그 공간이 바로 listener!!!
+
+  kr.co.mlec.listener - ContextListener next - LifeCycle
+-->서블릿이 실행하기 전에 무조건 실행되야함 ! 어떤 서블릿을 언제 쓸지 모르잖아
+         !! 그럼 어떻게쓸거야!!
+
+lsitener영역에  dao랑 service객체 등록 ! 
+
+BoardService 
+//외부에서 만든 dao객체를 나한테 넘겨줘야헤 ! 
+     왜냐면 여기는 순수 java인데 어떻게 서블릿코드 쓸거야? 
+-> 외부에서 만든 것을 받아오면 되잖아 -> 의존주의방식
+==> ContextListener 에서 
+       dao객체 만들어서 service 로  이렇게 넘겨주면 됨
+       sc.setAttribute("boardService", new BoardService(boardDao));
+
+
+-> 404 에러뜨면 다른 창
+ -> jsp/error/error.jsp
+DispatcherServlet에서 try catch 코드 작성
+
+--> 서블릿으로 하고싶으면 
+src.error/ErrorServlet.java
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+ kr.co.mlec.util -> ConnectionFactory  : //1~2단계 해결
+                        -> JDBCClose                 : close문 만들어주기
+
+   InsertMain04
+   SelectMain02
+   SelectMain03 - 비동기로 만들기 ( 버퍼사용)
+    sq.toString()  //스트링 버퍼,빌더 클래스의 데이터를 스트릴 데이터로 바꿔줌.
+ 
+  UpdateMain01 를 다시 해보기 ->  UpdateMain02
+

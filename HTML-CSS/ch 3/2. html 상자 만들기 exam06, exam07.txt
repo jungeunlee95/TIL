@@ -1,0 +1,64 @@
+2. 상자 만들기 exam06, exam07
+
+------------exam 06--------------
+border-style : solid; 상자
+border-style : dotted;  점
+border-style : dashed; 점선
+border-style : double; 이중실선
+border-style : ridge; 볼록실선
+border-style : groove; 오목실선
+border-style : outset; 볼록내용
+border-style : inset;   오목내용
+
+padding : 10px;   :  상자 안에 위아래 간격
+text-align : center; 상자 안에 글자 위치
+border-width : 10px; 상자 테두리 굵기
+border-color : pink;  상자의 테두리 색
+---------
+  margin
+----------
+margin : 10px; 요소와 요소 (상자끼리)의 간격 - 동서남북 마진이 다 바뀜
+  -margin-bottom, left, right, top 이렇게 상하좌우 중 하나만 잡을수도
+   -margin : 10px 0px 10px 0;  상 우 하 좌 순으로 값을 줄 수도 있음
+   -margin : 10px 0px ;  두개만 들어가면, 상하 10 좌우 
+
+
+float : left; 왼쪽으로 줄세우기 - 공간이 없으면 자동으로 밑으로
+  clear : left; - float:left 속성 무시하기
+   clear :  both   - 왼족이건 오른쪽이건 싹다 무시해버리장
+
+
+
+
+---------------------exam07-------------------------------
+height를 안정해주면 글자크기 만큼만 공간(border)이 잡힘.
+
+
+text-align: center; 글자의 수평이 아니라 수직만, 
+padding:10px; 으로 수평까지 내려주면 글자가 사각형의 완전 가운데로 오겟지
+
+----------------------------------------------------
+border : width style color 를 합쳐서 쓸 수 있어
+ex)
+		border-style: solid;
+		border-color: red;
+		border-width: 1px;
+   --> 이렇게 한번에 쓰기 가능!! border: 1px solid red;   
+----------------------------------------------------
+border-radius :50% 모서리 기준으로 원을 그려서 사각형테두리를 뭉툭하게
+border-top-left-radius : 특정 모서리만 골라서 뭉툭하게 할수도 있음
+	border-radius:20px;
+	border-top-right-radius : 0px;
+	border-bottom-left-radius : 0px;
+	<<<<위랑 아래랑 같은 모양이요>>>>
+	/* border-top-left-radius:20px;
+	border-bottom-right-radius:20px; */
+
+box-shadow : 가로 세로 번지는크기(흐림) 색깔
+box-shadow :inset 10px 10px 10px gray -> 박스의 그림자
+                    -inset하면 안으로 잡혀여
+
+
+
+
+

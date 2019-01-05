@@ -1,0 +1,122 @@
+1. javascript 마우스 이벤트, 키보드이벤트 - exam46,47,48
+
+이벤트(Event)
+ - 마우스 이벤트 ( 버튼 클릭하면 동적인 형태의 action) 
+ - 키보드 이벤트 ( 키보드 눌렀을 때 )
+ - HTML 프레임 이벤트 ( html 자체의 스크롤, 창크기 변화 )
+ - HTML 입력 양식 이벤트 (input 태그에 의해 만들어지는 ...)
+ - 유저 인터페이스 이벤트 (사용자가 원하는 형태의 변화를 가져다 주는 )
+
+-----------------------------exam46------------------------------------
+1. 마우스 이벤트 - inline, level2, 고전 방식 3가지 있음
+
+----------------------------------------
+//level1방식의 이벤트모델(고전적 이벤트 모델)
+----------------------------------------
+btnTag.onclick : btnTag를 클릭 했을 때, 
+	btnTag.onclick = function() {
+		console.log('click...');
+	}
+----------------------------------------
+//Level0방식의 인라인 이벤트 모델 
+----------------------------------------
+body에 온클릭 
+<input type = "button" value = "클릭해봐" id = "btn01" onclick="alert('클릭')">
+
+body에 함수 쓰고
+script에 클릭함수 만들어도 됨
+
+
+
+-----------------------------exam47------------------------------------
+
+----------------------------------------
+//Level2방식의 인라인 이벤트 모델 
+----------------------------------------
+-버튼 태그가 생김  
+  [addEventListener]
+<button>글자</button>
+-script에 callback함수로
+	btn01.addEventListener('click', function() {
+		console.log('click...');
+	});
+	
+
+
+-----------------------------exam48------------------------------------
+사용자가 입력한 정보값 전달할때 쓰는 속성-> name 
+name="id" 라고하면 태그 구분할수있는거
+그리고 전송 누르면 https://www.naver.com/?id=입력값 <-이렇게 데이터가 날라감
+                                       ?id=입력값 --> 이부분을 query라고 말함
+비밀번호도 같이 입력하면 -> ?id=aaa&pass=1111
+비밀번호확인 총 3개 날라가면? -> ?id=aaa&pass=1111&passCheck=2222
+
+ -> pass,passCheck가 다르면 안돼 -> 다시 입력으로 return해야됨
+onsubmit: submit버튼을 클릭했을때, ""를 해석하겠다.
+onsubmit="return false : 안날라감, true 날라감
+--> pass랑 passCheck가 같아야지만 true로 넘기게 해야지!
+         : 함수로 만들자 whenSubmit()
+
+ 사용자가 입력한 값을 알고 싶을 때 ->   .value    <-
+ex)
+<script>
+  function whenSubmit() {
+	var pass = document.getElementById("pass");
+	var passCheck = document.getElementById("passCheck");
+	
+	if(pass.value != passCheck.value){
+		alert('패스워드가 올바르지 않습니다.');
+		return false;
+	}
+		return true;
+	
+   }
+
+<body>
+  <form action = "http://www.naver.com" onsubmit="return whenSubmit()">
+	아이디 : <input type = "text" size ="20" name="id"> <br>
+	패스워드 : <input type = "password" size ="20" name="pass" id = "pass"> <br>
+	패스워드 확인 : <input type = "password" size ="20" name="passCheck" id = "passCheck"> <br>
+	
+	<input type = "submit" value = "전송">
+  </form>
+
+------------------------------------------------------------------------
+form태그에서 유일하게 name 속성을 이용해 각각의 태그값에 접근할수있음
+-> <form>에 name속성이 있어야함
+           <form action = "http://www.naver.com" 
+	  onsubmit="return whenSubmit()"
+	  name = "inputForm">
+
+document.inputForm 로 name으로 접근할수있음
+-document.inputForm.id
+-document.inputForm.pass
+-document.inputForm.passCheck
+ex)
+  function whenSubmit() {
+	var pass = document.inputForm.pass;
+	var passCheck = document.inputForm.passCheck;
+		
+	if(pass.value != passCheck.value){
+		alert('패스워드가 같지 않습니다.');
+		return false;
+	}
+		return true;	
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

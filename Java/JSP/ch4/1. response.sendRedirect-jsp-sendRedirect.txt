@@ -1,0 +1,44 @@
+1. response.sendRedirect
+
+-호출된 페이지에서 다른 페이지로 요청 처리가 이동
+  요청이 재 발생되어 데이터 공유가 되지 않음,
+-a.jsp를 클라이언트가 서버에 요청하고 또 b.jsp를 요청! ==> 요청이 두 번!
+-1번째 요청을 하고 응답을 한뒤, 다시 2번째 요청 --> request영역을 2번째요청은 볼수XX
+
+구문 :  response.sendRedirect("url");
+-> 첫번째 요청을 끝내고 url이 두번째 jsp주소로 바뀜! 응답이 이미 끝나고 두번째 요청!
+
+  <  ----  > forward는 응답 1번, response.sendRedirect는 응답 2번!
+
+-------------------------Lecture-Web-jsp-sendRedirect--------------------
+-sendRedirectSet
+-sendRedirectTest
+
+--->forward에서는 url이 forward.test?id=admin인데,
+ sendRedirect에서는 sendRedirect/admin.jsp  아예 admin으로 가버림!
+
+sendRedirectTest에서 id를 입력해서 보내고, 다시 또 user.jsp를 요청하는거니까
+param.id를 user.jsp에서 받을 수가 없음!!
+ -> 파라미터에 추가하는 방식으로 넘겨야함! 공유영역에 등록하는건 안됨!!
+   request.getParameter("id")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

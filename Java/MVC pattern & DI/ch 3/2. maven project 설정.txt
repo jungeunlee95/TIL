@@ -1,0 +1,72 @@
+2. Maven project 설정
+
+1. 메이븐 다운로드  다운로드 클릭
+  http://maven.apache.org/ 
+
+2. Binary zip archive -apache-maven-3.5.4-bin.zip ->lecture에  압축 풀기
+
+3.환경설정 내컴퓨터- 고급시스템 설정 - 오른쪽마우스 속성 클릭!
+
+5. 시스텝속성 - 환경변수 설정
+- 변수이름 JAVA_HOME  변수값 C:\Program Files\Java\jdk1.8.0_171
+    변수이름 : M2_HOME     변수값   D:\lecture\apache-maven-3.5.4
+  path편집 - 새로만들기- 찾아보기 D:\lecture\apache-maven-3.5.4-bin!! 추가 ! 
+
+6. cmd - mvn 엔터
+        - mvn -version 엔터
+
+ -----저장공간 바꾸기-----------------------
+7. d-lecture- maven-repository폴더 만들기
+
+--여기서부터 SPRING-WORKSPACE
+8. D:\lecture\apache-maven-3.5.4\conf -> settings.xml 열기 
+     <localRepository>/path/to/local/repo</localRepository> 복사 빼서 밑에
+     <localRepository>D:/lecture/maven-repository</localRepository>  이렇게
+
+9. 이클립스 윈도우 preferences -Maven - user Settings
+    ->  D:\lecture\apache-maven-3.5.4\conf -> settings.xml  로 경로 바꾸면
+    밑에 local repository - D:/lecture/maven-repository 이걸로 바뀜
+
+10.new - maven-project - create  simple project체크 
+  Group id : kr.co.mlec    artifact id: Lecture-Spring     - finish  다운로드.
+
+11.    pom.xml -> 스프링 원격조정
+       java : 소스파일 작성             resources : 자원파일 작성(xml,properties등)
+
+12.  http://mvnrepository.com/ 가서 검색창에 spring-context 검색
+    spring-context 클릭,    4.3.18.RELEASE 클릭
+     Maven복사 , 
+
+13. fom.xml  항상 jar파일 추가할 때 이제 복붙안하고
+        <dependencies> 밑에 <dependency>로 추가하면 돼 
+ ex)
+ <dependencies>
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-context</artifactId>
+		<version>4.3.18.RELEASE</version>
+	</dependency>
+ </dependencies> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

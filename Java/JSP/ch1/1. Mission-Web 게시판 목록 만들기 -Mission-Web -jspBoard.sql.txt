@@ -1,0 +1,158 @@
+1. Mission-Web 게시판 목록 만들기 -jspBoard.sql
+  -WRB-INF - lib에 servlet-api집파일 붙여넣기 해줘야 jsp사용할수있음~
+
+-> sql t_board
+
+-----------Mission-Web - WebContent - board  -list--------------
+  작업순서 :
+	1. DB접속  
+	2. t_board 테이블에서 게시물 조회
+	3. 화면에서 게시물 출력
+	4. DB접속해제
+----------------------------------------------------------------
+1. java Resources- src- util 패키지 만들어서 - 커넥션 팩토리,JEBCClose 가져오고 
+
+2. lsit.jsp에서 import해줘야함
+<%@ page import = "kr.co.mlec.util.ConnectionFactory" %>
+<%@ page import = "java.sql.Connection"  %> 
+
+3. lib-servlet.api 랑 ojdbc6.jar 파일 넣어줘야함 
+   ojdbc6- C\oraclexe\app\oracle\product\jdbc\lib\ojdbc6
+    servlet - c\programFiles\Apache Software Foundation\Tomcat\lib\servlet-api
+
+4. 데이터 가져올 쿼리 필요! StringBuilder
+	StringBuilder sql = new StringBuilder();
+	sql.append("select no, title, writer, reg_date ");
+	sql.append(" from t_board ");
+	sql.append(" order by no desc ");
+	PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+
+-> </html> 밑에 JDBCClose
+
+5. 화면에 출력하는 코드 : -> list.jsp 반복이 될수도 안될수도 있으니까 <body> 에서 반복문 !
+	<%
+		{
+	%>
+	<body> 들어갈 곳!
+	<%
+		}
+	%>
+
+rs.getInt("no") 써서 sql데이터를 가져올 수 있어 -> 이건 html에서 표현식<%= %>사용!!
+
+6. 만약 연월일만 나오게 하고 싶으면
+               ->  to_char(reg_date,'yyyy-mm-dd') as reg_date
+
+
+
+---------------------writeForm.jsp 게시글 등록 --------------------------------
+
+1. onclick 이용(자바스크립트) -> <script> -> function gotowriteForm(){}
+
+2. 입력 순서, 1.client가 입력하면 ->server에 전송 -> DB로 전달해서 DB가 기억,
+                                   -> form태그 필요!!!!
+
+3. writeForm 에서 사용자의 입력 받아야 함!!!!!!!!
+   주소 이동할 때 , ★★location.href = "list.jsp"★★
+
+4. 입력값 DB로 보내려면 메소드는 post방식이 제일 좋음
+     <form action="write.jsp" method="post">     write.jsp 만들러 board-write.jsp
+
+
+ client
+ 입력값 -----write.jsp(aaa,bbb,ccc) ------->    □server   <----> DB
+   aaa    <-----<html>...</html>.. ----------
+   bbb
+   ccc
+   사용자의 데이터를 날리면 server에서 추출해서 DB로 날리고, 
+    client화면에는 "새글등록" 이라는 문장만 뜨면 됨.
+
+
+5. 입력했을때 submit누르면 무조건 action로 가면안되고, 제목글쓴이내용이 null이면 안돼!
+<form action="write.jsp" method="post" onsubmit="return doWrite()">
+  -> javascript 함수 function doWrite(){}
+
+6. 근데 table name가져오려면 form도 name이 있어야함!!!
+ <form name="wForm" action="write.jsp" method="post" onsubmit="return doWrite()">
+-> 이렇하면 입력값 받을 때, [ document.wForm.title.value ]이렇게 하면 가능~
+-->script쪽에 doWrite()함수 만들고, 입력값이 "" (null이면)! return false!!!!
+
+
+7. 자~ 이제 write.jsp만들고 거기로 가자~ DB에 값 저장하러~!< board\write.jsp >
+   -> DB값도 저장하고
+   -> 얘의 기본적인 목적은 "새글 등록을 완료하였습니다." 만 나오면 됨!
+   
+<<<<<<<<<<<<<<  		작업 순서		>>>>>>>>>>>>>>>>>>>>>>
+	1. 사용자가 입력한 파라미터(제목, 작성자, 내용)을 추출한다. -java
+	2. 추출한 파라미터를 DB(t_board 테이블)에 추가한다.   -java
+	3. 결과 메세지를 화면에 출력한 후 목록페이지로 이동         -jsp
+ 
+
+8. [[[  1. 사용자가 입력한 파라미터(제목, 작성자, 내용)을 추출한다.]]]
+사용자가 요청한 정보 추출하기 위해서 request객체 
+  -> service를 기본객체를 내 것 처럼 쓸 수 있음 (request, response)
+ -> 근데 지금은 post인데, 한글날라오는거 바꿔주려고 encoding해줘야함
+    <%  request.setCharacterEncoding("utf-8");   %>
+
+String title = request.getParameter("title");   -> 날라오는 파라미터 String으로 받기!!!!
+
+
+9.  [[[ 2. 추출한 파라미터를 DB(t_board 테이블)에 추가한다. ]]]
+Connection conn = ConnectionFactory.getConnection();    -> import -> ctrl+space
+jsp에서 servlet변환할때, try,catch문 안에 이미 들어있는 코드들이기때문에 안써도됨
+
+
+10.  [[[   3. 결과 메세지를 화면에 출력한 후 목록페이지로 이동    ]]] 
+<button onclick="goList()">목록이동</button>
+
+<script>
+	function goList() {
+	      location.href = "list.jsp";
+	}
+</script>
+
+
+근데 사실 여기서 그냥 창만 띄우고 바로 돌아가면 되니까 
+<html>이 필요가 없음! 그래서 바로 <script>로 써줘도 됨!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%--        옛날 JSP 
+			<%
+				while(rs.next()){
+			%>
+				<tr>
+					<td><%= rs.getInt("no")          %></td>
+					<td>
+					<a href="detail.jsp?no=<%= rs.getInt("no")%>"><%= rs.getString("title")%></a>
+					</td>
+					<td><%= rs.getString("writer")   %></td>
+					<td><%= rs.getString("reg_date") %></td>
+				</tr>
+			<%
+				}
+			%> --%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

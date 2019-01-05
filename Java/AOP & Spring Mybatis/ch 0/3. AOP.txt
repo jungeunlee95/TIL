@@ -1,0 +1,49 @@
+3. AOP
+
+
+-------------------------------aop03----------------------------------
+나이를 수정할때마다 성인인지 미성년자인지 체크하고싶음
+AOPMain
+
+MyAspect에서 날라오는 setAge의 값을 알아야 성인인지 미성년자인지 알수있잖아  
+-> 그 값을 알 수 있는 것이 바로 joinPoint
+
+Object[] args = joinPoint.getArgs();
+for(Object arg : args) {
+     System.out.println(arg);
+  }
+
+-MyAspect
+Around 엔 proceed(); 를 적어줘야 setAge() 를 수행함.
+
+
+ before/after과 around의 차이점 알아야함 .. .. . .  . .. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

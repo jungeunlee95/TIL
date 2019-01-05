@@ -1,0 +1,117 @@
+1. spring-web연습 detail조회
+
+
+Mission-Web-Spring
+src/main/java
+kr.co.mlec.board.controller
+-------------------BoardController.java 에 selectByNo 만들기--------------
+
+	@RequestMapping("/board/detail.do")
+	public void selectByNo(HttpServletRequest request) {
+		int no = Integer.parseInt(request.getParameter("no"));		
+	}
+                            위 아래 같은 말 !
+	@RequestMapping("/board/detail.do")
+	public void selectByNo(@RequestParam("no") int no) {
+		System.out.println("no : " + no);		
+	}
+
+
+
+src/main/resources
+config
+sqlmap
+oracle
+----------------sqlmap-board.xml 에 select문 추가---------------------------
+	<!--해당 번호의 상세 게시글 조회 -->
+	<select id="selectByNo" parameterType="int" resultType="boardVO">
+		<include refid="selectBoard" />
+		where no = #{no}
+	</select>
+
+
+------------------------BoardDAOImpl.java-----------------------------
+
+	@Override                        //여기 주소는 sqlmap의 <mapper namespace="kr.co.mlec.board.dao.BoardDAO">
+	public BoardVO detail(int no) {
+		BoardVO board 
+		= sqlSessionTemplate.selectOne("kr.co.mlec.board.dao.BoardDAO.selectByNo", no);
+		
+		return board;
+	}
+
+
+
+------------------------BoardServiceImpl-----------------------------
+	@Override
+	public BoardVO selectByNo(int no) {
+		BoardVO board = boardDao.detail(no);
+		return board;
+	}
+
+
+-------------------BoardController.java-----------------------------
+	@RequestMapping("/board/detail.do")
+	public void selectByNo(@RequestParam("no") int no) {
+		/*System.out.println("no : " + no);	*/
+		BoardVO board = boardService.selectByNo(no);
+	}
+
+
+---------------src/main/webapp/WEB-INF -jsp-board-detail.jsp만들기-----
+
+
+
+--------------BoardController.java에 모델 객체--------------
+	@RequestMapping("/board/detail.do")
+	public String selectByNo(@RequestParam("no") int no, Model model) {
+		//System.out.println("no : " + no);	
+		BoardVO board = boardService.selectByNo(no);
+		
+		model.addAttribute("board", board);
+		
+		return "board/detail";
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

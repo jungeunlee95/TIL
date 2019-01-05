@@ -1,0 +1,155 @@
+2.  Lecture-Web & Mission-Web 파일 업로드 
+
+
+--------------------Lecture-Web- jsp - upload - fileuploadTest ---------------------
+
+파일이름이 날라가게 하기 위해서
+enctype="multipart/form-data"
+
+cos.jar -> 멀티폼으로 날라오는 데이터를 알아서 id=id 파일명=파일명 매칭시켜줌!!
+                  매직명과 이름을 구분시켜줌 지가 알아서!
+
+http://servlets.com/cos 에서 다운받아야돼
+com.oreilly.servlet 
+cos-26Dec2008.zip 다운
+->lib/cos.jap복사 -> webINF -lib에 붙여넣기
+
+
+
+writeForm 에 첨부파일 추가하자
+
+
+
+
+-----------------------Mission-Web-writeForm-----------------------------
+
+----------------------
+-----첨부파일 저장-----
+----------------------
+제목 글쓴이 내용 첨부파일1 첨부파일2 를 저장해야함 DB에!!!!!!!!
+t_board 테이블에 컬럼을 추가해야함!!!!
+근데 첨부파일은 있을수도있고, 없을수도있어
+그럼 테이블 모양이 L자가 되겠지? --> 이거 안좋잖아 낭비잖아
+테이블을 하나 더 만들어야겠지??
+
+--> 근데 컬럼을 2개(첨부1,첨부2) 로하면
+또 첨부1이 있는데, 첨부2는 없을수도있잖아 -> 또 L자 테이블이네..?
+    그리고 이러면 첨부파일 테이블의 첨부파일이 
+    t_board테이블의 어느 사람의 첨부파일인지 모르잖아
+---> 그냥 1게시글에 A가있다, 1게시글이 B가 있다 이런식으로 하면 괜찮겟지?
+1 첨부1
+1 첨부2
+2첨부1
+3첨부1
+4첨부1
+5첨부2 이런식으로!!!
+
+
+--> t_board_file ==> 첨부파일명, 게시물번호(참조), sequence(primary key), 서버에 저장된 이름
+
+---> 사람마다 다른이름의 파일을 올린다는 보장이 있어?
+--> 같은 동명의 이름의 파일을 올리수도있잖아.
+--> a.txt 라는 이름의 파일을 업로드해도 서버에서 저장할때는 unique한 이름으로 
+	rename(변형)된 이름의 파일이 들어가야함 
+
+
+--------------------------cos.jar파일 사용!!--------------------------------
+
+write.jsp - MultipartRequest multi 
+
+MultipartRequest multi = new MultipartRequest(
+ request객체,
+ 저장폴더 ( web-content - upload폴더 - 주소);,
+ 최대크기(102424 * 1024 * 3 3메가)
+ 인코딩 방식,
+ 파일이름중복 없애려고 저장되는 이름 rename하는 코드
+
+: 입력받을 파일이 write에 오면 객체 만드는순간 
+ saveFolder에 bitfilename..에 맞춰 파일이 올라감
+
+
+--> 선생님 자바파일 다운받아서 package kr.co.mlec.util; 에 
+public class BitFileNamePolicy 붙여넣기! --> 임의의 파일명을 정해주는 코드임!!
+
+
+--> 객체 이제 이렇게 가져와야함 String content = multi.getParameter("content");
+
+---------------------------------------------
+이제 저장하려고 sql에서 테이블 만들자!
+ex) 꿀팁! 테이블에 프라이머리키 두개 잡고싶으면
+, constraint t_board_file_no_pk primary key(no, aaa, bbb ) 이렇게 잡을수있음~
+---------------------------------------------
+ --첨부파일과 관랸된 테이블 생성
+ create table t_board_file(
+    no number(5) primary key
+    , board_no number(5) not null
+    , file_ori_name varchar2(200)
+    , file_save_name varchar2(200)
+    , file_size number(10) 
+근데 board_no은 무조건 t_board에 있는 넘버여야되니까 제약조건 걸꺼야!
+    , constraint t_board_file_board_no_fk foreign key(board_no)
+        references t_board(no)
+  -> 티보드 테이블의 no를 참조해서만 board_no를 사용할수있다는 제역조건!!!!!
+
+
+/* 2 첨부파일 저장하기(t_board_file) 
+먼저 시퀀스넘버를 받아와서 저장해야함!!!인서트 전에!!
+ - 게시물번호(int no)
+ - 원래파일명
+ - 변경파일명
+ - 파일크기를 알아야 저장가능
+
+
+- 게시물번호 시퀀스 ! 
+  	int no  = dao.selectNo();
+ 	board.setNo(no);
+ 	
+ 	dao.insert(board);
+
+
+
+ - 원래파일명(fileOriName) - 변경파일명(fileSaveName) - 파일크기를 알아야 저장가능(fileSize)
+
+	multi.getFileNames();  -> 얘가 원래 파일명 가져오는 메소드임!
+              -> 데이터가 몇개던간에 파일 네임을 다 저장할 수 있음
+
+ 	Enumeration files = multi.getFileNames();
+	while(files.hasMoreElements()){
+		String fileName =  (String)files.nextElement();
+		File f = multi.getFile(fileName);
+		
+		if(f != null){
+			String fileOriName = multi.getOriginalFileName(fileName); 
+			String fileSaveName = multi.getFilesystemName(fileName);
+			int fileSize = (int)f.length();
+			
+		}
+	}
+
+---------------BoardFileVO!!!만들어
+
+
+---------------------------------첨부파일이 글디테일에 보이게
+detail -첨부파일 추가 
+dao.selectFileByNo(no);
+---> dao에 추가!
+
+<tr>
+	<th>첨부파일</th>
+	<td>
+		<c:forEach items="${fileList }" var="file">
+			<a href="/Mission-Web/upload/${ file.fileSaveName }">  -> 지금은 Mission-Web이지만, 나중에는 톰캣서버에 만들어야한당
+				${ file.fileOriName }						
+			</a>	
+			(${ file.fileSize}bytes)<br>
+		</c:forEach>
+	</td>
+</tr>
+
+
+
+
+-------------------------------------------------------------------
+
+sql에서 부모가 갖고있는 no가 지워지면, fk도 같이 지워져야해!!
+ on delete cascade <<<- 이거 그거얌

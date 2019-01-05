@@ -1,0 +1,25 @@
+1. tomcat 다운 및 설치 - > http://tomcat.apache.org tomcat 8.0ver
+
+2.web-workspace 폴더 생성
+
+3. 이클립스에서 web-work-space로 로드
+
+4. css, html, jsp, java encoding 변경 (UTF-8로 변경)  windows\preperance
+
+
+실행할때 web-workspace
+ 기본설정 javaEE로
+
+ html 
+ css
+ javascript
+ java
+ jsp
+
+ encoding 
+(ECU-KR)  ->   UTF-8로 변경
+ : 모든 언어에 대해 인코딩 할 수 있는 기법으로 바꿔줘야함 
+
+
+
+

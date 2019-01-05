@@ -1,0 +1,166 @@
+메뉴 1,2,3,4,5,0 -> 각각 다 따로따로 클래스로 
+UI - service - vo - service - ui 
+DAO
+
+[접근제한자 다시 봐라..]
+ ㄴㅐ부적으로만 쓰고싶어 밖에 노출 싫어 : private
+ 상속 받는 관계가 쓰게하고 싶으면: protected
+ 
+BoardMain
+1.메뉴만들기 - 화면에 띄어주는 기능
+
+
+화면과 관련된 클래스 패키지 - kr.co.mlec.board.ui
+ kr.co.mlec.board.ui - [BoardUI] : 메뉴와 관련된 클래스
+ 1. 메뉴가 뜨면 2.항목선택 3.선택값에 따라 실행할 객체들 선택
+ -> 같은 클래스에 메뉴메소드(private) 하나 더 만들어서 
+      public execute메소드가 호출해서 보여주는걸로
+
+ -> menu () { 보여지는 메뉴 명령문 작성 }
+ -> 입력을 받아야하니까 scanner 는 메소드 제일 위에
+ -> 스캐너 받을 메소드 다시 또 만들어서 scanner 값 받을 메소드
+ -> 메뉴에서 스캐너 받고, return해
+
+->[BoardMain] 에서 BoardUI().excute() 호출하면 목록나오고, 스캐너 받음
+
+->[BoardUI] excute에서 type값 받으면
+   사용자 선택에따라, 문장이 다르니 switch로 입력값마다 출력할 명령문작성
+-> 선택받고 프로그램 끝나면 안되니까, while 문으로 무한루프 돌려줌,
+    그럼 0을 누를때까지 계속 메뉴를 선택할 수 있음.
+
+-> 글 종료하기 위한 클래스 [ExitUI] 만들기
+->[ExitUI] -> 어떤걸 실행하던 같은 메소드명 인스턴스객체 만들고 실행하고 싶어
+                        = 인터페이스 만들엇 : [IboardUI]
+                         = void execute() -> ui에서 프로그램 실행할때 따 execute사용해
+                                                      -> 예외처리는 간접으로 넘겨
+->[BoardUI] implements IBoardUI 가져오면 , execute 받고
+->[ExitUI]도 IBoardUI인터페이스 받아!  -> 무조건 추상메소드 오버라이드 해
+UI 와 관련된 모든 아이들의 실행명령문을 execute로 정의하겠다
+
+->[BoardUI]-> execute 선언해줘 while문 앞에!
+
+->Main 에서만 예외처리 잡아주면, 모든 예외처리 해결가능. 
+    :근데 그냥 하면 메인에서 예외처리 하면 프로그램이 종료됨,
+-> 다시 [BoardUI]가서 직접 예외 잡아주면 while문 계속 도니까 에러가 나도 프로그램 종료가 안됨
+
+[ExitUI] -> execute에 종료 명령문 만들어줌 system.exit(0);
+
+
+
+[글등록 메뉴 만들기 ui -> [AddUI] : IBoardUI 인터페이스상속
+추상메소드 오버라이드 한 메소드에 : 제목과 등록할 내용 입력 받기
+
+-> [BoardUI] case에 AddUI 호출해서 실행하도록
+-> 근데 [BoardUI]의 모든 명령문이 다 입력을 받아야함 : [BaseUI]클래스 만들어서 Scanner 받을 수 있는 변수 생성 (부모클래스 역할)
+   [ BaseUI ] -> 인스턴스 객체 하나 만들어서 scanner 넣어주고, 
+                        사용자 선택에 따른 정수,문자 입력 받고싶어
+       => [BaseUI] 정수,문자 받을 메소드 따로 만들엇 ( protected )
+
+[Addui] -> BaseUI 상속받고, IBoardUI 도 상속받아
+     -> BaseUI 가 IBoardUI 상속받으면
+   -> AddUI 가 BaseUI만 상속받아도 IBoardUI의 메소드까지 사용할 수 있음
+   -> 이때, BaseUI를 추상클래스로 만들어주면 IBoardUI의 추상메소드를 오버라이드 할 필요 없음
+
+[Board UI]도 {BaseUI] 상속 받으면 입출력 Scanner 사용할 수 있음
+
+
+[AddUI] - 이제 스캐너 필요없어 BaseUI 스캐너 메소드 호출하믄댕
+[BoardUI] menu 에서도 스캐너 필없엉, BaseUI에서 그냥 명령문 호출해서 받아오믄댕
+
+-------------
+전체게시글 조회 - SelectAllUI  -> 검색이 목적
+--------------
+SelectAllUI - BaseUI 상속받아서 execute()만 오버라이드 해주면 돼
+                                                               -> alt + shift + s 누르고 v선택
+
+execute메소드에서 명령문쓰고
+
+menu가서 다시 SelectAllUI호출해서 실행하도록
+
+----------
+글번호로 조회 SelectOneUI - 글번호로 조회
+--------------
+SelectAllUI - BaseUI 상속받아서 execute()만 오버라이드 해주면 돼
+오버라이드한 execute에서 스캔메소드 호출해서 조회할 글번호를 입력받아
+menu가서  글번호 조회에서 호출해서 실행하도록 해줘
+
+---------------
+글수정 UpdateUI 클래스 생성 -> BaseUI상속 : 클래스 만들때 superclass선택해서 BaseUI상속받은상태로 만들면도ㅔ
+----------------
+execute()에서 수정할 글 번호 선택 입력 (scanner) 받아
+ 수정할 제목을 도 입력받아
+ 게시글 수정했서요
+menu 가서 글수정 조회에서 호출해서 실행.
+
+------------------------
+글삭제 클래스 DeleteUI 생성
+------------------------
+execute () 에서 삭제할 글번호 입력받아,
+글 삭제 완료, menu가서 글삭제 조회에서 호출해서 실행.
+
+[ BoardVO : Value Object : 하나의 정보를 저장하는 단위 ( 값을 기억하는 클래스들) - 게시글 기억하는 클래스들
+  UI : 화면을 구성하는 클래스들 ]   ->  VO패키지도 따로 만들장
+
+kr.co.mlec.board.vo
+UI와 다른 패키지입니다
+[BoardVO] -> 기억하고 싶은 값들을 선언해주자
+  -> private int num //글번호 갖고
+       private String title //글제목도 갖고
+       private String writer //글쓴이도 갖고
+       private int viewCnt //조회수도 갖고
+       private string regDeate //등록일도 갖고
+ -> 얘네는 은닉성을 갖고있으니, get,set 메소드 만들어줘야해
+       -> alt shift s 누르고 c 누르면 : 기본 생성자 
+                                         o 누루면 : 매개변수 가지는 생성자 
+                                         r 누르면 : getter,setter 메소드 생성
+                                         s 누르면 : 나중에 다른 클래스에서 호출할수있는 toString메소드를 오버라이딩함
+
+-> 이렇게 되면 게시글 정보 자체를 가지고 있으며, 데이터를 추가,수정,삭제,조회할수있는 
+      기능을 갖고있는 list가 필요함 -> [DAO] Data Access Object : 게시글들을 CRUD하기위한 클래스 ->crud :  데이터 생성추가업데이트삭제
+
+-> 실제 게시글들을 관리하는 클래스 만들거야 
+ [패키지 하나 더 추가욤 board.dao 패키지에 [BoardDAO]클래스 만들어
+
+[BoardDAO] 에서 여러개 게시글을 가질수있는 리스트 생성해줘야해.
+    BoardVO를 관리하기 위한 boardList를 만듦 - 계속해서 추가되는 게시글을 기억하는 것이 목적
+
+우리가 입력받는 데이터는 제목,글쓴이 뿐인데, BoardVO에는 글번호,조회수,날짜가 있잖아
+    -> 글번호,조회수,날짜는 AddUI에서 할수가없어 : 얘는 입력만 받는 애니까
+    -> 그래서 BoardVO의 비어져있는 기능들을 수행할수있게 (안에서 내부적으로 알아서 수행하는  business logic필요)
+             -> 중간에서 그러한 기능들을 수행해주는 기능을 가진 비즈니스로직을 가져야해
+                  :UI에서 나온 데이터가 VO로 가기위한 흐름을 관리하는 중간클래스 : Service
+
+[Board service] 생성~!
+ : DAO 와 UI를 왔다리 갔다리 하면서 이것저것 일들을 처리해줌
+
+
+DAO와 UI가 값을 VO형태로 주고 받고 해야함
+
+
+UI가 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

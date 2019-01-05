@@ -1,0 +1,126 @@
+
+3. Spring MVC 연습 @ResponseBody
+          @RestController으로 대체할수있음
+
+컨트롤러가 곧장 응답을 해주길 바람(json또는 xml과 같은 메세지 기반의 서비스를 만들경우사용) 
+@ResponseBody
+---------------------------------------------------------------------
+package kr.co.mlec.body;/ ResBodyController 만들기 ! 
+
+POSTMAN에서
+GET 방식에      http://localhost:8000/spring-mvc/ajax/resBody.do        <send>
+
+한글깨지니까 charset 인코딩 해줘야함
+----------------------------------------------------------------------
+spring-mvc.xml 수정해야돼 
+ <mvc:annotation-driven>
+   <mvc:message-converters>
+   	<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+   		<property name="supportedMediaTypes">
+   			<list>
+   				<value>text/html; charset=utf-8</value>
+    			</list>
+    		</property>
+    	</bean>
+    </mvc:message-converters>
+ </mvc:annotation-driven>
+
+
+----ResBodyController에서 MAp객체 추가하면 에러뜰거야 ---------------------
+프로젝트 - properties
+	- Java Build Path - JavaSE-1.8로 Edit하기 ! 
+	 - Project Facets -> 자바 1.8버전으로 바꾸기 
+
+--------------------------------------------------------------------
+web.xml 에도 .json 추가해야돼
+  <servlet-mapping>
+  	<servlet-name>dispatcher</servlet-name>
+	<url-pattern>*.json</url-pattern>  
+  </servlet-mapping>
+---------------------------------------------------------------------
+
+ResBodyController의 Map객체를 json으로 만들고싶어
+spring-mvc.xml 빈 추가 해야돼 -> Map을 json으로 컴버트해줄.
+
+   <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    	<property name="supportedMediaTypes">
+     		<list>
+    			<value>text/html; charset=utf-8</value>
+    			<value>application/json; charset=utf-8</value>
+    		</list>   			
+    	</property>
+    </bean>
+
+----------------------------------------------------------------------
+pom.xml에서 코드 수정 ! dependcy -> 수정
+http://mvnrepository.com/search?q=jsckson-core
+Jackson Core ≫ 2.9.6
+Jackson Annotations ≫ 2.9.6
+Jackson Databind ≫ 2.9.6
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.6</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>2.9.6</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.9.6</version>
+		</dependency>
+
+---------------------------------------------------------------------
+
+
+
+----------------------------------------------------------------------
+kr.co.mlec.rest패키지    RestBodyController  
+
+//이렇게 클래스에 RestController어노테이션 하면 인스턴스 객체를 빈컨테이너가 만들어줌
+@RestController
+굳이 메소드 마다@ResponseBody를 써줄 필요 없음
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

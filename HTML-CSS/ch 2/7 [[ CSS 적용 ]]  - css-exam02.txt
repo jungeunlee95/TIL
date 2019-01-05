@@ -1,0 +1,59 @@
+ [[ CSS 적용 ]]  -> css/exam02
+
+우선순위 : !important -> id -> class -> div# -> *
+------------------
+class  나누기  태그를 구별할 수 있는 구분명 약간 id같은거
+------------------
+	p{
+		background-color: gray;
+		color:white;
+	}
+
+	.style01{
+		color: red;
+	}
+	
+	.style02{
+		color: blue;
+	}
+
+<body>
+	<p class="style01">
+	스타일1-1 적용
+	</p>
+	
+	<p class="style02">
+	스타일1-2 적용
+	</p>
+	
+	<h3 class="style01">
+	스타일2-1 적용
+	</h3>
+	
+	<h3 class="style02">
+	스타일2-2 적용
+	</h3>	
+		
+</body>
+
+------------------------------------------------------
+
+
+         [ exam03]
+
+-----
+id   -> id가 제일 우선순위
+------
+style앞에 .말고 #붙이면 돼
+
+
+	<p class="style01" id="style01">
+	 class와 id하면 id가 적용됨
+
+
+
+
+
+
+
+

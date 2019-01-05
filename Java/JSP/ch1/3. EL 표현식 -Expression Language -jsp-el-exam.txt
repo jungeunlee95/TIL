@@ -1,0 +1,87 @@
+3. EL 표현식 -Expression Language     -> 자바 언어에 직접적으로 접근하지 않아도 됨 
+
+
+표현식 <%= %> 대신 사용
+자바 클래스 메소드 호출 및 집합 객체에 대한 접근 방법을 제공
+JSP에서 제공하는 내장객체 중 4가지 기본 영역에 대한 속성 사용
+
+구문 --> $ {expr}
+ex) 당신의 이름은 ${name} 입니다.
+
+----------------------jsp - el - exam01 ---------------------------------
+	5 + 5 : <%= 5 + 5 %><br>
+	5 + 5 : ${ 5 + 5 } <br>
+	9 % 5 : ${ 9 % 5 }<br>
+	9 mod 5 : ${9 mod 5 }<br>     --> 나머지
+
+
+-------
+empty 
+--------
+값이 nul		 empty=true
+비어있는 문자열 	empty=true
+배열이나 콜렉션일경우 길이가 0이면 empty=true
+
+
+----------------------jsp - el - exam02 ----------------------------------
+ 
+ ${객체이름}   -> el에 객체이름에 해당하는 id가 있는지 찾고, 없으면 내장객체중에 찾음
+ param <- request.getParameter 대체 하는 매핑 객체
+paramValues <- request.getParameterValues 대체 하는 매핑 객체
+
+  http://localhost:8000/Lecture-Web/jsp/el/exam02.jsp?id=hong  
+  이렇게 호출했다는 가정하에 id에 해당하는 value값 hong을 추출하는 코드 작성
+
+  ID : <%= id %><br>
+  ID : <%= request.getParameter("id") %><br>
+  ID : ${param.id}<br>     <- 매핑객체로 이렇게 간단하게 쓸 수 있음! 
+ 만약 name 추출하고 싶으면 ${param.name}    param.추출하고싶은속성
+
+----------null값이면 실행할때 nullpointexception생기니까 자동초기화--------
+	 if(hobbys == null){
+		 hobbys = new String[]{"파라미터 없음"};
+	 }
+
+
+같은 영역을 표현하는데 이름이 다를뿐!!!
+이 두개가 서로 같은 공간을 의미함! 서로 각자의 명령문으로 같은 곳의 값을 뽑아낼수있음
+
+  - 공유영역 - 
+JSP : pageContext    request             session               application
+EL   :  pageScope      requestScope   sessionScope   applicationScope
+  -> el은 값을 대입하는게 목적이아니라, 찾는게 목적임
+  
+
+ pageContext    request             session               application: 공유영역
+ <이런식으로 찾아야함>
+       공유영역.setAttribute(이름,값)
+--> request.setAttribute("name", "임꺽정");
+-->pageContext.setAttribute("name", "홍길동");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

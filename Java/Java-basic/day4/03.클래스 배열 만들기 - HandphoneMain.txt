@@ -1,0 +1,17 @@
+int a:
+int b:
+int c:
+
+int[] ar = {a,b,c};
+
+처럼 참조변수도 원소를 가지는 배열을 만들 수 있음!
+클래스 네임형 타입의 배열 만들기
+
+Handphone hp = new Handphone();
+Handphone hp3 = new Handphone();
+Handphone hp3 = new Handphone();
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓세개를 배열로다가
+
+Handphone[] hpArr = {hp,hp2,hp3};  [[그림은 그림에 있음]]
+
+hpArr[1].name -> hp.name을 가리키고 있는거임

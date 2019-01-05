@@ -1,0 +1,38 @@
+  [  날짜 API  ]
+  [Date]
+  오 늘 날 짜 
+ int year = d.getYear()+1900;
+ int month = d.getMonth() + 1;
+ int date = d.getDate();  
+
+  [Calendar] - 추상클래스라서 객체 얻으려면 Calender.getInstance()
+                     - static 이용해야함       
+
+	Calendar c = Calendar.getInstance();
+	//이런식으로 사용해야한다~	
+	System.out.println(c.getInstance());
+                //이렇게 하면 엄청 많은 정보가 출력됨
+
+//저 많은 정보중에서 원하는 정보를 추출하고 싶을 때,
+ get(Calendar.YEAR);        
+ get(Calendar.MONTH);       
+ get(Calendar DATE.);        
+ 
+//오늘 날짜가 아닌 다른 날짜로 설정하고 싶을 때 set(int year, int month, int date, int ...)
+       
+      
+       
+        
+       
+       
+         
+        
+       
+               
+             
+               
+                     
+                  
+            
+                         
+                              

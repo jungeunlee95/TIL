@@ -1,0 +1,131 @@
+1. AJAX
+     -> 날라오는 정보가 xml, javascript -> 비동기 방식
+- 직관적이고 자연스러운 사용자 상호 액션 방식 ( 기존 클릭이 필요X )
+- 화면의 일부분의 자연스러운 변경
+      : 기존 - 서버 요청, 대기 , 전체화면 새로고침
+      : AJAX - 업데이터가 필요한 부분만 변경
+
+---------
+ 동작방식 
+---------
+ : 원래는 C가 S에 요청하면 응답이 도착할 때 까지 대기! 
+   But, AJAX가 C대신 S에 요청을 해줘서 C는 자기할일 할수있어 멈추지 않고 동작
+    --> 중간에 AJAX engine이 요청&응답을 처리해 웹의 일부분만 바꿔줌!!!!!!!!
+    --> AJAX가 서버로 HTML+CSS 문서 보낼 필요 X xml보내면 C가 알아서 해석해서 업뎃함
+
+---------
+ 구성요소
+---------
+XMLHttp Request
+DOM 
+CSS
+Javascript
+
+
+------------------
+XMLHttp Request
+------------------
+- 자바스트립트 객체 
+- 표준 HTTP방식(GET,POST)으로 서버와 통신 
+- 대부분의 브라우져에서 지원
+- 서버와 통신시 비동기적으로 작업 ( 백그라운드에서 작업 )
+- 기존 서버 작업 방식 사용 ( Servlet, JSP, ... ) 
+- 응답 문서 타입 -> 기존 html 외의 xml, json, 단순 텍스트 사용
+
+---------
+ 발생 순서 
+---------
+1. 클라이언트 이벤트 발생
+2. XMLHttp Request 객체 생성
+3. XMLHttp Request 객체 콜백 함수 설정
+4. XMLHttp Request 객체를 통한 비동기화 요청
+5. 서버 응답결과를 생성하여 클라이언트로 전송
+6. XMLHttp Request 객체는 서버 결과를 처리할 콜백함수 호출
+7. 결과를 클라이언트 화면에 반영 - responseText
+
+ ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+1. 사용자 버튼 클릭 시 자바스크립트 함수(requestMsg)를 호출
+2. httpRequest = new XMLHttp Request(); 객체 생성
+3. httpRequest.onreadystatechange = callback 함수 
+                             -> 상태가 바뀔때마다 콜백함수
+4. httpRequest.open, httpRequest.send 메소드로 비동기화 
+   open : 요청의 초기화 작업, get/post 지정, 서버 url지정, 동기/비동기설정
+               - ("HTTP method", "URL", true/false)   비동기-true 동기-false
+   send : 실ㅈㅔ 요청을 하는 기능!
+              GET방식은 URL에 필요한 정보 추가하니까 null적용,
+              POST방식에서 파라미터 설정 처리
+              - (content)
+5. 서버요청파악 : readtState == 4, status ==200  : 서버에서 요청이 왔단 좌표값
+  - 요청따와서 innerHTML 에 값 집어 넣을거야
+
+
+---------Lecture-Web - WebContent -ajax - exam01 -----------------
+hello.jsp
+hello01.jsp
+ 윈도우 버전이 낮아서 XMLHttpRequest 없을수도 있으니까 if, else로!
+
+------------------------------servlet으로 ajax 출력하기 ------------------------
+----Java Resources - kr.co.mlec.ajax - HelloServlet  
+         -> next로 설정해주면 mapping이름도바꾸고, service메소드도 자동생성해쥼
+
+-------------------------------------------------------------------------------
+
+
+onreadystatechange(C가 비동기통신을 요청해서 응답이 올때까지 상태변화를 기록하는 변수)
+:서버에서 응답이 도착했을 때 호출 될 콜백함수를 지정함
+ : 콜백함수는 상태(readtState)가 변경될때 마다 호출
+              **호출(callback)함수 : onreadystatechange가 바뀔때마다 호출되는것
+ readyState : 요청의 현재 상태
+0 : uninitialized ( 객체 생성 후 open 메서드 호출 전)         open() 호출전
+1 : loading (open 메서드가 호출되고 send 호출 전)            open()호출 후 , send()호출 전
+2 : loaded ( send 메서드가 호출되었지만 서버 응답 전)      send()호출, BUT 서버의 응답 전
+3 : interactive (데이터의 일부가 전송된 상태)                  서버응답, header전송,body미전송
+4 : completed (모든 데이터 전송 완료)                               C에서 body전송완료(응답완료)
+
+
+
+
+-----------------/Lecture-Web/WebContent/ajax/exam02/readtState.jsp-----
+debug로 1~4단계마다 [ readyState : 요청의 현재 상태 ]호출하고, clear!
+--------------------------------------------------------------------------------
+
+
+
+
+
+--------------------------------------------------------------------------------
+status : 서버 처리 결과 상태 코드
+	200 : OK 요청 성공!	
+	403 : 엑세스 거부
+	404 : Not Found 페이지 못찾아 ㅠㅠ
+	405: 서블릿에러
+	500 : server Error 내부서버에서 결과 생성 시 오류 발생
+         ------> 구글에 http상태코드 검색하면 다 나와용 외우지 않아도 됩니당
+	
+responseText : 서버의 응답결과를 문자열로 받기
+responseXML : 서버의 응답결과를 XML Document로 받기!
+
+
+--------/Lecture-Web/WebContent/ajax/exam02/readtStatus.jsp------------
+--status--
+상태코드는 서버에서 응답을 완료해야지 ! 즉, readtstate==4 status==200일때만 보여!!!! 
+
+오류 발생 했을 때, 
+httpRequest.status : 오류 코드    404
+httpRequest.statusText : 무슨 오류인지! 오류 내용  Not Found
+  --> F12 console창에 httpRequest 검색하면 status 등 다 확인 할 수 있음!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+

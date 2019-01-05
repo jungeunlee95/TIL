@@ -1,0 +1,57 @@
+4. Mission-Web-MVC02 어노테이션 
+
+2개의 어노테이션 Controller   RequestMapping
+
+각각의 컨트롤러에 requestMapping(.do)의 value mapping 해주기 
+BoardController
+LoginController
+
+-----------------------------------------------------------------------
+SERVLET 만들기
+
+package : kr.co.mlec.framework
+Name: DispatcherServlet.java
+Servlet 만들때, next해서 url mappings -remove & add-> *.do로 
+                                           Initialization parameters --Add --> kr.co.mlec.board.control.BoardController | kr.co.mlec.login.control.LoginController
+                           next - > init, service만
+
+package : kr.co.mlec.framework
+
+HandlerMapping.java  -> 이 uri 줄테니까 너가 뭐 실행해야 하는 지 알려줘 
+ " | " 이 파이프로 구분해서 uri 구분 할 수 있어  -> 근데 주소 뒤에 공백있을지도 모르니까 trim이용하기
+	-->BoardController 안에 다 넣을건데
+	      어떤  uri가 들어오면 어느 메소드를 실행해야 하는지 알아야되잖아, 
+	      그래서 어떤 uri에 어떤 메소드를 수행하는지 알고싶어서 
+
+
+--------------------<HandlerMapping>---------------------------------
+목적 : 어떤 uri를 호출하면 그에 맞는 클래스와 메소드를 찾아서 호출해야해 !!!!
+ex) /board/list.do 호출하면 
+       (new BoardController()).list(); ->이걸 호출해야해 결국,
+	<HandlerMapping>
+       메소드 호출하려면 객체가 있어야 호출할 수 있어
+       Object target = clz.newInstance();
+
+Method[] methods = clz.getMethods(); -> 상속받은 메소드까지 다 나옴 단! public만!
+declaredMethods -> 내가 속해있는 메소드 전부 (접근제한자 상관없음 )
+
+//request.Mapping 어노테이션을 갖고있어??
+RequestMapping reqAnno = method.getAnnotation(RequestMapping.class);
+method : public java.lang.String kr.co.mlec.board.control.BoardController.wirte(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse) throws java.lang.Exception 
+reqAnno :  @kr.co.mlec.framework.annotation.RequestMapping(value=/board/write.do)
+
+
+//근데 String,과 controller과method를 다 써야하는데 ,
+    못쓰니까 컨트롤러+method갖고있는 클래스 하나 만들어
+    --> private Map<String, CtrlAndMethod> mappings;
+
+
+---------------------dispatcherServlet ----------------------------
+//동적으로 메소드를 실행하고싶을때  
+   method.invoke(obj, args);
+     method.invoke(target, request, response);
+
+
+
+
+

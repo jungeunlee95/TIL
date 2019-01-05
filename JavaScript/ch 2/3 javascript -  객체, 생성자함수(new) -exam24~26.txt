@@ -1,0 +1,66 @@
+3 javascript -  객체, 생성자함수(new) -exam24~26
+--------------------------------exam 24 -------------------------
+--> 만약 내가 객체에 넣은 속성값이 맞는 지 확인하고 싶을때,
+       굳이 info(person); 이런식으로 출력하면서 확인 안하고, 그냥 웹브라우저의
+       console창에서 person이렇게 쳐보면서 속성값 확인할 수 있음
+
+
+두개 객체 합쳐서  배열로 만들 수 있음
+var persons = [person, person2];
+-> person의 name 찍을때
+persons[0].name
+
+person추가 할거야
+persons[2] = {
+	name : '한길순',
+	phone : '010-5555-6666',
+	'addr' : '서울시 서초구'
+  };
+
+근데 매번 마지막 번지수 알수있어? 없잖아 마지막번지수에 객체 추가 push!
+ person.push({
+	name: '최길동',
+	phone : '010-8888-9999'
+  });
+
+
+--------------------------------exam 25 -------------------------
+//가만보니까 모든 객체들이 name,phone의 멤버변수를 갖고있네?
+--객체 미리 선언해서 만들고 그 안에 속성들 넣어서 배열로 만들어서 출력하기 
+
+
+--------------------------------exam 26 -------------------------
+-----<or> new이용해서 객체를 만들어서[생성자함수]사용해보자---------- 
+생성자 함수 new 사용
+-----------------
+new쓰면 return값 필요없음
+
+exam25의 얘는 -> object
+var person =makePerson('홍길동', '010-1111-2222', '서울시 서초구');
+//person instanceof Person : error
+↓↓↓↓↓↓↓↓
+makePerson은 형이 아니라, 그냥 일반 함수!
+new는 Person형을 만들었다고 보면됨!ㅎㅎ
+↑↑↑↑↑↑↑↑
+exam26의 얘도 -> object
+var person = new Person('홍길동', '010-1111-2222', '서울시 서초구');
+//person instanceof Person : true
+
+
+[[[생성자함수 new]]]]   -> this. -> 속성명 만들고 =name ->으로 입력갑 받는거
+function Person(name, phone, addr) {
+	this.name = name;
+	this.phone = phone;
+	this.addr = addr;
+	this.info = function() {
+		var msg = '';
+		for ( var key in this) {
+			if ((typeof this[key]) != 'function')
+				msg += key + ' : ' + this[key] + '\n';
+		}
+		alert(msg);
+	}
+ }
+
+
+

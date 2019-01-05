@@ -1,0 +1,20 @@
+   [ Map ]- Key와 value(값) 으로 나누어 데이터 관리, 순서없고, 키에 대한 중복은 없음
+   -MapMain & MapMain02
+,
+[HashMap]
+
+[TreeMap]             
+    
+ V put(K key, V value) : 데이터 입력
+       -> 동일한 값이 있을 경우 새로운 값으로 대체하고 기존 값 반환
+
+ V get(Object Key) : 데이터 추출
+       -> 키에 해당하는 값이 없을 경우 null값 반환
+
+ boolean containsKey(Object Key) : 특정 키 확인
+       -> Key가 존재할경우 true반환
+
+ void putAll  : 기존 콜렉션 데이터 추가욤
+
+       
+      

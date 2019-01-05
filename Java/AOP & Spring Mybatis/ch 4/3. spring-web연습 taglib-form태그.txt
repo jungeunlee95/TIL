@@ -1,0 +1,197 @@
+3. spring-web연습 taglib-form태그
+
+
+
+===========BoardController  writeForm메소드만들고
+
+
+----------------------------write.jsp------------------------------------
+<body>코드 작성하기 
+
+
+--------------------------index.jsp에 태그 만들기------------------------
+<a href="${pageContext.request.contextPath}/board/write.do">새글등록</a>
+
+
+
+------------------write.jsp  tablib하고 form 만들기--------------------------
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
+<form:form method="post" commandName=" 컨트롤러에서 만든 객체이름 ">
+ 	내가 컨트롤러에서 VO객체를 먼저만들어서 폼태그의 input애들을 
+	이미 만들어진 공간에 하나씩 집어넣을거야 
+
+
+<!-- path는 VO의 멤버변수의 변수명이여야함 !!!!! -->
+<form:input path="title"/>
+
+
+
+-->form태그 다 적으면 
+
+
+
+---------BoardController writeForm (GET) 메소드에 객체만들거야 폼태그 input넣을 객체------
+    model.addAttribute("boardVO", new BoardVO());          객체 만들어 ! 
+        new BoardVO()객체를 만들어서 boardVO라는 이름으로 등록해! ! 1 
+
+
+----------------------------write.jsp------------------------------------
+	<form:form method="post" commandName="boardVO">
+commandName 이제 넣을수있어 ㅎㅎ
+
+---------------BoardController post로 날라오는 write메소드 ---------------
+이제 날라오는 파라미터를 받을(post) 메소드가 필요해 !!!! 
+BoardVO로 받을거야 
+
+->이제 DB에 CRUD해야지?
+
+------------------sqlmap-oracle/sqlmap-board.xml---------------
+  <!-- 새글 등록  -->
+  <insert id="insert" parameterType="boardVO">
+	insert into t_board(no, title, writer, content)
+	  values(seq_t_board_no.nextval, #{title}, #{writer}, #{content})
+  </insert>
+
+
+
+----------BoardDAO---------
+	/**
+	 * 새 글 등록 서비스
+	 */
+	public void insert(BoardVO board);
+
+
+--------BoardService----------
+	public void insert(BoardVO board);  등록 
+
+
+--------BoardDAOImpl   insert(BoardVO board) 메소드-------------
+오버라이드
+
+@Override
+public void insert(BoardVO board) {
+	 sqlSessionTemplate.insert("kr.co.mlec.board.dao.BoardDAO.insert",board);
+	 sqlSessionTemplate.commit();
+	
+ }
+---------------------BoardServiceImpl------------------------
+	@Override
+	public void insert(BoardVO board) {
+		boardDao.insert(board);
+	}
+
+
+---------------------------BoardController-----------------------------
+@RequestMapping(value="/board/write.do", method=RequestMethod.POST)
+public String write(BoardVO boardVO) {
+		
+	//System.out.println(boardVO);
+		
+	boardService.insert(boardVO);
+	return "redirect:/board/list.do";
+		
+  }
+
+--------------------index에서 실행하면 됩니다 ~ -----------------------------
+
+
+
+에러체크 <form:errors>
+근데 아무것도 입력안하고 등록 누르면 에러나잖아 그거 잡기위해서 에러체크
+----------------------write.jsp에  넣어줘 form태그 명령어있음
+<form:errors path="title" />
+<form:errors path="writer" />
+<form:errors path="content" />	
+
+
+
+------------->이거 쓰려면 다운받아와야돼 hibernate-validator 
+http://mvnrepository.com/search?q=hibernate-validator
+
+Hibernate Validator Engine Relocation Artifact ≫ 6.0.12.Final
+===> pom.xml에 
+<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-validator</artifactId>
+	<version>6.0.12.Final</version>
+</dependency> 
+
+다운다운~~~
+
+
+-------------------------------------------------------------------
+
+--------------------BoardVO.java 에 어노테이션 붙일수있음
+@NotEmpty(message="공백으로 두시면 안됩니다ㅡㅡ.")
+private String title;
+@NotEmpty(message="공백으로 두시면 안됩니다ㅡㅡ.")
+private String writer;
+@NotEmpty(message="공백으로 두시면 안됩니다ㅡㅡ.")
+private String content;
+
+
+[이런것도 됨]
+@Length(min=2, max=50, message="2 - 50 글자 사이로 입력해야합니다.")
+@Pattern(regexp="^[A-Za-Z]*$", message="알파벳으로만 시작 할 수 있습니다.")
+
+
+
+
+-------------------BoardController   write 메소드에
+@Valid BoardVO boardVO, BindingResult result
+       --> 이거 괜찮아?                  --> 결과
+
+  if(result.hasErrors()) {    -->만약 에러면: 공백이라서 
+	System.out.println("오류 발생이오오~~~");
+	return "board/write";
+  } 
+이렇게 하고 index확인하면 공백일때 옆에 공백으로두면안된다고 에러뜸~~
+
+--------------------------------------------------------------
+
+
+
+@Transactional -> rollback할때   -> 주문결제 실패하면 주문결제까지의 과정을 다시 제자리로
+-> 데이터베이스 들어갔다가 다시 빠져나옴
+
+
+---나중에 디테일볼때 detail/넘버 넘기려면
+.do로 안끝나잖아 
+web.xml에서 *.do를 / 이걸로 바꿔주면 넘어감 ㅎㅎ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

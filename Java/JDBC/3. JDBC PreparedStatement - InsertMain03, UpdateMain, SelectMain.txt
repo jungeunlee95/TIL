@@ -1,0 +1,16 @@
+[[ PreparedStatement ]]  -InsertMain03 & sql localhost259~
+String sql = "insert into t_test(id, name) ";
+ sql += " values(?,?) ";
+pstmt = conn.prepareStatement(sql);
+pstmt.setString(1, id);          //첫번째 물음표에 이거 넣어줘~
+pstmt.setString(2, name);
+
+
+UpdateMain01
+-> 쿼리 실행항때
+	pstmt.executeUpdate()
+
+
+SelectMain01-> select 쓸때는  
+          ResultSet rs  = pstmt.executeQuery()
+	

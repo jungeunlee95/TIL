@@ -1,0 +1,115 @@
+5. 07  FileIO
+
+# FileIO.py
+# 표준 입출력
+
+print('-----------------------------------------------------------------------')
+print(10) #숫자 출력
+print('Hello', 'Python') # 문자열 출력(공백O)
+print('Hello' + 'Python') # 문자열 출력(공백X)
+num = 20
+print(num, 'Hello')
+print(str(num) + 'Hello')
+
+print('-----------------------------------------------------------------------')
+iVal = 10
+sVal = 'Python'
+print(iVal, sVal, sep = '') # sep 파라미터 활용 -> 중간에 공백 지울수도 있음 
+print(iVal, sVal, sep=', ')
+print(iVal, sVal, sep=', ', end='!!!')  # end 파라미터 있으면 자동 개행 안됨
+print('Hello')  # end 파라미터가 없다면 자동 개행
+#   System.out.println()    -> print()
+#   System.out.print()      -> print(end='')
+
+print('-----------------------------------------------------------------------')
+# 표준 출력
+import sys
+print('Hello Output', file=sys.stdout) # 표준 출력
+print('Hello Error', file=sys.stderr)  # 표준 에러 출력
+
+print('-----------------------------------------------------------------------')
+# 파일 입출력
+# 순서 : 1. 열어 -> 2. 작업수행 -> 3. 닫아
+#   드라이브 경로 -> /hello.txt
+#   프로젝트 경로(07_FileIO.py)가있는 경로 ->  hello.txt
+f = open('/hello.txt', 'w')
+print('Hello FileIO', file=f) # python기본경로(/) : 드라이브경로 
+
+# FileIO
+f = open('hello.txt', 'w', encoding='utf-8')
+data = f.write('Hello Python IO\nWorld')
+f.close()
+
+
+# 사진 파일 복사
+# 1 : 열기
+ori_file = open('iotest/ge.jpg', 'rb') # 바이너리 모드 read
+data = ori_file.read()
+ori_file.close()
+
+cpy_file = open('iotest/ge2.jpg', 'wb') # write
+cpy_file.write(data)
+
+print(cpy_file.closed) # 통로가 닫혔는지 확인
+cpy_file.close()
+print(cpy_file.closed) # 통로가 닫혔는지 확인
+print('-----------------------------------------------------------------------')
+
+
+#1. 열어라
+#f = open('/hello.txt', 'r', encoding='utf-8')
+f = open('hello.txt', 'r', encoding='utf-8')
+#2. 작업수행
+data = f.read()
+print(data)
+#3. 닫아라
+f.close()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

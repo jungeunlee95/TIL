@@ -1,0 +1,27 @@
+ [시퀀스-create sequence] homework294~341
+
+select seq_01.nextval   //그냥 일련번호 부여
+from dual;
+--dual쓴 이유 : 그 테이블에 있는 레코드 개수만큼 다 나와서 
+
+
+select seq_01.currval //마지막 시퀀스가 몇 번인지 
+from dual;
+
+
+create sequence seq_02
+start with 201808000001;    -> 이번호부터 시작해라
+
+create sequence seq_03
+increment by 5;  -> 한번에 5씩 증가해
+
+
+alter sequence seq_03
+ increment by 3;   -> 다시 3씩 증가시키기로 바꾸기
+
+
+insert into t_board(no, title, content)
+ values(seq_t_board_no.nextval, '제목1', '시퀀스에 의한 삽입');
+
+
+

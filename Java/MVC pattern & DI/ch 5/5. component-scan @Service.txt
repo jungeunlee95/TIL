@@ -1,0 +1,25 @@
+5. component-scan @Service
+
+  -@Component, @Controller, @Service, @Repository
+
+어떠한 목적을 가진 클래스들은 @Service
+
+
+-------------------------------di_anno04----------------------------
+@Service -> 기능클래스 
+-> 주문을 받아 파는 것이 목적인 HyundaiMaker.java
+-> KIAMaker.java
+
+
+사용자가 오더메니저한테 부탁하고 기아,현대메이커에 3000주면서 차 주문,
+현대,기아가 돈을 보고 오더매니저한테 차를주고 
+오더매니저가 차를 줌
+
+
+
+-----------------연습문제 di_test02 / EmpMain ---------------------------
+
+
+
+
+

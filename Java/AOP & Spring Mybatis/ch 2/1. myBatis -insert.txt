@@ -1,0 +1,169 @@
+1. myBatis
+-> 장점 : 동적 태그를 쓸 수 있음 !!!! 
+
+-원래 IBatis(옛날) 였음 
+-더 빠른 JDBC코딩을 위한 일반화된 프레임 워크
+-sql을 자바가 아닌 XML으로 따로 분리
+-sql실행결과를 MAp또는 자바 클래스로 자동 매필
+-sql을 XML이나 인터페이스 내에 어노테이션을 활용하여 처리 
+
+-> 쿼리문을 가지고 있는 파일 Mapped 파일
+
+-> 장점 : 동적 태그를 쓸 수 있음 !!!! 
+-> 환경설정파일(sqlMapConfig)과 실제쿼리를 적용할 파일 (Mapper)이 필요해 (XML, Annotation)
+-> 자바 파일에서 설정된 환경설정 정보를 이용하여 SqlSession객체를 얻어온 다음 myBatis와 연동 
+
+
+->구글에 myBatis검색하면 뜸
+http://www.mybatis.org/mybatis-3/ko/getting-started.html  
+->알집파일 다운로드
+
+--> 자바 프로젝트 myBatis 생성 ! 
+lib폴더 만들어서 자르파일 2개 붙여넣기 
+->myBatis 오른쪽마우스 Build Path에서 Libraries에 Add JARs해서 추가한 자르파일 두개 넣기
+
+--------------------------------------------------------------------------
+->package kr.co.mlec; / MyConfig 
+->src / mybatis-config.xml 에 XML에서 SqlSessionFactory 빌드하기 !  
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+      <properties resource="db.properties" />
+
+  <environments default="development">
+    <environment id="development">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="org/mybatis/example/BlogMapper.xml"/>
+  </mappers>
+</configuration>
+
+여기서 ${} 은 EL아니고 property에서 name에 해당하는 값을 가져올때 사용함
+--------------------------------------------------------------------------
+
+
+--> 그냥 file로 db.properties파일 만들기
+driver=oracle.jdbc.driver.OracleDriver
+url=jdbc:oracle:thin:@localhost:1521:xe
+username=hr
+password=hr
+
+-> 이렇ㄱㅔ하면 xml에서 
+<properties resource="db.properties" /> 코드를 통해 가져오니까 
+
+<property name="driver" value="${driver}"/> 여기서 ${oracle.jdbc.driver.OracleDriver} 안에 저 위의 식이 들어감 
+
+->MyConfig.java에 추가
+SqlSession session = sqlSessionFactory.openSession();
+
+--이제 DB접속을 myBatis연동하자나 sql세션 객체만 있으면 돼
+
+->BOARDDAO 클래스 만들기 
+private SqlSession sqlSession;
+
+-> Main에서 실행
+
+-----------------------------------------------------------------------
+CRUD할수있는 쿼리 필요
+ex) 
+ <select>
+        select * from table
+ </select>
+이런식으로 태그가 있어서 쿼리를 실행할수있음
+만약 쿼리가 여러개면  id="" 속성 넣어주면 돼
+ ?자리에 들어 갈 애가 어떤 타입이니 parameterType=""; (나 int야, String,이야 ... 타입)
+resultType="" -> db에 입력하고 다시 값을 받아와야할때 타입
+resultMap
+
+만약 겹치는 공통의 쿼리들은 
+
+<sql id = "sql01">
+   select *
+       from t_board]
+,</sql>
+
+<select id="s01">
+       <include refld="sql.01" />
+<select>
+
+임의의값 출력할때는 #{}
+
+
+-----------------------------------------------------------------
+xml파일 만들기
+src/ commmon.db패키지 / - 파일 만들기 / 
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.example.BlogMapper">
+  <select id="selectBlog" resultType="kr.co.mlec.board.vo.BoardVO">
+    select * from Blog where id = #{id}
+  </select>
+</mapper>
+
+------------------------------------------------------------------
+-mybotos-cofig-xml
+-BoardVO추가
+
+---------------------------------------------------------------------
+
+-mybotos-cofig-xml에  Alias붙일거야
+
+<typeAliases>
+	<typeAlias type="kr.co.mlec.board.vo.BoardVO" alias="board"/>
+</typeAliases>
+에 추가하면 
+
+-board.xml
+  <select id="selectBlog" resultType="kr.co.mlec.board.vo.BoardVO"> 이부분을 
+  <select id="selectAll" resultType="board"> 이렇게 ! 
+
+---------------------------------------------------------------------
+insert할거야
+-board.xml                  myBatis-config.xml 에서 <typeAlias type="kr.co.mlec.board.vo.BoardVO" alias="board"/> 를 board로 했기때문에 밑의 타입도 board
+  <insert id="insert" parameterType="board">
+  insert into t_board(no, title, writer, content) 
+    values(seq_t_board_no.nextval, ?, ?, ?)
+  </insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,12 @@
+class String{
+           char[] value;  //얘는 배열로 보는게 아니라 문자로 보는거임
+  }
+
+
+str.length();  => String의 참조변수가 몇개의 인스턴스 객체를 가리키고있는지
+ex ) String str = new String(); 
+            □ ---------> □      1개
+
+       //이 뜻은 참조 변수가 null이라는 거 
+       String str2 = null;   참조변수가 0이라고 가리키는 객체가 없음.
+           □:null                      0개

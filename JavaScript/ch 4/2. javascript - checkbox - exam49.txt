@@ -1,0 +1,88 @@
+2. javascript - checkbox - exam49
+
+-------------------------------exam49----------------------------------
+checkbox,radio 같은건 무슨 값을 보내는지 알기 위해서 name속성을 넣어줘야해
+선택된 값을 체크하고 싶을때 쓰는 속성
+
+지금 ?inputForm.hobby 는 배열이라 번지수로 찾아줘야함
+ : document.inputForm.hobby[0].checked = true -> 0번지값 선택, false -> 취소
+배열개수만큼 돌고싶을때는 변수in배열 하면 안되고 무조건 length로 돌아야함
+
+ex)
+	function selectAll() {
+		var hobbys = document.inputForm.hobby;
+		for(var  i = 0 ; i < hobbys.length; i++) {
+			hobbys[i].checked = true;		
+		}
+	}
+
+----> 근데 전ㅊㅔ선택이랑, 헤재랑 true, false만 달라!!
+	function toggle(check) {
+		var hobbys = document.inputForm.hobby;
+		for(var  i = 0 ; i < hobbys.length; i++) {
+			hobbys[i].checked = check;		
+		}	
+	}
+
+ 이렇게 함수 하나 만들어서 onclick값을 true와 false로 전송해주면 됨
+
+
+-----> 결과보기 함수는 
+	function showInfo() {
+		var hobbys = document.inputForm.hobby;
+		
+		var msg = '';
+		for(var  i = 0 ; i < hobbys.length; i++) {
+			if(hobbys[i].checked) {
+				msg += hobbys[i].value + '\n';
+                                                    //  체크된번지수 값들의 value를 찍어!
+			}
+		}	
+		alert(msg);
+	}
+		
+
+-------> 전체선택.해제 toggle
+	function toggle2() {
+		var hobbys = document.inputForm.hobby;
+		var check = false;
+		for(var i = 0 ; i < hobbys.length; i++){
+			if(!hobbys[i].checked){
+				check = true;
+				break;
+			
+				}
+			
+		}
+	}
+
+
+------------해석
+	function toggle2() {
+		var hobbys = document.inputForm.hobby;
+		var check = false;   
+		
+		for(var i = 0 ; i < hobbys.length; i++){
+			if(!hobbys[i].checked){
+				check = true;
+				break;
+				}	
+			} 
+		
+		for(var i = 0 ; i < hobbys.length; i++){
+		hobbys[i].checked = check;
+		}
+	}
+check의 기본값 false해놓고, 만약 하나라도 체크가 안되어있으면
+다 true:전체체크하고 break;
+체크가 되어있으면 false로 바꿔주자 
+
+
+
+
+
+
+
+
+
+

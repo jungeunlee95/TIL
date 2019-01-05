@@ -1,0 +1,27 @@
+2. 병합, 조인 TourAPI - series,  dataframe
+
+
+--------TourAPI 에 New Python File -> series.py---------------------
+pandas 모듈 설치 해야돼
+                       ---> pip install pandas
+
+
+
+--------TourAPI 에 New Python File -> dataframe.py---------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

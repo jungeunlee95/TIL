@@ -1,0 +1,54 @@
+select * from t_board;   -티보드의 모든 데이터를 보겠다
+
+/*
+   게시판 INSERT 예제
+   번호 : 1
+   제목 : 제목1
+   내용 : 내용1
+   조회수 : 0
+   등록일 : 현재날짜
+*/
+
+티보드에  컴럼 넣을때
+insert into t_board(no, title, content, view_cnt, reg_date)
+                                    이거 넣을거야 데이터들 순서는 상관 없음!~
+                  이거 생략하고 밸류스 desc t_board; 순서대로 넣어주면 돼
+ 
+데이터에 내용 넣을거  문자는 '문자' 작은따옴표
+  values(1, '제목1', '내용1', 0, sysdate);
+
+모든 조회수 100으로 하고싶어
+ update t_board 
+    set view_cnt = 100;
+ 모든 레코드에 다 업데이트,
+
+글번호2번만 조회수 0으로 바꿀래
+ update t_board
+    set view_cnt = 0
+   where no = 2;
+
+
+--글번호가 3인 게시물에서 제목을 디폴트연습 -> 변경된제목으로 수정
+ update t_board
+    set title = '변경된 제목'
+  where no = 3;
+
+
+--글번호가 4인 게시글에서 제목을 '수정된 제목', 내용을 '수정된 내용'으로 변경
+ update t_board
+    set title = '수정된 제목' , content = '수정된 내용'
+  where no = 4;
+
+
+--글번호 2 인 게시글 삭제
+ delete from t_board
+ where no = 2;
+ 
+ --전체 게시글 삭제
+ delete t_board;
+
+
+
+
+
+

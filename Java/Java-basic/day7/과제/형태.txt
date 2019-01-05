@@ -1,0 +1,5 @@
+class Shape {
+  width? : int 
+  height? : int
+  radius? : int
+  }  => 올수도 있고. 안올수도 잇꼬

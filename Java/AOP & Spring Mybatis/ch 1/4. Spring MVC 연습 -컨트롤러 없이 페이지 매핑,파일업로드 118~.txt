@@ -1,0 +1,61 @@
+
+4. Spring MVC 연습 -컨트롤러 없이 페이지 매핑,파일업로드 118~
+
+-----------------------------------------------------------------
+jsp 만들기
+/ spring-mvc / webapp / WEB-INF / jsp 에 file 폴더 fileUploadForm.jsp 생성
+
+---spring-mvc.xml 파일에 내용 추가
+<mvc:view-controller path="/file/uploadForm.do" view-name="file/fileUploadForm"/>
+
+---spring-mvc.xml 파일에 내용 추가
+<bean id="multipartResolver"
+	class="org.springframework.web.multipart .commons.CommonsMultipartResolver"> 
+                    <!-- 최대 업로드 파일 사이즈 : 10MB -->
+	<property name="maxUploadSize" value="10485760" />
+</bean>
+
+---pom.xml 파일 dependency 추가
+http://mvnrepository.com/search?q=commons+Fileupload
+commons Fileupload
+Apache Commons FileUpload ≫ 1.3.3 복사해서 추가
+
+
+----컨트롤러 만들기
+-/ spring-mvc / src / main / java 폴더에 UploadController 생성
+
+--결과페이지
+-/ spring-mvc / webapp / WEB-INF / jsp 에 file 폴더 생성
+-생성된 폴더에 uploadResult.jsp 생성
+
+
+--------index에 실행하면
+파일하나 올리고 제출하면 경로 에러 뜨는데, 거기에 폴더 만들어주면 됨
+java.io.FileNotFoundException: D:\lecture\eclipse-work\wtpwebapps\spring-mvc\upload\mlec-5bb94e32-0743-4a9f-9730-04a464ed7487.jpg (지정된 경로를 찾을 수 없습니다)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

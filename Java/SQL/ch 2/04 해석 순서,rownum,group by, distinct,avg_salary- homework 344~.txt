@@ -1,0 +1,58 @@
+해석 순서,rownum,group by, distinct,avg_salary- homework 344~
+
+<해석 순서>
+from -> where -> group by -> having-> select -> order by
+
+서브쿼리에서 집합함수쓰면 무조건 이름 붙이는 게 좋음
+
+----------------------------
+rownum  homework 344~373
+----------------------------
+ select * from employees;
+-- employees의 위에서 다섯개의 데이터만 추출하고 싶을 때,
+ select * 
+ from employees
+ where rownum <= 5;
+
+ex)
+ --첫번째 페이지에 출력할 사원목록 조회
+ select *
+ from employees
+ where rownum <= 5;
+ 
+ --두번째 페이지에 출력할 사원 목록을 조회
+select *
+from( 
+      select e.*, rownum as rnum
+      from employees e     
+    )
+  where rnum >= 6 and rnum <= 10;
+
+
+
+-----------
+group by 375~ 404
+-----------
+group by -> 하나의 레코드에서 흩어져있는 애들을
+                      소규모의 그룹으로 잡아줌
+-> 그룹나오면 무조건 셀렉트절에서 하나의 함수만 가능, but집합함수가능
+
+
+distinct -> 일일이 하나씩 추출해주는 것
+
+
+ --부서별 사원 수 조회
+ select department_id, count(department_id or *)
+ from employees
+ group by department_id;
+
+
+ --부서별 평균급여 조회 단, 평균 급여가 5천 이상인 부서만 조회
+ select avg_salary
+ from(
+   select department_id, avg(salary) as avg_salary - 컬럼명을 만들어줘야함
+   from  employees
+   group by department_id
+   )
+   where avg_salary >= 5000;
+

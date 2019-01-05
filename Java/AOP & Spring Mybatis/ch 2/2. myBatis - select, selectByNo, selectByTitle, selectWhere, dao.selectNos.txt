@@ -1,0 +1,146 @@
+2. myBatis - select, selectByNo, selectByTitle, selectWhere, dao.selectNos
+
+
+---------------------------selcet------------------------------
+DAO에 select만들고
+board.xml에 select만들어
+-> main에서 실행
+
+
+
+
+---------------------------selectOneBoard------------------------------
+ id="selectOneBoard"
+id="selectOneBoardInt"   -> 굳이 board로 안보내고 숫자 하나만 보내도 됨
+근데 이러면 둘이 중간에 코드가 중복되잖아 위로 sql로 빼서 
+  <sql id="selectAll">
+	select no, title, writer, content, view_cnt as viewCnt
+	,to_char(reg_date,'yyyy-mm-dd') regDate
+	from t_board
+  </sql>
+--> 중복코드 자리에   <include refid="selectAll" /> 적어주면 됨
+
+
+
+
+----------------------------- selectByTitle ------------------------------
+-DAO
+List<BoardVO> list = sqlSession.selectList("kr.co.mlec.board.dao.BoardDAO.selectByTitle", board);
+
+-board.xml
+<select id="selectByTitle" resultType="board" parameterType="board">
+	<include refid="selectAll" />	
+	where title = #{title}
+</select>
+
+-DAO
+List<BoardVO> list = sqlSession.selectList("kr.co.mlec.board.dao.BoardDAO.selectByTitle", "직접입력");
+
+-board.xml
+<select id="selectByTitle" resultType="board" parameterType="java.lang.String">
+	<include refid="selectAll" />	
+	where title = #{title}
+</select>
+
+
+
+
+---------------------------  like % 쓸경우 -----------------------------------
+${} 사용하기 
+
+[selectOneBoard]
+[selectByTitle]
+int면 그냥 써도 되는데 문자열이면 '${}' 이렇게 작은따옴표 붙여야함 
+이걸 쓰는 경우 = like = aa% 같은 sql코드 만들때
+#{aa}%같은건  'aa'%' 이런거라서 안돼
+'${}%' 이렇게 씀 
+-------------
+board.xml
+------------
+<select id="selectByTitle" resultType="board" parameterType="board">
+	<include refid="selectAll" />	
+	where title like '${title}%'
+</select>
+
+
+
+
+-----------------------  selectWhere  ----------------------------------
+		board.setTitle("직");
+		board.setWriter("u");
+
+xml
+	<select id="selectWhere" parameterType="board" resultType="board">
+		select no, title, writer, content, view_cnt as viewCnt
+		,to_char(reg_date,'yyyy-mm-dd') regDate
+		from t_board
+		where title like '${title}%' and writer like '${writer}%'
+	</select>
+
+--------------
+resultMap
+--------------
+board.xml
+
+자바에서는 regDate, sql에서는 reg_Date니까 둘이 이름 매핑시킬꺼야
+<resultMap type="board" id="boardMap">
+	<result column="view_cnt" property="viewCnt"/>
+	<result column="reg_date" property="regDate"/>
+</resultMap>
+
+그럼 이제 as 안써도 돼 ! 
+
+---------------------------<where태그>---------------------------------
+근데 만약 selectWhere에서 제목만 검색할수도있꼬, 글쓴이만 검색할수도있잖아
+<where>
+	<if test="title != null">
+		title like '${title}%' 
+	</if>
+	<if test="title != null">
+		and writer = '${writer}'
+	</if>
+</where>
+
+-----------------------  dao.selectNos  -----------------------------
+
+no로 조회할때
+
+<select id="selectNos" parameterType="java.util.List"  resultMap="boardMap">
+	<include refid="selectAllMap" />
+	where no in
+                                                                                           // ( , , , , , ,) 형태로 정렬하려고
+	<foreach collection="list" item="bno" open="(" separator="," close=")">
+		#{bno}
+	</foreach>
+	order by no desc
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+jetbrains : 편집기 pycharm
+-> https://www.jetbrains.com/
+
+Tools -> PyCharm -> Community 다운
+
+설치 -> 실행
+Create New Project
+D:\lecture\python-work
+-> new python file
+
+file -> open -> import
+
+file -> settings - > Project:python -> Project Interpreter ->
+환경설정이모티콘 누르고 ADD!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+boardservice
+
+보드서비스 하나 만들어서 모든 인스턴스 객체가 보드서비스 하나만을 가리키게 만들어주는 것
+
+          list가 VO 형태를 여러개 갖고 잇는것 
+                   DAO <-- service --> UI 
+
+전체 게시글 조회 -> 서비스에서 불러서 조회 해야함 DAO의 insertBoard 
+
+[전체 글번호 조회 ]
+UI -> service -> DAO
+
+[SelectOneUI ]
+->BoardVO board = service.selectBoard 호출 -> 내가 글번호 줄테니까 그 번호에 해당하는 게시글 줘
+
+[service] 에서 selectBoard 메소드 만들고 int no을 받아
+ -> dao에게 selectBoard(no)를 보내줘
+
+[dao] 에서도 selectBoard메소드 만들고
+ <글번호에 해당하는 게시물을 호출자에게 전달>
+ 받은 int no를 boardlist(게시글 데이터를 갖고있는 리스트) 에 검색을 해서, 맞는 번호를 찾아내야함
+ for(BoardVO board : boardList) {
+    if(보드의 겟넘버 == 넘버) {   -> 내가 준 글번호가 있으면
+            리턴 보드     -> 그 번호에 맞는 게시글 내놔
+       }
+   }없으면 return null;을 리턴해
+
+[SelectOneUI]
+ 에서 만약 받은 board값이 null이면 게시물이 없습니다, 출력해
+  만약 null이 아니면 검색결과 : 게시글 정보를 출력 해야지~~ 
+
+[수정할 글정보] 
+ [UpdateUI] BoardVO 소환, setNo(no) 넘버와 제목을 주고 업데이트해! 라고 넘겨줘 데이터
+  ->service에게 보드값 수정하라고 넘겨줌
+
+[service]
+ updateboard 메소드 만들고 DAO에게 넘겨줘
+ 
+[DAO]
+//호출자가service 넘겨준 보드VO객체의 no(수정할 게시물 번호)를 검색하여 title(수정할 제목) 값으로 수정
+ updateboard 메소드 만들어 
+  for(보드 리스트 검색하면서) {
+      만약에 내가 수정할 번호가 그ㅡ 리스트에 있는 번호니? 있으면 {
+           수정해! vo.settitle에 board.gettitle값 업뎃행
+         return; 찾았으면 돌아가~
+
+
+[글삭ㅈㅔ]
+DeleteUI
+에서 서비스에게 번호 넘겨줘 몇번삭제할거야!
+[service] deleteBoard 메소두 만들고 dao에게 번호 전해줘~ 이거 지워죠
+
+[dao]
+//호출자가 넘겨준 번호에 해당하는 게시물을 boardList에서 삭제
+deleteBoard(int no) <-받은 번호에 ㅇ해당하는 게시물 삭제
+for( 게시글 돌면서 ) {
+   만약에 보드리스트의 넘버가 == 내가 받은 넘버냐?
+    list.remove(i)  그거 지워
+   return 지웟으면 돌아가
+
+
+
+
+
+
+
+
+
+
+

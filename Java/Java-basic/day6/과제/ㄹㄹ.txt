@@ -1,0 +1,4 @@
+  1. checkChar("abcdce",'c');  c의 개수는? 2개
+  StringUtil클래스에 public 스태틱 int ~~~
+
+  2. 특정 문자 제거

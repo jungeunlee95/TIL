@@ -1,0 +1,84 @@
+    [ Collection API ]   - day10 래퍼,제너릭 - WrapperMain, GenericMain
+ 같은 타입의 변수들은 어떻게 하면 효율적으로 메모리에 저장할 수 있을까? -> 자료구조
+ 저장된 데이터의 집합들 중 내가 원하는 데이터를 어떻게 하면 좀 더 빠르게 탐색할 수 있을까
+
+ [저장 알고리즘]     
+ [탐색 알고리즘]
+    
+ int[] 
+char[]
+
+String[]
+ -> 콜렉션에서는 다 참조자료형으로 데이터 집합을 만든당
+
+<기본자료형>
+boolean
+char
+byte
+short
+int
+long
+float
+double   
+            [-> 다 기본 자료형들인데 이 자료형들을 감싸고 있는 클래스형으로 만들기 ]
+<참조자료형>  => wrapper클래스라고 함  ex) int[] ==> Integer[] 감싸고있음
+Boolean
+Character
+Byte
+Short
+Integer
+Long
+Float
+Double 
+
+int i = 10;
+Integer i2 = new Integer(10);
+Integer i3 = 10; //Integer = int  //10을 Integer박스에 알아서 넣어줌요
+  => auto boxing 박스포장을 했다고 함 1.5버전 이후부터 에러가 안남(원래 에러났었음) 
+
+int i = new Integer(100); //auto unboxing했다고 함 객체에서 내용물 빼와서 넣어주는 것
+
+Class Integer {
+  private int value;
+  Integer() {}
+  Integer(int i ) {
+this.value = i ;
+}
+ }
+int num = new Integer(100);
+
+// 원래는 = 를 기준으로 양쪽이 같은 타입이여야하는데 달라도 에러가 안남 
+
+     
+-----------------
+Generic < > 
+-----------------
+Object []   //하나의 객체에 여러가지를 저장할 수 있음.
+{new String("aaa"), new Random(), new Integer(100), new Calender()}
+ -> 명시적 형변환을 해줘야만 쓸 수 있음. -> 비효율적임!!!
+
+
+ Generic < >   -> 어떤 타입의 객체를 저장하는지 명시해주는 키워드 <> Collection사용할때 제너릭 꼭 사용하는게 좋음
+ 클래스<타입>
+ List<String> list  = new ArrayList<String>();   //알아서 형변환해주심 
+ -> 문자열만 갖고 있는 데이터의 집합 만들거야!!!!!!! 
+     
+ Object[]arr = new String[5];
+ arr[0] = new Integer(10);
+ arr[1] = new Integer(1000);
+ arr[2] = new Integer(200);
+  for(Object i : arr) {
+   접근하려면 무조건 (Integer) i  }이렇게 형변환 해줘야함 -> 복잡 -> 제너릭사용!(묵시적형변환사용안해도 됨)
+  배열에서는 사실 제너릭 못쓰는데 그냥 예시로   
+    
+65
+
+ 
+   
+     
+   
+    
+    
+   
+    
+      

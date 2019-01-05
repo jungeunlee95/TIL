@@ -1,0 +1,38 @@
+반환타입 : void    메소드 이름:sing   매개변수 ; String somgName
+void sing(String songName) {
+  }
+
+
+반환타입 String   이름 getGenre    매개변수: 업슴
+String getGenre() {
+   return"aaa";
+}
+
+String s = getGenre();로 받아야함
+
+
+반환타입:String[]   메소드이름:getSingList    매개변수:void
+String[] getSingList () {];
+     String[] list = {"aaa", "bbb"
+     return list;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

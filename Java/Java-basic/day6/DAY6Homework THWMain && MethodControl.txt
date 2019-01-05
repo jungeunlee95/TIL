@@ -1,0 +1,48 @@
+ ★ ★ Main 클래스는 짧을수록 좋음.  => DAY6Homework THWMain && MethodControl
+
+만약 Scanner메소드를 사용하고 싶으면
+
+>>>>MethodControl 클래스를 하나 더 만들어서
+>>>>컨트롤 클래스에서 Main에서 입력받을 함수들을 적어줌
+
+ public MethodControl () {
+ Scanner sc = new Scanner(System.in); 
+ char inputChar(String msg) {
+   sysout(msg);
+   char c = sc.nextLine().charAt(0);
+   return c;
+  }
+
+ String inputStr(String msg) {
+  sysout(msg);
+  String str = sc.nextLine();
+ 
+ return str;
+  }
+ void process() {
+  sysout("프로그램 시작...");
+ }
+ 이렇게 하고
+ 
+   
+>>>>메인에서
+  MethodControl control = new MethodControl();  //메인에서 클래스를 사용할 입력문
+  control.process();   //컨트롤 클래스에 있는 process메소드를 실행해라! 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

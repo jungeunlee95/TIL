@@ -1,0 +1,58 @@
+5. 08_ClassExam 예제
+
+[Access Method : 접근자 메소드]
+getter와 setter를 사용하는 이유 : 주소에 직접 접근할수없도록( 메모리해킹 ) 
+
+
+-------09_Operator----------------------------------------------
+# Operator Overloding
+# 연산자 중복 정의
+#   기존 제공하는 파이썬 연산자를 새롭게 정의 할 수 있다.
+'''
+    수치 연산자
+    __add__(self, other)     : + (이항)
+    __pos__(self)            : + (단항), 부호 연산자
+    __sub__(self, other)     : - (이항)
+    __neg__(self)            : - (단항), 부호 연산자
+    __mul__(self, other)     : * 
+    __pow__(self, other)     : ** (제곱)
+    __truediv__(self,other)  : /
+    __floordiv__(self,other) : //
+    __mod__(self, other)     : %
+    __lshift__(slef,other)   : <<
+    __rshift__(slef,other)   : >>
+    __and__(self, other)     : &
+    __or__(self, other)      : |
+    __xor__(self, other)     : ^
+    __invert__(self)         : ~
+    __abs__(self)            :abs()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

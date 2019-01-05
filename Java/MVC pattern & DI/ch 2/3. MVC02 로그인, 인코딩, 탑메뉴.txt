@@ -1,0 +1,89 @@
+3. MVC02 로그인 , 인코딩, 탑메뉴
+
+
+-----------------------------------------------------------
+로그인 만들기.
+login.jsp 랑
+index에 추가하고
+loginController에 ModelAndView객체 !리턴 ! 
+
+LoginController -> 에 loginProcess 메서드도 하나 만들어줌
+LoginService, LoginDAO, LoginVO 만듬
+
+ContextListener->로그인  DAO등록
+    LoginDAO loginDao = new LoginDAO();
+    LoginService loginService = new LoginService(loginDao);
+    sc.setAttribute("loginService", loginService);
+
+
+LoginController 인코딩, id,password --> VO에 넣기
+
+-로그인 성공 실패
+/login/login.do --> /login/loginProcess.do 
+ 만약 프로세스에서 로그인정보 잘못되면 그냥 login.do로 가면되잖아
+ 근데 그냥 mav.setView("/jsp/login/login.jsp"); 하면 url이 계속 loginProcess.do임
+ -> 이럴때는  foward쓰면 안되고 sendRedirect써야됨 ! ! ! 
+
+주소에 redirect: 붙이면 sendRedirect라는 뜻 
+
+
+DispatcherServlet에서 forward와 sendRedirect 구별해야함 ! 
+if(view.startsWith("redirect:")) 
+
+이제 session에 로그인 정보 저장해줘야해 ! 1 1 !!
+
+ 먼저 idnex.jspㅇㅔ 로그아웃 태그 하나 만들어주고,
+ login에서 session에 로그인 정보 저장하고,  session.setAttribute("userVO", userVO);  
+ LoginController -> logout 메소드 하나 만들어
+ 그리고 세션 정보 지워 session.invalidate();
+
+
+------------------------------------------------------------
+LoginController 에서 만약에 
+request.setCharacterEncoding("utf-8"); 이거 빼먹으면 안되자나 
+필터클래스 하나 만들어서 상속받으면 돼 어렵지않아 
+package kr.co.mlec.filter;  EncodingFilter.java  -> 오버라이드 필수
+
+WEB-INF에서 필터 매핑!!
+
+EncodingFilter -> chian : 필
+chain.doFilter(request, response);    : 필터링 돼서 넘어가게 됨
+request.setCharacterEncoding("utf-8");  -> url들어오면 무조건 인코딩해
+
+--> 근데 무조건 다 utf-8이라는 보장 있음? 없잖습. WEB.xml init넣고
+EncodingFilter에서 init
+
+web-xml 다 주서쿠 ~ ^^~~~~~!!!
+
+
+MVC02 탑메뉴
+
+jsp/include/topMenu.jsp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,49 @@
+4. JSTL - 기본
+ 개발자들이 개별적으로 만들어 쓰던 태그 중 자주 사용되는 태그를 표준으로 만들어서 제공
+
+4가지 종류
+ -core 태그 - 프로그램에서 많이 사용되는 기본 태그 
+                     : 반복,조건문, 출력 : 모든사이트주요사용태그
+ -fmt 태그 - 다국어 지원, 로케일 제공, 메시지 처리, 숫자, 날짜 포멧팅  
+                     : 빈도는 낮지만 가끔 사용
+ - 함수           : 빈도는 낮지만 가끔 사용
+ - sql 태그      : 거의 사용 안함
+ - xml 태그     : 거의 사용 안함
+
+
+---> 다운로드 하러 
+  http://tomcat.apache.org/
+  Taglibs  - download   - Standard Taglib 1.2.5 
+    Jar Files 4개 다 다운  -> Lecture-Web - WEB-INF - lib에 붙여넣기!
+
+접두어
+ 코어 :      c 
+ 국제화 :  fmt 
+ 함수 :      fn
+
+--------------core - Set 태그 : 공유영역에 변수 설정 하려고 사용 ------------------
+형식
+<    c:set var ="" value="" [scope=""]       />
+var : 설정할 변수명
+value : 설정할 값
+scope : 변수의 사용 영역  4가지   -> 기본설정 영역 : page
+	(여기서는 pageContext->그냥 page)
+
+ex>  
+    <    c:set var ="cnt" value="1" [scope="page"]       />
+     : 아 page영역에 cnt라는 이름으로 1 저장할거구나~
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

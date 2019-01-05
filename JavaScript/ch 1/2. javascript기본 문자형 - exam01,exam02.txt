@@ -1,0 +1,41 @@
+ 2. javascript기본문자형 - exam01,exam02
+                                                 .js 파일<script></script>
+                                               ( .css -> <style></style> )
+script를 쓰면  ducument나 alert가 있어야 화면에 print됨
+-------------exam01-------------------------
+<head>
+<script>
+document.write("aaa<br>");   -> body에 글자를 추가하겠다고
+</script>
+
+<script> 가 <BODY>에 들어갈수도 있음 : 그치만 일반적으로 웬만하면<head>에
+
+
+-------------exam02-------------------------
+var:: 모든(정수,실수,문자형)타입을 감쌀 수 있음!!!   심지어 함수도 var형~
+
+var num = 100;
+document.write(num); 그냥 출력
+alert(num);   경고창으로 팝업창처럼 뜸
+
+>>>>>자바스크립트 내부적 자료형<<<<<   --> 근데 다 var형으로 통일해서 쓸수있음
+ : number, string, bool, Array, Object, undefined,null .. ...
+--> alert(typeof 12);   --> 12는 무슨 형이야?  ( 정수, 실수는 다 number형)
+	alert(typeof 'A');		string
+	alert(typeof "Hello");	string	
+	alert(typeof 12.34);	number	
+	alert(typeof 12);		number
+	alert(typeof null);		object	
+	alert(typeof undefined);	undefined
+
+(number -> string 로 문자 형 변환하고싶을때)
+  var number = 123;
+  alert(typeof number.toString()); 
+
+(string-> number 로 문자 형 변환하고싶을때)
+  alert(typeof Number("123")); 
+
+(number -> boolean 로 문자 형 변환하고싶을때)
+alert(typeof Boolean(0));
+
+

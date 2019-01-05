@@ -1,0 +1,41 @@
+  [ byteStream ]
+    
+ 
+
+그림~~~!
+
+여태까지 쌀을 한톨씩 옮겼다면 ,                             - FileIOMain02
+char by char?  ㄴㄴ  line by line ! 
+이제 문자열로 쉽고 빠르게 옮긴닷~
+
+[파일용 바가지] 버퍼에서 읽은다음에 버퍼로 ~        - FileIOMain03 훨~~~씬 빨라
+
+
+
+FileInputStream
+BufferedInputStream   ->버퍼도 필터클래스! 혼자서는 사용 불가능용
+
+ ↓↓↓↓↓↓↓↓↓↓↓↓
+
+RAM에 배열로 저장하고 그 배열안의 값이
+
+↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+BufferedOutputStream
+ FileOutputStram    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+    
+    
+    
+        
+       

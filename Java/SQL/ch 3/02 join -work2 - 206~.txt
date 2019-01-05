@@ -1,0 +1,55 @@
+---null값을 가진 것도  출력하고 싶을 때 :(+)  206~~
+
+<left outter join> (+)가 오른쪽이면 left
+왼쪽의 employees의 모든 레코드를 다 출력해! 
+select e.employee_id, e.first_name, e.salary
+     , e.department_id, d.department_name
+from employees e, departments d
+where e.department_id = d.department_id(+);
+
+<right outter join> (+)가 왼쪽이면 right
+select e.employee_id, e.first_name, e.salary
+     , e.department_id, d.department_name
+from employees e, departments d
+where d.department_id(+) = e.department_id;
+
+
+218~~
+   [ ansi join ] -join의 표준화 기호 (오라클만(+)기호씀) 
+ 아예 명시적으로 아래의 키워드를 씀
+  cross join
+  inner join
+  left outer join
+  right outer join
+
+ex)))  => 이해안되면 노트필기
+---cross join
+select count(*)
+from employees cross join departments;
+
+--- inner join 은 교집합 명시해줘야함~~
+select count(*)
+from employees e inner join departments d
+     on e.department_id = d.department_id;
+
+
+ --ansi left outer join 일때는, 왼쪽 기준으로 왼쪽에 있는 테이블 값 다 출력해!!!
+select count(*)
+from employees e left outer join departments d
+  on e.department_id = d.department_id;
+
+
+--ansi right outer join
+select count(*)
+from departments d right outer join employees e
+  on e.department_id = d.department_id;
+
+
+예시문제 풀이 276~~
+
+---------------
+--self join 같은 테이블 값 비교할 때 같은테이블 조인
+-----------
+
+
+

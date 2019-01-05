@@ -1,0 +1,241 @@
+
+2. spring-web연습 login로그인, 로그아웃
+
+
+
+
+---------------src/main/webapp/WEB-INF -jsp-login.jsp만들기->index에추가----
+action="${pageContext.request.contextPath}/login/login.do"
+
+
+
+
+--------------kr.co.mlec.member.controller  /  MemberController.java----------
+
+index에서는 a태그의 GET방식으로 login.do로가고
+login에서 액션으로 POST방식으로 login.do   같은 url로 가니까 
+
+uri를 다르게 해석해야함 !!!!!
+@RequestMapping(value="/login/login.do", method=RequestMethod.GET)
+@RequestMapping(value="/login/login.do", method=RequestMethod.POST)
+
+파람 어떻게 가져와?
+public void loginProcess(@RequestParam("id") String id, @RequestParam("password") String password ) { } 이렇게
+
+
+---------------MemberVO--만들어---------------------------
+
+
+----------kr.co.mlec.member.controller  /  MemberController.java---------
+//받아온 객체 한번에 넣기 ! VO만든다음에
+@RequestMapping(value="/login/login.do", method=RequestMethod.POST)
+public void loginProcess(@ModelAttribute("member")MemberVO member) {
+		        -> member라는 이름으로 공유영역 등록하겠다,
+		-> 이거 안써도 MemberVO첫글자 소문자로 들어감 memberVO 이걸로
+}
+
+===>★★login.jsp의 name밸류값이랑 컨트롤러에서 받는 VO의 변수이름이 같아야 값이 들어감
+
+-----src/main/resources-config-mybatis----
+여기에  <typeAlias type="kr.co.mlec.member.vo.MemberVO" alias="memberVO"/> 추가
+
+
+
+
+src/main/resources/config/sqlmap/oracle
+-----------------sqlmap-member ---------------------
+MemberDAO추가해서  select문 만들어줘
+<select id="login" parameterType="memberVO" resultType="memberVO">
+	select id, password, type
+	from t_member
+	where id = #{id} and password = #{password}
+</select>
+
+
+
+
+
+
+
+
+-----여기까지하고 테스트 한번 해볼게 ----------------------
+src/test/java/kr.co.mlec/MemberTest.java 에서 테스트 ing
+-----------------------------------------------------
+
+
+
+
+
+-------------------------------------------------------------------------
+---다시 kr.co.mlec.member.dao  /  MemberDAO.java
+-------kr.co.mlec.member.service / MemberService.java  인터페이스로 만들어
+둘다 public MemberVO login(MemberVO loginVO); 이거 넣어줘 
+
+
+--------dao에 MemberDAOImpl -> MemberDAO상속받고 만들어 
+-> DB관련이니까 @Repository 하고
+@Autowired
+private SqlSessionTemplate sqlSessionTemplate; 변수선언해
+
+-> DB Access해 : member가져와서 보내  -> 서비스로 
+@Override
+ public MemberVO login(MemberVO loginVO) {
+	MemberVO member = sqlSessionTemplate.selectOne(
+			"kr.co.mlec.member.dao.MemberDAO.login", loginVO);
+	return member;
+ }
+
+
+-------service에 MemberServiceImpl -> MemberService 상속받고 만들어
+->service 니까 @Service 하고 
+@Autowired
+private MemberDAO memberDao;    : MemberDAO변수를 자동주입해줘야함
+
+->DAO객체에있는 login객체 받아와야함
+@Override
+public MemberVO login(MemberVO loginVO) {
+	MemberVO member = memberDao.login(loginVO);
+	return null;
+}
+
+
+
+[service를 이제 controller가 호출함]
+
+
+
+-----  MemberController로 와서  변수선언
+@Autowired
+private MemberService memberService;
+
+-> loginProcess에서 member객체 넘김
+MemberVO userVO = memberService.login(member);
+                   :userVO는 null아니면, 로그인성공 -> if문으로 돌려 , 
+	     근데 로그인 실패하면 get방식으로 다시 login으로 보내야함 redirect로
+
+--> 세션등록하려면 
+public String loginProcess(@ModelAttribute MemberVO member, HttpSession session) { 이거 수정하고
+하고 세션 등록해
+
+
+-------------->index.jsp에서 로그인 세션 되는지 안되는지 확인
+<c:choose>
+	<c:when test="${ empty userVO }">
+		<a href="${pageContext.request.contextPath}/login/login.do">로그인</a>
+	</c:when>
+	<c:otherwise>
+		<a href="${pageContext.request.contextPath}/login/logout.do">로그아웃</a>
+	</c:otherwise>
+</c:choose>
+
+
+----------------->MemberController 에서 로그아웃 - 세션 비우기
+  @RequestMapping("/login/logout.do")
+  public String logout(HttpSession session) {
+	session.invalidate();
+	return "redirect:/";
+  }
+
+
+
+------------MemberController2 만들어서 백업해서 냅두고 @Controller 주석처리 
+
+-----MemberController에서 logout을 ModelAndView타입으로 바꿔 --> msg찍을거야 (id또는 password가 잘못되었습니다)
+
+loginProcess -> ModelAndView로바꿔
+if(userVO == null)이면 이제 jsp로 가고싶어 (메세지 찍으려고)
+  mav.addObject("msg", "아이디 또는 패스워드가 잘못되었습니다.");  -> 이 msg가지고
+  mav.setViewName("login/login");     ---> login/login.jsp로 가렴 ! 
+
+
+--> 이렇게 되면 login.jsp에서 msg가 뜰때도 있고 안뜰때도 있어 (그냥 올때는 안뜨고, 실패하고 돌아오면 메세지뜨게)
+<script> 에 if문으로 msg변수가 있으면 찍고, msg변수가 없으면 찍지마. 
+	<c:if test="${ not empty msg}">
+		alert("${msg}");
+	</c:if>	
+</script>
+
+
+
+
+
+------------MemberController3로 만들어서 백업해서 냅두고 @Controller 주석처리 
+다시 MemberController 수정 
+loginProcess -> session지우고 
+else에 mav.addObject("userVO", userVO);  
+	-> 하면 session이 아니기에 아무리 로그인 해봤자 로그인 안됨
+
+==>그런데 맨위 클래스에 @SessionAttributes({"userVO"}) 어노테이션 추가하면   
+: 야 모델객체에 userVO라는 등록된 객체가 있을거야 너가 userVO객체를 session영역에 올려줘 !
+-->index실행하면 로그인 유지됨 ㅎㅎ
+--> 이런 경우에는 remove나 invalidate 로 로그아웃이 불가능해
+
+--> 로그 아웃 하려면  SessionStatus  사용해야함 
+  @RequestMapping("/login/logout.do")
+  public String logout(SessionStatus sessionStatus) {
+	sessionStatus.setComplete();
+	return "redirect:/";
+  }
+
+
+------------------BoardController  
+이제 uri에서 변수를 받고싶어 --> @PathVariable
+selectByNo주석하고 복사
+
+---list.jsp 제목누르면 디테일 들어가는거 수정                              ->no을 앞에다가 
+<a href="${pageContext.request.contextPath}/board/${board.no}/detail.do"> 
+<c:out value="${ board.title}" />
+
+--------BoardController
+  // /board/3/datail.do	
+  @RequestMapping("/board/{no}/detail.do")
+  public String selectByNo(@PathVariable("no") int no, Model model) {
+	
+	BoardVO board = boardService.selectByNo(no);
+	
+	model.addAttribute("board", board);
+	
+	return "board/detail";
+  }
+--> 만약 날라오는게 여러개면 이렇게 쓰면 됨 
+  // /board/3/aaa/datail.do	
+  @RequestMapping("/board/{no}/{text}/detail.do")
+  public String selectByNo(@PathVariable("no") int no,
+		@PathVariable("text") String text,Model model) {
+	BoardVO board = boardService.selectByNo(no);
+	model.addAttribute("board", board);
+	return "board/detail";
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

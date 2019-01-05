@@ -1,0 +1,52 @@
+문자열 길이
+  class String {
+  char[] value; 
+  int length() {                 //문자열의 길이를 반환함
+     return value.length;
+   }
+  }
+
+
+getChars => 문자 집합들을 배열로
+
+ "abcde"  =>  {'a', 'b', 'c', 'd', 'e'} 
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+String str = "abcd";
+   =>    char[] chars = { 'a', 'b', 'c', 'd'}
+=============================================================
+
+-------------
+str.length();
+--------------
+	String str = new String("ABCDEFGHIJ");
+		
+	int length = str.length();
+	System.out.println("[" + str +"] 길이 : " + length);
+              =>[ABCDEFGHIJ] 길이 : 10
+--------------
+str.charAt();
+--------------
+-배열 안의 몇번째 문자인지.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

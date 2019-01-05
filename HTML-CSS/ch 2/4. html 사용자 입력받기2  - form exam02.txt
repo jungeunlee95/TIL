@@ -1,0 +1,55 @@
+html 사용자 입력받기 2  - form exam02
+-------------------------------------------
+                [form exam02] 
+-------------------------------------------
+-이메일을 입력 : <input type="email" size="20" required ><br>  : 최소한의 체크 
+  : 이메일같은거 입력할때 올바른 형식으로 입력하게 하기
+
+-required : 필수 항목! 이 칸을 입력하지 않고 제출하면 체우고 제출하라고 뜸
+- maxlength="10"   최대 10글자만 입력해, 그 이상 입력하면 에러남당
+
+-주소 입력: <input type="url" size="20" ><br>
+    : http://aaa.aaa 이런 형식으로 최소한의 url주소 형식 체크
+
+-전화번호 : <input type="tel" size="40" ><br> : 국가마다 다르니까, 뭐 제약할수가 없어
+   -> <input type="tel" size="40" pattern=pattern="\d{3}-\d{3,4}-\d{4}"><br>
+        : 패턴 설정해주면돼  d는 0~9까지 숫자 입력해, {몇자리?} 3자리-3or4자리-4자리
+ 
+  pattern="(010|011|016|017|018|019)-\d{3,4}-\d{4}"   :  
+  placeholder ="xxx-xxxx-xxxx형식으로 입력하세요." ><br>   : 주석같은?	
+
+-검색어 : <input type="search" size="20"><br>
+    : 입력한 input값 X로 한번에 지우기!
+
+-수량:<input type="number" min="1" max="10">  숫자 범위 조정 가능
+
+-범위: <input type="range" min="1" max="10"> 
+
+-날짜: <input type="date" value="2018-07-27" min="2018-01-01" max="2018-12-31">
+
+-시간: <input type="time"><br>
+		
+-색상: <input type="color"><br>
+
+-submit 버튼을 이미지로 하고싶을때
+<input type="image" src="/Lecture-Web/html/images/nutton.jpg"
+	            width="130" height="40">
+
+-입력했던 값들 다 초기화 시킬때 : <input type="reset">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

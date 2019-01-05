@@ -1,0 +1,95 @@
+3. 파이썬 - 연산자 02_DataType
+
+#논리 비교
+print([] or 'hello')
+print('hello' or [])
+print('hello' and 'operator')
+print(None and 1)
+print(None or 1)
+
+#비트연산자
+print(~3)   #4의 2진수 뒤집기
+print(~-1)
+print(2<<4)
+print(48>>4)
+print(3&2)
+print(16|2)
+print(16^2)
+
+num1 = 10
+num2 = 4
+result = num1 ^ num2
+print(result)
+
+result = result ^ num2
+print(result)
+
+# Swap
+a = 10
+b = 6
+
+# 1 - 메모리를 하나 더 사용하지만, 속도가 빠르다.
+'''
+temp = a
+a = b
+b = temp
+'''
+# 2 - 메모리를 사용하지 않지만, 속도가 느리다.
+'''
+a ^= b
+b ^= a
+a ^= b
+'''
+# 3 - 파이썬의 문법을 활용
+'''
+b, a = a, b
+'''
+print(a,b)
+
+key = 34892374
+password = 1234
+sub = 0
+re = 0
+
+# 암호화 
+sub = password ^ key
+print(sub)
+
+# 복호화 
+re = sub ^ key
+print(re)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

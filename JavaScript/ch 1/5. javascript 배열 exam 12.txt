@@ -1,0 +1,40 @@
+5. javascript 배열 exam 12
+---------------------exam12 [배열] --------------------------------
+var array = [12, 'A', 34.56, true, "ABC", null, '!', new Date()];
+->  모든자료형 한번에 넣고 배열을 만들 수 있음
+-> 값 찍어볼 때 document.write(array[번지 수] ); 
+--> 없는 번지 수 찍으면 undefined
+--> 전체 조회 document.write('array : ' + array );
+--> 개수 document.write('array원소 개수 : ' + array.length + '개<br>');
+--> 배열에 원소 추가 array[7] = 'add';
+--> 만약 8,9에 원소 없는데 array[10] = "end"; 하면 8,9에 null들어가고 추가
+     -> 이때 8번지 값 출력하면 document.write('array[8] :' + array[8])
+                                             = undefined  나옴
+제일 마지막 번지에 추가 할 때
+  array.push("추가...");
+  -> array[array.length]번지(제일 마지막) 에 원소 넣어
+
+제일 마지막 번지 삭제 할 때
+ array.pop(); 
+ var  data = array.pop();
+ document.write('삭제 된 데이터 : ' + data + '<br>')
+ document.write('삭제 후 array 배열 : ' + array + '<br>');
+ document.write('원소 총 개수 : ' + array.length + '개<br>');
+
+--문자열 길이 =====
+	var str = 'Hello World';
+	doucument.write('str : ' + str + '<br>');
+	doucument.write('문자열 길이 ' + str.length + '개<br>');
+
+
+
+
+
+
+
+
+
+
+
+
+

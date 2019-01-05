@@ -1,0 +1,49 @@
+3. Mission-Web-MVC02 어노테이션 
+
+지금까지의 이야기.
+C ---- .do ------> S 보내면, 서버에서 서블릿->컨트롤러(공유영역에 등록)
+				-> 디비  이렇게 왓다갓다하고 서블릿이 
+				jsp에 보내면 jsp에서 request에서 가져온 값을
+ 				 이렇게이렇게해서 다시 C로 응답.
+--> 이렇게 하면 컨트롤러 너무 많고 복잡해. 이제 우리 좀 다른 방식을 사용해보자.
+
+/list.do = > ListController = > handleRequest()
+/detail.do = > DetailController = > handleRequest()
+/write.do = > WriteController = > handleRequest()
+...
+... 이렇게 너무 계속 비효율적으로 코드를 짰어. 우린 어리석었지.. 이제 진절머리나.,
+ ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+------------- Controller ------각각 기능의 대장 컨트롤러만 만들거야 ! ! ! ! 
+/list.do:	BoardController  -> list()
+ 		              -> detail()     
+/login.do:	LoginController    -> login()
+                  	              -> loginProcess()
+            	             	              -> logout() 
+  -> 매번 handleRequest가 아니라, 마치 dao처럼 각각의 기능을 가지고 있는 메소드  <-
+  -> 대신 이제는 Controller만 알면 안되고, 각각의 컨트롤러가 갖고있는 메소드까지 알아야함
+	.do가 들어오면 컨트롤러를 알아야하고, 컨트롤러가 무슨 메소드를 갖고있는지 알아야해
+====> 어노테이션을 만들어보자구~!~!
+
+
+------------------------------------------------------------------------
+java Resources -> kr.co.mlec.framework.annotation  -> Controller.java
+
+@interface  : at interface
+
+@Target(ElementType.TYPE)  
+     -> 이렇게 어노테이션.java에 붙이면 다른 클래스에서 @오버라이드 할수이써!
+          만약 메소드에 붙이고 싶으면  @Target(ElementType.METHOD)
+            이렇게 타입을 정해줄 수 있음 !!!! 
+
+@Retention(RetentionPolicy.RUNTIME)
+    프로그램을 실행하고나서 어느때까지 유지시킬지의 문제. 
+    (근데 우리는 나중에 얘를 통해서 데이터를 뽑아올거잖아 계속 인식할 수 있도록 runtime까지)
+
+--이제 .do가 들어오면 컨트롤러가 무슨 메소드를 갖고있는지 알 수 잇는 어노테이션 하나 더 만듬
+RequestMapping.java 어노테이션 하나 더 만들거야 
+@Target(ElementType.METHOD) 메소드만 오버라이드! 
+ 근데 여기에 value 메소드는 나중에 uri 를 뽑아낼 수 있음
+ex) BoardController.java에서 @RequestMapping(value="/board/list.do") 이렇게 하면
+  value뒤의 uri값을 저 RequestMapping 어노테이션이 저 uri 를 가진 값을 뽑아냄 
+  어노테이션 메소드 이름이 name이면, 컨트롤러@RequestMapping(name="")형식이여야함
+ 만약 어노테이션에 메소드가 단 한개라면 생략가능 @RequestMapping("/board/list.do")

@@ -1,0 +1,109 @@
+1. jquery - exam05~12
+------------------------exam05 마우스관련---------------------------------
+$(document).ready(function(){
+	$('h1').mouseenter(function() {      ->마우스 올리면
+		$('h1').css(속성명.값);
+	});
+
+	$('h1').mouseleave(function() {      -> 마우스 떼면
+		$('h1').css('background-color', 'orange');
+	})
+
+	-> 위의 두개를 합친거
+	$('h1').hover(mouseenter, mouseleave);          
+       
+                   -> 이렇게 각각의 함수를 소환해주면 됨 
+	$('h1').hover(function() {
+		$('h1').css('background-color' , 'pink');
+	}, function() {
+		$('h1').css('background-color' , 'orange');
+	});
+});
+
+
+
+
+------------------------exam06 키보드관련---------------------------------
+keydown - 키보드 없을때
+keyup - 키보드 잇을때
+
+focus - 갔을때 이런 효과 줘
+blur - focus나왔을 때 효과 줘
+
+------------------------exam07 click-----------------------------
+버튼 누르면 h1글 색깔 다 바꿔!
+
+mouseenter
+mouseleave
+click                 -> 이 세가지가 다 h1태그에 있으니까, 한번에 주쟈
+
+$('h1').on();    -> 이벤트를 추가하는 목적, 
+ 	$('h1').on({
+		'clcik' : function() {
+			
+		}, 'mouseenter' : function() {
+			
+		}, 'mouseleaver' : function() {
+			
+		}
+	});   -> 이런식으로 ''이걸하면 function이거 실행해~
+ 
+css도 한번에 여러개 설정할수있따
+	$('h1').css({
+		'color' :  'black',
+		'background-color' : 'green'
+	})
+
+
+------------------------exam08 -----------------------------
+상자 숨겼다 보이게하기
+hide          fadeOut
+show        fadeIn
+
+	//투명도. 0이면 거의 안보이게
+	$('div').fadeTo(2000, 0.4);   -> 2초동안 0.4정도의 투명도로
+
+-> hide와 show ->  둘 ㄷㅏ toggle
+-> fadeOut, fadeIn -> fadeToggle
+
+------------------------exam09 animate-----------------------------
+-=100px  -> 내 크기로
+opacity 투명도
+----jquery홈페이지에서 코드 가져와서 쓰면 쓸수있음
+
+
+--------------------exam10 animate-----------------------------
+slideDown   내려갔다
+slideUp        올라갔다
+slideToggle   둘다.
+
+
+--------------------exam11-----------------------------
+문장 먼저 애니로 보인 후 alert창 띄우고 싶으면 - > callback함수로 해야함
+-> exam 선생님 코드 확인
+
+--------------------exam12----------------------------
+p 태그의 innerHTMl값을 알려주는 함수
+   ->  $('p').html();
+
+var html = $('p:first').html();
+var text = $('p:first').text();
+
+javascript와 jquery는 리턴타입이 다름
+ -> $('p')[0] 이거랑 $('p').eq(0) 이거랑!!!!
+
+var aTag = document.querySelector('a');
+aTag.getAttribute('href');        -> aTag의 href의 속성값이 뭐야??
+		 	    -> 얘는 a태그 추출하고 또 href속성값구해야됨
+
+var attr = $('a').attr('href');   -> 한번에 처리 가능!
+
+-------------------------사용자 입력받고 그 값 가져오기
+
+
+
+
+
+
+
+

@@ -1,0 +1,88 @@
+2.javascript DOM- windowonload,.innerHTML,Text, getElementsByTagName, querySelectorAll-exam41~43
+DOM - document로 제어할수있는거
+
+---------------------------------exam41------------------------------
+스크립트에 console.log(document.body); 쳐도 아직 body를 읽기 전이라 null값임
+--> 읽고싶으면 window.onload 
+	
+	window.onload  = function() {
+		console.log(document.body);	
+	}
+   -> </html>끝까지 읽고 나서 window.onload가 자동으로 호출됨.!
+------------------>
+  window.onload  = function() {
+	alert('innerHTML : ' + document.body.innerHTML);
+		//태그까지
+	alert('innerText : ' + document.body.innerText);
+		//태그빼고 안에 있는 문자열만	
+	document.body.innerHTML = "변경했음.,,";
+		//이렇게하면 원래 body내용에 덮어쓰기 할 수 있음
+
+		var list = '';
+		list += '<ul>';
+		list += '<li>aaa</li>';
+		list += '<li>bbb</li>';
+		list += '<li>ccc</li>';
+		list += '<ul>';	
+		document.body.innerHTML = list;
+		//저장할때는 얘가 태그 빼고 문자열만 저장하고(덮어쓰기)
+		document.body.innerText = list;
+		//얘가 태그랑 문자열까지 저장함..
+		
+		document.body.innerHTML += list;
+		//기존 body문자 뒤에 이어서 나오게!!!!!
+   }
+
+
+
+---------------------------------exam42------------------------------
+body 의 ID를 한글 아이디로 바꾸고 싶을 때!!
+
+document.getElementById('id').innerText ->  태그명 가져오기
+  //id가 id인애를 찾을게
+
+  window.onload = function() {
+	var id = document.getElementById('id');
+	//console.log(id.innerHTML);
+	id.innerHTML = '아이디';
+	//id의 태그명을 '아이디'로 바꿔줘
+	
+	//id가 pwd인것
+	var password = document.getElementById('pwd');
+	password.innerText = '패스워드';
+
+                  // 얘도 id가 pwd인것! ★얘를 더 많이 씀★
+	var password = document.querySelector("#pwd");
+	password.innerText = '패스워드';
+  }
+
+
+---------------------------------exam43------------------------------
+태그에 의해서 특정 element 찾기    -> id없는 것들!@
+document.getElementsByTagName()   -> return type : 배열!
+--> 안에 있는 값을 보고싶으면
+document.getElementsByTagName("td")[0] 0번지값 : <td>id</td>
+document.getElementsByTagName("td")[1] 1번지값 : <td>password </td>
+
+  id를 아이디 로 바꾸고 싶을 때
+  tags[0].innerHTML = '아이디'; ~~~>>> 하면 바뀌어요
+
+
+
+------------------------------
+document.querySelector(태그명)
+------------------------------
+: 맨처음 검색된 태그명의 요소가 반환.  여러개가 있더라 하더라도 맨처음 있는 태그만 리턴됨.
+  <td>태그가 여러개 여도 맨 처음에 있는 id만 나온것처럼 
+     
+        -> 만약 다 검색하고 싶으면? 
+    ~>  document.querySelectorAll(태그명) : 태그명에 해당하는 모든 요소 반환 : 배열
+
+--> 전체 검색한 것 중에 1번지 값인 비밀번호를 변경하는 것도 가능함
+	var nodes = document.querySelectorAll('td');
+
+	nodes[1].innerHTML = '패스워드';
+
+
+
+

@@ -1,0 +1,25 @@
+
+* maven 다운로드
+http://maven.apache.org/ -> USE ( Download)  -> Binary zip archive다운로드 -> Leture폴더 바로 아래에 다운로드 -> 그리고 컴퓨터
+시스템(내 pc의 속성) -> 고급 시스템 설정 -> 환경 변수 -> 시스템 변수의 새로만들기 -> 변수이름 : JAVA_HOME 디렉토리
+찾아보기 : c드라이브의 java에 있는 jdk -> 또 시스템 변수의 새로만들기 -> 변수이름 : M2_HOME 디렉토리 찾아보기 : D드라이브
+Lecture에 있는 apache-maven-3.5.4 -> 그리고 시스템 변수안에 있는 path 더블클릭 -> 새로 만들기 클릭 -> 찾아보기 클릭
+-> apache-maven-3.5.4 안에 있는 bin 확인 -> cmd에서 mvn -version 치고 잘 되었는지 확인 -> Leture폴더 아래에 maven-repository 만들기
+ 설치된 메이븐 폴더의 conf에 가서 settings 파일을 편집을 누르고 <localRepository>쪽 한줄을 복사하고 --> 아래에다가 붙여넣기 -> 그리고
+maven-repository폴더의 경로를 복사 -> --> 아래쪽에다가 붙인곳에 붙여넣고 -> \를 / 로 다 변경 -> 그리고 자바에가서 window탭에서 preference클릭
+-> Maven에서 user Settings -> User Settings 에서 Browse누르고 아까의 settings 선택 ( 만일 잘 되었다면 Local Repository는 아까 복붙해서 \를 / 로 바뀐 경로로 갈것)
+적용.  -> 그리고 Maven Project 만들고 Create a simple project를 체크 -> Group id 를 kr.co.mlec / Artifact id를 Lecture-Spring -> 완료
+
+* Spring 다운로드
+mvnrepository.com -> 검색창에 Spring-context 검색 -> Spring Context 클릭 -> 4.3.18.Release 클릭 -> Maven에 적혀있는거 복사 -> Lecture-Spring의 pom.xml에 <dependencies></dependencies>적어놓고 안에 붙여넣기 저장 하면 다운로드
+
+
+*프로젝트 구조
+
+pom.xml - maven 관련 설정파일
+
+src/main/java - 소스 파일작성
+
+src/main.resources - 자원파일 작성
+
+						

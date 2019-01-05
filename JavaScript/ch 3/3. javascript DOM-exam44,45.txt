@@ -1,0 +1,84 @@
+3. javascript DOM-exam44,45
+dom - document object model
+----------------------------------exam44-----------------------------
+html
+ - head -title - "insert title here"
+ - body - h2 - "Hello"   -> 얘를 돔적으로 만들고 싶어
+
+document.createElement("h1") -> h1 태그 만들어짐
+
+document.createTextNode("Hello") -> 문자 Hello를 만들어줌
+
+append.Child()  -> 누구의 자식을 만들겠다.
+ex ) 		h1Tag.appendChild(text);
+		console.log(h1Tag);
+		//h1Tag밑에 text를 자식으로 
+     ----> 이렇게하면 하면 화면에 안뜸! body의 자식으로 둬야 떠
+		document.body.appendChild(h1Tag); <<--요렇게 해야 뜸
+
+
+-----------------
+이미지 넣기  -  setAttribute('src','http://qqq.ddd.ddd.....')
+-----------------
+  var imgTag = document.createElement('img');
+	
+ < 둘다 같은 코드 img src 태그 >	
+  imgTag.src = "https://t1.daumcdn.net/daumtop_chanel/op/20170315064553027.png";
+  imgTag.setAttribute('src',"https://t1.daumcdn.net/daumtop_chanel/op/20170315064553027.png");
+--> document.body.appendChild(imgTag); <---자식으로~
+
+
+		//이미지 누르면 다음으로
+		var aTag = document.createElement('a');
+		aTag.setAttribute ('href', 'http://www.daum.net');
+		aTag.setAttribute ('target', '_blank');
+		aTag.appendChild(imgTag);
+		document.body.appendChild(aTag);
+
+		//이미지 누르면 다음으로#2
+		var aTag = document.createElement('a');
+		aTag.href = "http://www.daum.net";
+		aTag.target = '_blank';
+		aTag.appendChild(imgTag);
+		document.body.appendChild(aTag);
+
+
+
+
+----------------------------------exam45-----------------------------
+--이제 특정 태그를 삭제하자!
+
+body 에서 <td id = "id"> ID </td> 이거 지우고싶어  
+
+-> removeChild <  -  > appendChild
+
+	//방법 #1	
+	var id = document.getElementById("id");
+	var trTags = document.getElementsByTagName("tr");
+	               //console.log(trTags[0]);
+	trTags[0].removeChild(id); 
+
+->parentNode -> 태그명의 부모를 알수 있음
+-> parentNode.removeChild  -> 그 부모의 자식을 지우겠다.
+
+	//방법 #2  -> 굳이 trTags 찾을 필요 없어
+	var id = document.getElementById("id");
+	id.parentNode.removeChild(id);
+
+ 	//방법 #3 -> 굳이 부모 통해서 갈필요없어, 날 지워그냥!
+	id.remove(); 
+		-> 근데 이 방법 못써, 크롬은 되는데 익스플로러에서는 안먹혀~
+
+
+-------------------
+CSS Style 넣어주기
+-------------------
+console  ->   console.log(변수명.style); 치면 넣을 수 있는 스타일 나옴
+   .style.color = "red";
+   .style.border = "2px dotted pink";
+   .password.style.backgroundColor = "lightgray";
+
+
+
+
+

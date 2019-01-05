@@ -1,0 +1,62 @@
+3. EL에서의 객체 표현 이해(배열, 콜렉션) -exam06,07,08
+
+
+el 표현식쓰면 error발생을 줄일 수 있음!!!
+
+
+객체 자리에 올수있는 타입 4가지 : 자바빈즈, 맵, 배열, 콜렉션
+
+-------------------
+  배열   - exam06~!
+-------------------
+ String[] names = {"홍길동", 임꺽정, 강감찬};
+pageContext.setAttribute("names", names);
+
+${ names[0] }   -> 홍길동
+${ names[1] }   -> 임꺽정
+${ names[2] }   -> 강감찬     
+
+
+names[3] : <%=names[3] %><br>   이렇게 자바 객체 소환으로 하면 error!!! 3값없어
+
+el names[3] : ${ name[3] }<br>    : error안나고 empty
+
+
+
+-------------------
+  콜렉션 - exam07~!
+-------------------
+
+List<String> names= new ArrayList();
+names.add("홍길동");
+
+pageContext.setAttribute("names", nameList);
+${ names[0] }   -> 홍길동
+   
+
+
+------------
+  exam08
+------------
+성공/실패? ${boardList[0].title}<br>
+
+---- > 여러 객체표현들 섞어서 봐야함~!~!~@!#@!#!~@@~!~!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,94 @@
+2. EL에서의 객체 표현 이해(자바빈즈,맵) - exam04,05
+
+★★객체 자리에 올수있는 타입 4가지 : 자바빈즈, 맵, 배열, 콜렉션★★
+
+
+$ { 객체.이름 }   :  $ { id.a }
+
+- 자바빈즈 클래스 형태의 5개 필수 조건!!!!!!!!!!!!!!!!!    -> VO도 자바빈즈클래스 형태
+1. 패키지로 선언
+2. 클래스는 public선언
+3. 매개변수 없는 생성자 선언
+4. 멤버변수는 private선언
+5. 멤버변수에 대한 setter,getter 
+
+
+----------------------------------------------------------------------------
+--- 객체 타입이 자바빈즈 인 경우
+ $ { 객체.이름 }     일때 .이름 은 ---> getter 임
+   -   ex)   -
+       ${board.no}   -> board클래스의 getNo() 라는 뜻
+
+----------------자바빈즈객체이해 -jsp-el- exam04---------------------------
+java Resource - board- BoardVO 만둘고 exam04에서 
+객체 넣고, ~ 이제 그 데이터를 공유영역에 등록!!!
+
+pageContext.setAttribute("board", b);      객체 등록 
+
+((BoardVO)pageContext.getAttribute("board")).getNo()
+                       지금 이 자체는 object형이기때문에 
+   BoardVO형으로 형변환 시켜주고                                   겟넘버
+
+title : <%= ((BoardVO)pageContext.getAttribute("board")).getTitle() %><br>
+
+----------> 이 복잡한 것이 el로 쓰면 
+el no : ${ board.no }
+el title : ${ board.title }    -> 너무 간단해졌죠? 
+                   -> 이 자체가 board의 getNo, getTitle이라는 뜻이니까
+
+
+
+----------------------------------------------------------------------------
+-----객체 타입이 맵인 경우
+ $ { 객체.이름 }     일때 .이름 은 ---> key 임
+   -   ex)   
+   Map b = new HashMap();
+  b.put("no","1");
+  b.put("title","test");
+pageContext.setAttribute("board",b);   -> 공유 영역에 등록
+
+	key : no     title
+              value :  1       test
+
+    ${board.no}   -> no 는 맵의 key가 no를 의미함  -> map의 key에 해당하는 value=1찍어                                                
+
+
+
+
+
+-----------------맵(map)객체이해 -jsp-el- exam05---------------------------
+  Map<String, String> b = new HashMap<>();
+  b.put("no", "1");
+  b.put("title", "test");
+  pageContext.setAttribute("board", b);
+
+<body>
+   el방식
+         el no : ${ board.no }<br>
+         el title : ${ board.title }<br> 
+
+----------------------
+  맵과 자바빈즈의 차이점
+----------------------
+맵 : el aaa: ${ board.aaa }<br>   -> 없는 객체 찍으면 empty :  빈값 
+
+자바빈즈 : el aaa : ${board.aaa}<br>    -> getAaa -> 500error!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

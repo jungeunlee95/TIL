@@ -1,0 +1,35 @@
+1. MVC02 - ModelAndView
+
+BoardVO 객체 만들기 
+BoardDAO
+
+BoardController에서 dao호출
+Web-Content-jsp/board/list.jsp list.jsp 파일 만들고
+
+BoardController에서 return "/jsp/board/list.jsp";
+ request에 올린거 list.jsp에서 사용!!!
+
+DispatcherServlet
+  RequestDispatcher dispatcher = request.getRequestDispatcher(callPage);
+  dispatcher.forward(request, response);
+
+-BoardController에서 저장할 정보(객체를) 기억하고, 포워드시킬 jsp주소 기억하는 class
+kr.co.mlec.board.control / ModelAndView.java
+Model : 화면단(JSP)에서 사용할 데이터의 저장 객체 
+             ((request)공유영역에 등록시킬 객체)
+View  : 응답할(forward 할 ) JSP 정보를 저장
+ --> model은 MAP객체, view는 JSP주소니까 Stirng
+
+-----------------------------------------------------------------
+      이제 DispatcherServlet 에서 mav모델객체를 사용해서 
+           프로그램 동적으로 실행하기 해보자
+/1. model객체 추출 후 request 공유 영역에 등록해야함
+/2. mav가 알려준 view를 보고 해당 jsp로 이동
+
+-----------------------------------------------------------------
+BoardService만듬!!!@!@!@!
+--> 이제 BoardController에서 dao객체 부를 때 service.으로 불러와
+
+ static처럼 객체를 하나 만들어서 사용하면 좋겠다.
+->게시판 하나씩 만들 때 마다, service랑 mav등등 계속 똑같이 사용하잖아. 서버터질라!
+

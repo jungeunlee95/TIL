@@ -1,0 +1,12 @@
+[equals]
+
+=============================================================
+int a = 10;     String str = "abc";
+int b = 20;     String str2 = "abcd";
+if(a == b)        if(str == str2)
+ 가능                 불가능 -> str, strs는 주소값을 갖고있기 때문에 ==가 무의미
+                        => 둘의 문자열이 같은지 비교할때는 boolean equals()로 비교->ppt 문자비교 
+
+----------
+int compareTo(string str)
+

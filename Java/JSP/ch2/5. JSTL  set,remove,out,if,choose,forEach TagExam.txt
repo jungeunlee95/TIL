@@ -1,0 +1,218 @@
+ 5.JSTL  set,remove,out,if,choose,forEach TagExam
+
+
+ Lecture-Web->WebContent->jsp -> jstl
+
+
+--------------------------------------------------
+    core - Set 태그 : 공유영역에 변수 설정 하려고 사용 
+--------------------------------------------------
+형식
+<    c:set var ="" value="" [scope=""]       />
+var : 설정할 변수명
+value : 설정할 값
+scope : 변수의 사용 영역  4가지   -> 기본설정 영역 : page
+	(여기서는 pageContext->그냥 page)
+
+ex>  
+    <    c:set var ="cnt" value="1" [scope="page"]       />
+     : 아 page영역에 cnt라는 이름으로 1 저장할거구나~
+
+-----------   Lecture-Web->WebContent->jsp ->setTagExam  ---------------
+ set으로 값 넣기
+
+1. 코어태그 넣기  2. 접두어 prefix="c"
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core"  prefix="c" %>  
+
+2. <body>  끝에 / 붙이면  시작동시에 종료태그됨!
+ <c:set />  
+
+☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆   영역   ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
+JSP   :   pageContext    request                   session                 application
+EL      :   pageScope        requestScope        sessionScope       applicationScope
+JSTL :   page                  request                   session                 application
+
+
+
+
+
+
+
+
+-----------------------------------------------
+    core-remove - 공유영역에 설정된 변수 삭제 시 사용
+------------------------------------------------
+형식
+<    c:remove var ="" value="" [scope=""]       />
+
+-----------   Lecture-Web->WebContent->jsp ->removeTagExam -----------
+
+	<c:remove var="cnt" scope="request"/>	
+	-----cnt삭제 후 -----<br>
+	cnt : ${ cnt }<br>
+	request cnt : ${ requestScope.cnt }<br>
+                 -> 이렇게 하면 cnt =1 이고 request cnt = empty 인데
+                 형식에 scope안써주면 둘다 empty
+
+
+
+
+
+
+-----------------------------------------------
+    core-out- 출력 전용 태그
+------------------------------------------------
+형식
+<    c:out value="" [escapeXml = "true/false"] [default=""] />
+ 
+value       : 출력할 내용 지정
+escapXml : true : 출력 내용에 태그가 있을 경우 문자값으로 변경처리
+	 ex)    '< '  -    &lt;
+	           '>'  -    &gt; &  
+                            ' " ' -    &#034;  
+                            ' ' '  -    &#039;
+                  false 일때는 value에 <hr> 이런거 있으면 선이 출력됨
+default    : value속성 값이 없으면 디폴트로 내용 출력
+
+-----------   Lecture-Web->WebContent->jsp ->outTagExam -----------
+<c:out value="${msg }" default="msg변수가 정의 안됨"/> 
+      : empty면    'msg변수가 정의 안됨'   출력
+
+
+
+
+
+
+-----------------------------------------------
+    core-if- 조건에 따라 내용을 실행
+------------------------------------------------
+형식
+  <    c:if test="조건">
+  조건이 참일 경우 실행할 내용
+  </c:if>
+
+test : 참과 거짓을 판단하는 조건을 명시
+
+-----------   Lecture-Web->WebContent->jsp ->ifTagExam -----------
+
+<c:if test="${empty param.type }">   -> 날라오는 파라미터가 없니?
+
+
+
+
+
+
+
+
+
+-----------------------------------------------
+    core-choose- 다중 조건에 따라 내용을 실행
+------------------------------------------------
+형식
+  <c:choose>
+        <c:when test="">
+               조건이 참일 경우 실행할 내용
+        </c:when>
+        ........
+        <c:otherwise>     ->else같은거
+               when 절이 모두 거짓일 경우 실행 할 내용
+        </c:otherwise>
+  <c:choose>
+
+test : 참과 거짓을 판단하는 조건을 명시
+
+-----------   Lecture-Web->WebContent->jsp ->chooseTagExam -----------
+	<c:choose>
+		<c:when test="${empty param.type }">
+			<h2>type 파라미터가 전송되지 않았습니다.</h2>
+		</c:when>
+		<c:when test="${ param.type eq 'S' }">
+			<h2>관리자님 환영합니다.</h2>
+		</c:when>
+		<c:when test="${ param.type == 'U' }">
+			<h2>일반사용자님 환영합니다.</h2>
+		</c:when>
+		<c:otherwise>
+			<h2>type파라미터의 정보가 잘 못 되었습니다.</h2>
+		</c:otherwise>
+	</c:choose>
+1번째 조건이 거짓이면 2번째 조건이,
+1.2조건 둘 다 거짓이면 3번째 조건이,
+만약 123둘다 거짓이면 otherwise 조건이 출력됨 !@!
+
+
+
+
+
+
+-----------------------------------------------
+    core-forEach- 반복문 처리 태그
+------------------------------------------------
+--형식--
+  <  c:forEach  var=""  begin=""  end=""  step="10">
+    반복 시 처리 할 문장
+  </c:forEach>
+- - - - -> 지정된 횟수 만큼 반복할 경우 사용
+begin : x부터  end: y까지   var변수를 소환!
+strp : 증가값 10씩증가해라~!
+
+                                                       var변수가 현재 어떤 상태인지 체크하는 속성!
+  <  c:forEach  var=""  items=""  [varStatus=""]>
+    반복 시 처리 할 문장
+  </c:forEach>
+- - - - -> 배열이나 콜렉션 객체를 반복할 경우 사용
+
+
+
+
+var : 반복문에서 사용 할 변수명 지정
+items : 반복시킬 대상 객체 지정 (배열이나 콜렉션)
+varStatus : 변수명, 반복과 관련된 기본 정보를 담고 있는 객체
+	1.first    : 반복문의 처음인지 판단, 참과거짓 반환
+	2.last    : 빈복문의 마지막인지 판단 , 참과 거짓 판단
+	3.index   :  반복의 처음에 0을 반환, 반복이 진행될때마다 1씩 증가 
+	4.count : var가 몇번째 돌았는지 체크하는 현재 어떤 상태인지??
+
+-----------   Lecture-Web->WebContent->jsp ->forEachTagExam -----------
+	<!-- for(int i = 0 ; i < names.length; i++) {
+		our.println(names[i] + "<br>");
+		}      이걸 forEach로! -->
+	<hr> <--for문 배열 이름 출력--> <br>
+	<c:forEach begin="0" end = "${length -1 }" var = "i">	
+		${ names[i] }&nbsp;&nbsp;
+	</c:forEach>
+	
+	<!-- for(String name : names) {
+		out.println(name + "<br>");
+		} -->
+	<hr> <--1.5 for문 배열 이름 출력--> <br>
+	<c:forEach items="${names}" var="name">
+		${name }&nbsp;&nbsp;
+	</c:forEach>
+
+, 찍을때, 
+count가 1만 아니면        앞에 , 찍고, 
+ ! loop.first                   첫번째가 아니면 앞에 ,찍고
+ <c:if test="${not loop.last}">,</c:if>       마지막이 아니면 뒤에 , 찍어~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

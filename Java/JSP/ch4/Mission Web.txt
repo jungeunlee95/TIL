@@ -1,0 +1,34 @@
+
+-Mission-Web - jsp - login - login.jsp
+
+/Mission-Web/js/myCheck.js  -> 로그인 체크하는 자바스크립트 
+
+
+loginDAO
+loginVO
+-> member DAO VO 써야됨 원래는!!!!
+
+
+
+< input type = "hidden" name = "writer" value="${ userVO.id }">
+   -> 내가 입력하지 않은 데이터를 숨겨서 날리고 싶을때!
+		${ userVO.id } 
+
+
+회원 하나씩 선택, 전체선택, 선택해제 -> 삭제 or 등업!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

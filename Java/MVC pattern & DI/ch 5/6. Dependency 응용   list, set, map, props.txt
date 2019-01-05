@@ -1,0 +1,48 @@
+
+6. Dependency 응용   list, set, map, props
+
+---------------di_collection / -------------------------------------
+Test
+di_collection.xml  주석
+
+	<bean class="di_collection.Test" >
+		<constructor-arg>
+			<value>5</value>    -> 이거 int로 인식할래
+			<value type="int">5</value> -> 이렇게 type설정
+		</constructor-arg>
+	</bean>
+
+---------------------------------------------------------------------
+
+----------------
+Dependency 응용   list, set, map,props
+----------------
+---------------di_collection / -------------------------------------
+    - 리스트로 값 가져오기
+ListMain
+di_collection.xml
+ListAddress.java
+
+
+   - MAP 가져오기
+MapMain
+MapAddress
+di_collection.xml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
