@@ -9,7 +9,7 @@
   String str = "HELLO";    //HELLO -> HELLO! 로 바꾸고 싶을 때
   str = str + "!";     //이미 있는 HELLO가 있는 공간과 "HELLO!" 공간이 따로있음
                               //그리고 str이 다른 공간으로 화살표를 바꾸는거임 
-             //자주 문자를 변경할때 이 형태는 느리기때문에, Bufferor Builder사용
+             //자주 문자를 변경할때 이 형태는 느리기때문에, Buffer or Builder사용
   
 -StringBuffer클래스
 

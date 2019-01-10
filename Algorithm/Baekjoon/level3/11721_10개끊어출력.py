@@ -22,3 +22,4 @@ while len(a) >10:
     a = a[10:]
 if len(a)<=10:
     print(a)
+

@@ -1,5 +1,5 @@
 class String{
-           char[] value;  //얘는 배열로 보는게 아니라 문자로 보는거임
+           char[ ] value;  //얘는 배열로 보는게 아니라 문자로 보는거임
   }
 
 

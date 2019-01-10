@@ -142,6 +142,16 @@ def positive_sum2(a):
     
 print(positive_sum2([1,-4,7,12]))
 print(positive_sum2([-1, -2, -3, -4]))
+
+# 3
+def positive_sum3(*numbers):
+    sum1 = 0
+    for i in numbers:
+        if i > 0:
+            sum1 += i
+    return sum1
+print(positive_sum3(1,-4,7,12))
+print(positive_sum3(-1, -2, -3, -4))
 ```
 
 
@@ -174,6 +184,7 @@ collatz(626331) #=> -1
 ```
 
 ```python
+# 1
 def collatz(num):
     cnt = 0
     while(num != 1):
@@ -187,10 +198,14 @@ def collatz(num):
         cnt = -1
     return cnt
 
-print(collatz(6))
-print(collatz(16))
-print(collatz(27))
-print(collatz(626331))
+# 2
+def collatz2(num):
+    for i in range(500):
+        num = num/2 if num%2==0 else num*3+1
+        if num ==1:
+            return i + 1
+    return -1
+
 ```
 
 
@@ -217,6 +232,27 @@ lonely([4,4,4,3,3]) #=> [4,3]
 ```
 
 ```python
+# 1
+def lonely(numbers):
+    result = []
+    for idx, n in enumerate(numbers):
+        if idx == 0 :
+            result.append(n)
+        elif result[-1] != n:
+            result.append(n)
+    return result
 
+print(lonely([1, 1, 3, 3, 0, 1, 1]))
+print(lonely([4,4,4,3,3]))
+
+# 2
+def lonely2(numbers):
+    result = []
+    for n in numbers:
+        if not result or result[-1] != n:
+            result.append(n)
+    return result
+print(lonely2([1, 1, 3, 3, 0, 1, 1]))
+print(lonely2([4,4,4,3,3]))
 ```
 
