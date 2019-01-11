@@ -23,11 +23,23 @@
 > - count_arara(8) # -> 'adak adak adak adak'
 
 ```python
+# 1
 def count_arara(num):
     if(num % 2 == 0 ):
         return "adak " * (num//2)
     else:
-        return "adak " * (num//2) + "anane " * (num%2)
+        return "adak " * (num//2) + "anane " 
+
+print(count_arara(1))
+print(count_arara(8))
+
+# 2
+def count_arara2(num):
+    return "adak " * (num//2) if (num % 2 == 0 ) else "adak " * (num//2) + "anane " 
+
+print(count_arara2(3))
+print(count_arara2(8))
+
 ```
 
 
@@ -43,6 +55,7 @@ def count_arara(num):
 > 명사를 문자열로 하는 함수를 완성하고 선호하는 밴드 이름을 문자열로 표시하세요.
 
 ```python
+# 1
 def solution(name):
     result = ""
     if(name[0] == name[-1]):
@@ -51,6 +64,19 @@ def solution(name):
         return result
     else : 
         return "The " + name[0].upper() + name[1:]
+    
+print(solution("alaska"))
+print(solution("dolphin"))
+
+# 2
+def solution2(name):
+    if name[0] != name[-1]:
+        return f'The {name[0].upper()}{name[1:]}'
+    else:
+        return "{}{}".format(name[0].upper, name[1:], name)
+print(solution2("alaska"))
+print(solution2("dolphin"))
+
 ```
 
 
@@ -72,6 +98,7 @@ def solution(name):
 > - 21을 입력하면 1.75를 반환해야 합니다. (10의 10% + 10의 7% + 1의 5%)
 
 ```python
+# 1
 def solution(a):
     answer = 0
     if a > 30 : 
@@ -83,6 +110,27 @@ def solution(a):
     else :
         answer = a*0.1
     return round(answer,2)
+    
+print(solution(10))
+print(solution(21))
+
+# 2
+def solution2(total):
+    if not isinstance(total, (int, float)) or total < 0: return 0
+    
+    tax = 0
+    if total >30 :
+        tax = 2.2 + (total - 30) * 0.03
+    elif total > 20:
+        tax = 1.7 + (total - 20) * 0.05
+    elif total > 10:
+        tax = 1 + (total - 10) * 0.07
+    elif total > 0 :
+        tax = total / 10
+    return round(tax,2)
+
+print(solution2(10))
+print(solution2(21))
 ```
 
 
@@ -96,11 +144,18 @@ def solution(a):
 > > 입력값 : 시작값(a),증가값(r), 횟수(n)
 
 ```python
+# 예시
+# arithmetic_sequence_sum(2, 3, 5) -> return 40
+# 1     2        3          4            5
+# a + (a+r) + (a+r+r) + (a+r+r+r) + (a+r+r+r+r) 
+# 2 + (2+3) + (2+3+3) + (2+3+3+3) + (2+3+3+3+3) = 40
+
 def solution(a, r, n):
     sum1 = a
     for i in range(1, n):
-        sum1 += (a+(r*i))
+        sum1 += a+r*i
     return sum1
+    
 ```
 
 
@@ -121,6 +176,7 @@ def solution(a, r, n):
 > - checkExam(["b", "c", "b", "a"], ["",  "a", "a", "c"]) → 0
 
 ```python
+# 1
 def solution(a, b):
     point=0
     for i in range(len(a)):
@@ -132,5 +188,17 @@ def solution(a, b):
     if(point<0):
         return 0
     return point
+        
+# 2
+def solution2(a, b):
+    point=0
+    for i in range(0,4):
+        if a[i] == b[i]:
+            point += 4
+        elif a[i] == "" or b[i] == "":
+            point += 0
+        else:
+            point -= 1
+    return point if point >= 0 else 0
 ```
 
