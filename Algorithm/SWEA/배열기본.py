@@ -33,19 +33,50 @@
 import sys
 sys.stdin = open("input1.txt", "r")   #-->  같은 경로에 있으면 나 이파일에서 바로 읽어서 처리할게
 
+# 1
+# for test_case in range(1, 11):
+#     a = int(input())
+#     b = list(map(int,input().split()))
+#     cnt =0
+#     for i in range(2, len(b)-2):
+#         result = [b[i-2], b[i-1], b[i+1], b[i+2]]
+#         if(max(result)<b[i]):
+#             cnt += b[i] - max(result)
+#     if(test_case == 10):
+#         print(f'#{test_case} {cnt}', end="")
+#     else:
+#         print(f'#{test_case} {cnt}')
 
+# # 2
 for test_case in range(1, 11):
     a = int(input())
     b = list(map(int,input().split()))
     cnt =0
     for i in range(2, len(b)-2):
-        result = [b[i-2], b[i-1], b[i+1], b[i+2]]
-        if(max(result)<b[i]):
-            cnt += b[i] - max(result)
-    if(test_case == 10):
-        print(f'#{test_case} {cnt}', end="")
-    else:
-        print(f'#{test_case} {cnt}')
+        max_num = max(b[i-2], b[i-1], b[i+1], b[i+2])
+        if(max_num<b[i]):
+            cnt += b[i] - max_num
+    # print(f'#{test_case} {cnt}')
+    print(test_case,cnt)
+# # 3
+# def my_max(nums):
+#     my_max = 0
+#     for i in nums:
+#         if(i>my_max):
+#             my_max = i
+#     return my_max
+
+# for test_case in range(1, 11):
+#     a = int(input())
+#     b = list(map(int,input().split()))
+#     cnt =0
+
+#     for i in range(2, len(b)-2):
+#         max_num = my_max([b[i-2], b[i-1], b[i+1], b[i+2]])
+#         if(max_num<b[i]):
+#             cnt += b[i] - max_num
+#     print(f'#{test_case} {cnt}')
+
 
 
 
