@@ -31,63 +31,70 @@
 #부호와 함께 테스트 케이스의 번호를 출력하고, 공백 문자 후 테스트 케이스의 조망권이 확보된 세대의 수를 출력한다.
 """
 import sys
-sys.stdin = open("input1.txt", "r")   #-->  같은 경로에 있으면 나 이파일에서 바로 읽어서 처리할게
+sys.stdin = open("input.txt", "r")   #-->  같은 경로에 있으면 나 이파일에서 바로 읽어서 처리할게
 
 # 1
-# for test_case in range(1, 11):
-#     a = int(input())
-#     b = list(map(int,input().split()))
-#     cnt =0
-#     for i in range(2, len(b)-2):
-#         result = [b[i-2], b[i-1], b[i+1], b[i+2]]
-#         if(max(result)<b[i]):
-#             cnt += b[i] - max(result)
-#     if(test_case == 10):
-#         print(f'#{test_case} {cnt}', end="")
-#     else:
-#         print(f'#{test_case} {cnt}')
-
-# # 2
 for test_case in range(1, 11):
     a = int(input())
     b = list(map(int,input().split()))
     cnt =0
-    for i in range(2, len(b)-2):
+    for i in range(2, a-2):
+        result = [b[i-2], b[i-1], b[i+1], b[i+2]]
+        if(max(result)<b[i]):
+            cnt += b[i] - max(result)
+    if(test_case == 10):
+        print(f'#{test_case} {cnt}', end="")
+    else:
+        print(f'#{test_case} {cnt}')
+        
+# 2
+for test_case in range(1, 11):
+    a = int(input())
+    b = list(map(int,input().split()))
+    cnt =0
+    for i in range(2, a-2):
         max_num = max(b[i-2], b[i-1], b[i+1], b[i+2])
         if(max_num<b[i]):
             cnt += b[i] - max_num
-    # print(f'#{test_case} {cnt}')
-    print(test_case,cnt)
-# # 3
-# def my_max(nums):
-#     my_max = 0
-#     for i in nums:
-#         if(i>my_max):
-#             my_max = i
-#     return my_max
+    print(f'#{test_case} {cnt}')
 
-# for test_case in range(1, 11):
-#     a = int(input())
-#     b = list(map(int,input().split()))
-#     cnt =0
+# 3
+def my_max(nums):
+    my_max = 0
+    for i in nums:
+        if(i>my_max):
+            my_max = i
+    return my_max
 
-#     for i in range(2, len(b)-2):
-#         max_num = my_max([b[i-2], b[i-1], b[i+1], b[i+2]])
-#         if(max_num<b[i]):
-#             cnt += b[i] - max_num
-#     print(f'#{test_case} {cnt}')
+for test_case in range(1, 11):
+    a = int(input())
+    b = list(map(int,input().split()))
+    cnt =0
 
-
-
-
-
-## 1 691
-## 2 9092
-## 3 8998
-## 4 9597
-## 5 8757
-## 6 10008
-## 7 10194
-## 8 10188
-## 9 9940
-## 10 8684
+    for i in range(2, a-2):
+        max_num = my_max([b[i-2], b[i-1], b[i+1], b[i+2]])
+        if(max_num<b[i]):
+            cnt += b[i] - max_num
+    print(f'#{test_case} {cnt}')
+    
+# 4
+def getMax(idx):
+    tmax = heights[idx -2]
+    
+    if tmax < heights[idx - 1]: tmax = heights[idx -1]
+    if tmax < heights[idx + 1]: tmax = heights[idx +1]
+    if tmax < heights[idx + 2]: tmax = heights[idx +1]
+    
+    return tmax
+    
+TC = 10
+for tc in range(1, TC+1):
+    N = int(input())
+    heights = list(map(int,input().split()))
+    view = 0
+    
+    for i in range(2, N-2):
+        side = getMax(i)
+        if side < heights[i]:
+            view += heights[i] - side
+    print("# %d %d" % (tc, view))
