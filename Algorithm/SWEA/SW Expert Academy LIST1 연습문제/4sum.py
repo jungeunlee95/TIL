@@ -19,6 +19,7 @@ ex) 1,2,3,10,9,8,7,6,5,4
 import sys
 sys.stdin = open("input4.txt", "r")
 
+# 1 
 T = int(input())
 for tc in range(1,T+1):
     a, b = list(map(int,input().split()))
@@ -29,9 +30,22 @@ for tc in range(1,T+1):
         t = 0
         for j in range(b):
             t += c[i+j]
-        if(t>max1):
-            max1=t
-        if(t<min1):
-            min1=t
+        if(t>max1): max1=t
+        if(t<min1): min1=t
     print(f'#{tc} {max1 - min1}')
 
+# 2 do not recompute ! 겹치는 부분 재사용하자! 
+# 예를들어, 1~8까지 있을때 7개씩 더한다면? 1~7까지 합 28, 다음은 28-1+8 로 하면 됨.
+T = int(input())
+for tc in range(1,T+1):
+    a, b = list(map(int,input().split()))
+    c = list(map(int, input().split()))
+    max1=0
+    min1=sum(c)
+    for i in range(a-(b-1)):
+        t = 0
+        for j in range(b):
+            t += c[i+j]
+        if(t>max1): max1=t
+        if(t<min1): min1=t
+    print(f'#{tc} {max1 - min1}')

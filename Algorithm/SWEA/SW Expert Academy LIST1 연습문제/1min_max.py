@@ -49,3 +49,26 @@ for tc in range(1,T+1):
 #     nums = list(map(int, input().split()))
 #     a = my_sub(nums)
 #     print(f'#{tc} {a}')
+
+
+# 4 REVIEW
+# import sys
+# sys.stdin = open("input.txt", "r")
+
+# def find(a, n):
+#     max_value = a[0]
+#     min_value = a[0]
+
+#     for i in range(1,n):
+#         if a[i] > max_value:
+#             max_value = a[i]
+#         if a[i] < min_value:
+#             min_value = a[i]
+#     return max_value - min_value
+
+# T = int(input())
+
+# for tc in range(1, T+1):
+#     n = int(input())
+#     a, b = list(map(int, input().split()))
+#     print(f'#{tc} {find(a, b)}')
