@@ -126,3 +126,28 @@ ex ) 111234123 에서 1234를 찾아봐
 
 ![1548824973602](../typora-user-images/1548824973602.png)
 
+---
+
+```python
+def B(t, p):
+    i = j = 0
+    N = len(t)
+    M = len(p)
+
+    while j < M and i < N:
+        if t[i] != p[j]:
+            i = i - j
+            j = -1
+        i += 1
+        j += 1
+    if j == M:
+        return i - M
+    else:
+        return i
+
+
+T = "sadewgsfd"
+P = "wg"
+print(T[B(T, P):])
+```
+

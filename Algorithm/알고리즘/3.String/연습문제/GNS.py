@@ -67,8 +67,33 @@ for t in range(1, T+1):
             print(result[i][j], end=" ")
     print()
 
-
 # 3
+def my_sort(a, nums):
+    num_list = ["ZRO", "ONE", "TWO", "THR", "FOR", "FIV", "SIX", "SVN", "EGT", "NIN"]
+    nums_dict = {}
+    for i in range(len(num_list)):
+        nums_dict[num_list[i]] = i
+
+    result = [[] for _ in range(10)]  # [[], [], [], [], [], [], [], [], []]
+
+    for i in range(a):
+        result[nums_dict[nums[i]]].append(nums[i])
+
+    for i in range(10):
+        for j in range(len(result[i])):
+            print(result[i][j], end=" ")
+    print()
+
+
+T = int(input())
+for t in range(1, T+1):
+    a = int(input().split()[1])
+    nums = input().split()
+
+    print(f'#{t}')
+    result = my_sort(a, nums)
+
+# 4
 # def changer(inputList):
 #     numList = [0] * 10
 #     numDict = {'ZRO': 0, 'ONE': 1, 'TWO': 2, 'THR': 3,
