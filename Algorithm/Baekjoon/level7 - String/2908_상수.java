@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*- 
-'''
+/*
 상근이의 동생 상수는 수학을 정말 못한다. 상수는 숫자를 읽는데 문제가 있다.
  이렇게 수학을 못하는 상수를 위해서 상근이는 수의 크기를 비교하는 문제를 내주었다.
   상근이는 세 자리 수 두 개를 칠판에 써주었다.
@@ -16,13 +15,27 @@
 
 출력
 첫째 줄에 상수의 대답을 출력한다.
-'''
+*/
+import java.util.Scanner;
 
-a = list(map(int, input()[::-1].split()))
-
-if(a[0]>a[1]):
-   print(a[0])
-else:
-   print(a[1])
-
-
+public class Main {
+    public static void main(String args[]) throws Exception {
+        Scanner scan = new Scanner(System.in);
+        String[] memoArray = new String[] { "", "" };
+ 
+        for (int i=0; i<2; i++) {
+            int input = scan.nextInt();
+ 
+            while (input > 0) {
+                memoArray[i] += input % 10;
+                input = input / 10;
+            }
+        }
+ 
+        if (Integer.parseInt(memoArray[0]) > Integer.parseInt(memoArray[1]))
+            System.out.println(memoArray[0]);
+        else
+            System.out.println(memoArray[1]);
+ 
+    }
+}
