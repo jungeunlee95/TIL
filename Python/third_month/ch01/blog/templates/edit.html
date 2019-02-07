@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <title> 글등록 </title>
+</head>
+<body>
+    <h1>새 글 등록</h1>
+    
+    <form action="/articles/{{article[0]}}/update">
+      <div class="form-group">
+        <label for="exampleFormControlInput1">제목</label>
+        <input type="text" class="form-control" name="title" value="{{article[1]}}">
+      </div>
+     <div class="form-group">
+        <label for="exampleFormControlInput1">작성자</label>
+        <input type="text" class="form-control" name="author"  value="{{article[4]}}">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">내용</label>
+        <textarea class="form-control" rows="3" name="content"  placeholder="내용을 입력해주세요">{{article[2]}}</textarea>
+      </div>
+      <input type="submit" value="Submit" class="btn btn-outline-dark"/>
+      <a href="/articles">
+        <button type="button" class="btn btn-outline-dark">글목록</button>
+      </a>
+    </form>
+</body>
+</html>
