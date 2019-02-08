@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 부트스트랩 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <title>영화 정보 수정</title>
+</head>
+<body>
+    <form action="/movies/{{a.id}}/update">
+        제목 : <input type="text" name="title" value="{{a.title}}"/><br>
+        영어제목 : <input type="text" name="title_en" value="{{a.title_en}}"/><br>
+        관객 수 : <input type="number" name="audience" value="{{a.audience}}"/><br>
+        개봉일 : <input type="date" name="open_date" value="{{a.open_date}}"/><br>
+        장르 : <input type="text" name="genre" value="{{a.genre}}"/><br>
+        관람등급 : <input type="text" name="watch_grade" value="{{a.watch_grade}}"/><br>
+        평점 : <input type="number" step="0.5" min="0" max="5" name="score" value="{{a.score}}"/><br>
+        포스트 : <input type="text" name="poster_url" value="{{a.poster_url}}"/><br>
+        설명 : <input type="textarea" name="description" value="{{a.description}}"/><br>
+        <input type="submit" class="btn btn-dark" value="수정"/>
+        <a href="/movies"><button class="btn btn-dark">취소</button></a>
+    </form>
+</body>
+</html>
