@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>한글 단어 입력</h1>
+
+<form action="/result">
+    <input type="text" name="word">
+    <input type="submit" value="번역">
+</form>
+
+{% endblock %}

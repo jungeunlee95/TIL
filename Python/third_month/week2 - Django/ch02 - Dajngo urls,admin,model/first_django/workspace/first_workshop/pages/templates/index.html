@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>환영합니다</h1>
+
+<form action="/catch">
+    <input type="text" name="message">
+    <input type="submit" value="던지기">
+</form>
+
+{% endblock %}
