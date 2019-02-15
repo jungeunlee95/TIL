@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<style>
+    #maca {
+        background-image : url("{% static 'maca.png' %}");
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+</style>
+
+ <!-- font awesome-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<header id = "header">
+    <div id="maca" class="jumbotron" style="height:350px; width:100%;">
+      <h1 class="display-4" style="text-align: center; padding-left: auto; margin-top: auto; padding-top:50px;">Header</h1>
+    </div>
+</header>
+
+<footer id= "footer">
+  <div style="float: left;">
+    <span style="font-size: 22px;">JungEun Lee</span>
+  </div>
+  <div style="float: right;margin-top: 10px;">
+    <a href="#header">위로</a>
+  </div>
+</footer>
+
+{% endblock %}
