@@ -1,0 +1,19 @@
+{% extends 'articles/base.html' %}
+{% block body %}
+
+<div class="container" style="text-align:center;">
+    <br><br>
+    <div class="card">
+      <h5 class="card-header">{{article.title}}</h5>
+      <div class="card-body">
+        <h5 class="card-title">{{article.content}}</h5>
+        <a href="{% url 'articles:edit' i.id %}" class="btn btn-dark btn-sm">수정</a>
+        <a href="{% url 'articles:delete' i.id %}" class="btn btn-dark btn-sm">삭제</a></td>
+        <a class="btn btn-dark btn-sm" href="/articles">목록</a>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
