@@ -56,6 +56,8 @@ exec "$SHELL"
 
 **가상 환경에 장고설치** : `pip install django`
 
+​		**extensions** : `$ pip install django_extensions ipython`
+
 **현재 폴더에 장고 시작** : `django-admin startproject intro .`
 
 ![1549864238394](../typora-user-images/1549864238394.png)
