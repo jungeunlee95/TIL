@@ -45,32 +45,22 @@ V개의 작업과 이들 간의 선행 관계가 주어질 때, 한 사람이 �
 '''
 import sys
 sys.stdin = open("작업순서","r")
-# 2
-def pop():
-    global top
-    if top == -1 : return 0
-    x = stack[top]
-    top -= 1
-    return x
-
 def check(G, V):
     # 모든 점을 들릴 때까지
     while len(result) < V :
         for i in SP:  #첫 출발할 점
             result.append(i)
             for j in G[i]: # j = 첫 출발점에서 갈 수 있는 다음 점
-                NS.pop(NS.index(j))  # j를 진입당하는 point list에서 제거
-                if j not in NS: #만약 j가 이제 더이상 진입당할 곳이 없다면
+                del NS[NS.index(j)]   # j를 진입당하는 point list에서 제거
+                if j not in NS: # 만약 j가 이제 더이상 진입 당할 곳이 없다면
                     SP.append(j) # j가 출발할거임!
-            SP.pop(SP.index(i)) # 이미 출발 한 애는 이제 출발 리스트에서 제거
+            del SP[SP.index(i)]   # 이미 출발 한 애는 이제 진입 리스트에서 제거
 
-    return result
+    return ' '.join(map(str, result))
 
 for t in range(1, 11):
-    # V, E = map(int, input().split())
-    V, E = 5, 4
-    # L = list(map(int, input().split()))
-    L = [2, 4, 3, 5, 2, 3, 1, 2]
+    V, E = map(int, input().split())
+    L = list(map(int, input().split()))
 
     G = [[] for _ in range(V+1)]  # 노드 체크할 빈 list
 
@@ -92,6 +82,7 @@ for t in range(1, 11):
         G[L[i]].append(L[i+1])
 
     print(f'#{t} {check(G, V)}')
+
 
 
 
