@@ -1,0 +1,40 @@
+{% extends "csvpratice/base.html" %}
+
+{% block body %}
+<div class="container">
+    <h1> 새 영화 등록</h1>
+    
+    <form action="{% url 'movies:create' %}" method="POST">
+    {% csrf_token %}        
+      <div class="form-group">
+        <label for="exampleFormControlInput1">제목</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="title">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">관객</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="audience">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">장르</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="genre">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">평점</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="score">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">post_url</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" name="poster_url">
+      </div>
+      
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">내용</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="description"></textarea>
+      </div>
+      
+      <button type="button" class="btn btn-warning" onClick="location.href='/articles'">취소</button>
+      <input type="submit" class="btn btn-warning" value="글쓰기"/>
+    </form>
+</div>
+
+{% endblock %}

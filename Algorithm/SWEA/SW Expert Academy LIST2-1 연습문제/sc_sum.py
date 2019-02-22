@@ -24,7 +24,7 @@ a = [
 #부호와 함께 테스트 케이스의 번호를 출력하고, 공백 문자 후 테스트 케이스의 답을 출력한다.
 '''
 import sys
-sys.stdin = open("sc_Sum_input", "r")
+sys.stdin = open("sc_Sum_input.txt", "r")
 
 # for t in range(10):
 #     t = int(input())

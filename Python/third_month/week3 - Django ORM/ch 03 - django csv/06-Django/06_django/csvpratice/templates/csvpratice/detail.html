@@ -1,0 +1,26 @@
+{% extends 'csvpratice/base.html' %}
+
+{% block body %}
+
+<div class="container" style="text-align:center;">
+    <br><br>
+    <div class="card">
+      <h5 class="card-header">{{movie.title}}</h5>
+      <div class="card-body">
+        <img src="{{movie.poster_url}}" style="width:200px; height:300px;"></img>
+        <h5 class="card-title">관객 : {{movie.audience}}</h5> <br>
+        <h5 class="card-title">장르 : {{movie.genre}}</h5> <br>
+        <h5 class="card-title">평점 : {{movie.score}}</h5> <br>
+        <h5 class="card-title">줄거리 : {{movie.description}}</h5> <br>
+        
+        <a href="{% url 'movies:edit' movie.id %}" class="btn btn-dark btn-sm">수정</a>
+        <a href="{% url 'movies:delete' movie.id %}" class="btn btn-dark btn-sm">삭제</a></td>
+        <a class="btn btn-dark btn-sm" href="{% url 'movies:index' %}">목록</a>
+      </div>
+    </div>
+    <br>
+</div>
+
+
+
+{% endblock %}
