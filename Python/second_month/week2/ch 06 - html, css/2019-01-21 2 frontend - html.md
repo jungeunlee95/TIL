@@ -56,3 +56,9 @@
 
 ---
 
+
+
+[form 태그 속성 ]
+
+http://www.nextree.co.kr/p8428/
+
