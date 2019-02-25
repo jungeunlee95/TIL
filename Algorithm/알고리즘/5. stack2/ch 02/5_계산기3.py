@@ -18,7 +18,7 @@ for t in range(1, 11):
             top+=1
             stack[top] = a[i]
         elif(a[i] == ')'):
-            while( str(stack[top]) != '('):
+            while( str(stack[top]) != '(' ):
                 result += str(stack[top])
                 stack[top] = 0
                 top -= 1
