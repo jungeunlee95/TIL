@@ -1,7 +1,7 @@
 class Node:
-    def __init__(self, data):
+    def __init__(self, data, next=None):
         self.data = data
-        self.next = None
+        self.next = next
 
 
 # LinkedList 클래스 (자료구조) 정의
@@ -9,7 +9,7 @@ class LinkedList:
 
     # 초기화 메소드
     def __init__(self):
-        dummy = Node("")
+        dummy = Node("HEAD")
         self.head = dummy
         self.tail = dummy
 
@@ -61,6 +61,13 @@ class LinkedList:
 
         return self.current.data
 
+    def center(self, pre, data):
+        if pre == None:
+            print("error")
+        else:
+            i = pre.next
+            pre.next = Node(data, i)
+
     def size(self):
         return self.num_of_data
 
@@ -77,7 +84,10 @@ def check(data):
 
 
 l_list = LinkedList()
-l_list.append(1)
+a = [1, 5, 2, 4, 3]
+for i in a:
+    if l_list.size()== 0 : l_list.append(i)
+
 l_list.append(5)
 l_list.append(2)
 l_list.append(4)
