@@ -1,0 +1,64 @@
+{% extends 'movies/base.html' %}
+
+{% block body %}
+            <div class="card">
+                <div class="card-body">
+                    <img src="{{ movie.poster_url }}" alt="">
+                    <hr>
+                    <h1> {{ movie.title }}</h1>
+                    <hr>
+                     <h4>관객수: {{ movie.audience }}</h4>
+                    <hr>
+                     {{ movie.description }}
+                    <hr>
+                    장르 : {{ movie.genre_id.name }}
+                    <hr>
+
+                </div>
+            </div>
+        <div>
+            <a href="{% url 'movie:movie_list' %}"><button class="btn btn-danger">목록으로</button></a>
+            <a href="{% url 'movie:update_movie' movie.id %}"><button class="btn btn-danger">수정</button></a>
+            <form action="{% url 'movie:delete_movie' movie.id %}" method="post" style="float:left;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">삭제</button>&nbsp;
+            </form>
+         </div>
+
+    <br><br>
+
+
+    <div class="card mb-2">
+        <div class="card-body">
+            <form action="{% url 'movie:create_score' movie.id %}" method="post">
+                {% csrf_token %}
+                <label for="score">score</label>
+                <input type="number" min = "0" max = "10" step = "1"name="score" id="score" class="form-control" autofocus>
+
+                <label for="content">content</label>
+                <input type="text" name="content" id="content" class="form-control" autofocus>
+                <input type="submit" class="btn btn-success">
+            </form>
+        </div>
+     </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">평점</th>
+              <th scope="col">한줄평</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for score in scores %}
+            <tr>
+              <th scope="row" width="10%"><span class="badge badge-primary badge-pill">{{ score.score }}</span></th>
+              <td>{{ score.content }} <a href="{% url 'movie:delete_score' movie.id score.id %}" > 삭제</a></td>
+
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+
+
+{% endblock %}

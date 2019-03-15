@@ -1,0 +1,21 @@
+{% extends 'movies/base.html' %}
+
+{% block body %}
+    <a href="{%  url 'movie:create_movie' %}" class="btn btn-info">새 영화 등록</a>
+<hr>
+    {% if movies %}
+        <section class="card-columns" style="width:60%;">
+            {% for movie in movies %}
+                <article class="card mb-4" >
+                        <img src="{{ movie.poster_url }}" alt="이미지가 없습니다."
+                             class="card-img-top image-fluid">
+                    <div class="card-body">
+                        <a href="{% url 'movie:movie_detail' movie.id %}">
+                            <i>{{ movie.title }}</i>
+                        </a>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+{% endblock %}
