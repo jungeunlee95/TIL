@@ -1,0 +1,32 @@
+{% extends 'sns/base.html' %}
+
+{% block is_list %}
+    active
+{% endblock %}
+
+{% block body %}
+{% include 'sns/_forms.html' %}
+<hr>
+    {% if postings %}
+        <section class="card-columns">
+            {% for posting in postings %}
+                <article class="card mb-2">
+                    <a href="{% url 'sns:posting_detail' posting.id %}">
+                        {#                    이미지가 없을 때 #}
+                        {% if posting.image %}
+                            <img src="{{ posting.image_thumbnail.url }}" alt="{{ posting.image }}"
+                                 class="card-img-top image-fluid">
+                        {% else %}
+                          <img src="https://picsum.photos/32{{ forloop.counter }}/300/?random"
+                               alt="random_image_{{ forloop.counter }}"
+                               class="card-img-top image-fluid">
+                        {% endif %}
+                    </a>
+                    <div class="card-body">
+                        <i class="{{ posting.icon }} fa-2x"></i>
+                    </div>
+                </article>
+            {% endfor %}
+        </section>
+    {% endif %}
+{% endblock %}

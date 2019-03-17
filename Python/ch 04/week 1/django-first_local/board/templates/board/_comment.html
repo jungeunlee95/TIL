@@ -1,0 +1,19 @@
+    <form action="{% url 'board:create_comment' article.id %}" method ="POST">
+        {% csrf_token %}
+        <label for="comment">댓글</label>
+        <input type="text" name="comment" id="comment" autofocus>
+    </form>
+
+    {% if comments %}
+        <ul>
+        {% for comment in comments %}
+            <li>{{ comment.content }}</li>
+            <form action="{% url 'board:delete_comment' article.id comment.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">삭제</button>
+                {# TODO : 이거 만들어라#}
+            </form>
+        {% endfor %}
+        </ul>
+
+    {% endif %}
