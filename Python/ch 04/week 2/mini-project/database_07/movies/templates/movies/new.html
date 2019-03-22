@@ -1,0 +1,34 @@
+{% extends 'movies/base.html' %}
+
+{% block body %}
+    <h1>NEW Movie</h1>
+    <form method="post">     {# 내 자리로 점프! #}
+        {% csrf_token %}
+        <div>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title">
+        </div>
+        <div>
+            <label for="audience">audience</label>
+            <input type="number" name="audience" id="audience">
+        </div>
+        <div>
+            <label for="poster_url">poster_url</label>
+            <input type="text" name="poster_url" id="poster_url">
+        </div>
+        <div class="radio">
+            <label for="genre_id">genre</label>
+            {% for g in genre %}
+                <input type="radio" name="genre_id" id="genre_id" value="{{ g.id }}">{{ g.name }}
+            {% endfor %}
+        </div>
+        <div>
+            <label for="description">description</label>
+            <textarea name="description" id="description" cols="30" rows="10"></textarea>
+        </div>
+
+        <div>
+            <input type="submit" class="btn btn-success">
+        </div>
+    </form>
+{% endblock %}

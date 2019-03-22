@@ -1,0 +1,21 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+    <br>
+    <h1>고객센터</h1>
+
+    <a href="{% url 'shouts:create' %}" class="btn btn-info">문의하기</a>
+
+    <hr>
+
+    <h2>문의내용</h2>
+    {% for shout in shouts %}
+        <p>
+            제목 : {{ shout.title }}<br>
+            내용 : {{ shout.content }}
+            <a href="{% url 'shouts:update' shout.id %}">수정</a>
+            <a href="">삭제</a>
+        </p>
+    {% endfor %}
+    
+{% endblock %}

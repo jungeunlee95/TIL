@@ -1,0 +1,30 @@
+{% extends 'movies/base.html' %}
+
+{% block body %}
+    <div class="container text-center">
+    <a href="{%  url 'movie:create_movie' %}" class="btn btn-info">새 영화 등록</a>
+    </div>
+    <hr><br>
+    <!-- container 생성 -->
+    <h3 class="movie_subtitle">영화 목록</h3>
+    <hr style="width: 70px;">
+    <!-- row 생성 -->
+    {% if movies %}
+        <div class="row mt-5 justify-content-center">
+            {% for movie in movies %}
+                <div class="card col-sm-5 col-md-4 col-lg-3 card-margin">
+                    <a href="{% url 'movie:movie_detail' movie.id %}">
+                        <img src="{{ movie.poster_url }}" class="card-img-top" alt="이미지를 읽을 수 없습니다.">
+                    </a>
+                    <div class="card-body text-left" style="padding-right: 5px;padding-left: 5px;">
+                        <h5>{{ movie.title }}</h5><hr>
+                        <p class="card-text card-text1">드라마</p>
+                        <a href="{% url 'movie:movie_detail' movie.id %}">
+                            <button type="button" class="btn btn-success" style="font-size: 14px;margin-top:5px;">영화정보 보러가기</button>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

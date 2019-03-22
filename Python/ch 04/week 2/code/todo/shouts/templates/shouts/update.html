@@ -1,0 +1,5 @@
+<form action="{% url 'shouts:update' form.instance.id%}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit">
+</form>
