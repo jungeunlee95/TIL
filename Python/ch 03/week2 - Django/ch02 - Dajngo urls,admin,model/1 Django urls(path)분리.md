@@ -2,7 +2,7 @@
 
 **서버 실행** : ` $ python manage.py runserver $IP:$PORT`
 
-![1549945413666](../../week2%20-%20Django/typora-user-images/1549945413666.png)
+![1549945413666](../typora-user-images/1549945413666.png)
 
 **urls.py 만들기!**
 
