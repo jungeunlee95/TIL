@@ -22,6 +22,20 @@ properties
 ```html
 <template>
   <div>
+      <b-form-input 
+                    type="text" 
+                    placeholder="input keyword" 
+                    v-model="keyword"
+                    v-on:blur="searchKeyword" 
+                    v-on:keyup="checkEnterKeyEvent"
+      ></b-form-input>
+      
+      <b-input-group-append>
+          <b-button variant="primary" @click="searchName">
+              <i class="fa fa-search"></i>
+          </b-button>
+      </b-input-group-append>
+      
       <b-pagination-nav 
                         align="center" 
                         v-model="currentPage" 
@@ -73,10 +87,24 @@ export default {
             return {
                 path: '/path',
                 query: {
-                    name: this.searchServiceName,
+                    keyword: this.keyword,
                     page: pageNum
                 }
             }
+        },
+        searchKeyword () {
+            this.currentPage = 1
+            this.$router.push({
+                path: '/path',
+                query: {
+                    keyword: this.keyword,
+                    page: this.currentPage
+                }
+            }).catch(err => err)
+            this.getNewPageList()
+        },
+        checkEnterKeyEvent (e) {
+            if (e.keyCode === 13) this.getNewPageList()
         }
     }
 }
