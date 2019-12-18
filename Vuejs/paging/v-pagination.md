@@ -1,4 +1,4 @@
-**참고**
+**ref**
 
 ```
 https://github.com/cichy380/vue-plain-pagination
@@ -7,7 +7,7 @@ https://github.com/cichy380/vue-plain-pagination
 
 <br>
 
-**package 설치**
+**package install**
 
 ```powershell
 npm install --save vue-plain-pagination
@@ -21,8 +21,8 @@ properties
 
 | name        | description                                                 |
 | ----------- | ----------------------------------------------------------- |
-| v-model     | 현재 페이지 정보와 바인딩                                   |
-| :page-count | 총 페이지 버튼 수 (전체 데이터수, 페이지 당 데이터 수 계산) |
+| v-model     | binding with current page data                                   |
+| :page-count | total page count (total data count, data per page cal) |
 
 ```html
 <template>
@@ -87,7 +87,7 @@ export default {
             this.urlRefresh()
             this.getNewPageList()
         }
-    }.
+    },
     computed: {
         pageCount () {
             return Number((this.page.totalElements/this.pageSize + 1).toFixed())
