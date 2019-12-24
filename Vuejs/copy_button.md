@@ -34,7 +34,7 @@ example 코드
 
 ```js
 export default {
-    name: "ClusterList",
+    name: "Test",
     data () {
         return {
             message: 'Test Copy!'
