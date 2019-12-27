@@ -1,4 +1,4 @@
-Today I Learn!
+# **Today I Learn!**
 
 <br>
 
@@ -7,6 +7,7 @@ Today I Learn!
 ```
 HackerRank
 백준 알고리즘
+samsung sw expert academy
 ```
 
 ---
@@ -14,6 +15,7 @@ HackerRank
 교육 플랫폼
 
 ```
+inflearn
 Coursera
 edx.org - CS50 or introduction to computer science and programming
 udacity
