@@ -123,18 +123,3 @@ docker rmi {{container id}}
 ```
 
 <br>
-
-#### RabbitMQ가 설치된 컨테이너에 접속하기
-
-```powershell
-docker exec -it {{container id}} /bin/bash
-```
-
-<br>
-
-#### RabbitMQ가 설치된 컨테이너에 접속하기
-
-```powershell
-docker exec -it {{container id}} /bin/bash
-```
-

@@ -142,20 +142,36 @@ public class Receiver {
 
 ![1577551706316](assets/1577551706316.png)
 
+<br>
 
+### queue에 message가 여러개 쌓인 경우
 
+![1577552206745](assets/1577552206745.png)
 
+![1577552790068](assets/1577552790068.png)
 
+<br>
 
+### 도커 컨테이너에 접근해서 확인
 
+```powershell
+D:> docker exec -it 7bd /bin/bash
+root@test-rabbit:/# 
+root@test-rabbit:/# rabbitmqadmin get --username=admin --password=admin queue=test-queue-name2 count=10
++------------------+----------+---------------+------------------+---------------+------------------+------------+-------------+
+|   routing_key    | exchange | message_count |     payload      | payload_bytes | payload_encoding | properties | redelivered |
++------------------+----------+---------------+------------------+---------------+------------------+------------+-------------+
+| test-queue-name2 |          | 1             | test message2!   | 14            | string           |            | False       |
+| test-queue-name2 |          | 0             | test message2-2! | 16            | string           |            | False       |
++------------------+----------+---------------+------------------+---------------+------------------+------------+-------------+
+```
 
+<br>
 
-
-
-
-
-
-
+```
+ [x] Received 'test message2!'
+ [x] Received 'test message2-2!'
+```
 
 
 
