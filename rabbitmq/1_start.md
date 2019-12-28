@@ -12,9 +12,7 @@ ref: [rabbitmq docker hub](https://hub.docker.com/_/rabbitmq?tab=description)
 D:>docker image pull rabbitmq:3.8.0-management
 ```
 
-
-
-
+<br>
 
 ------
 
@@ -22,42 +20,39 @@ D:>docker image pull rabbitmq:3.8.0-management
 
 ```powershell
 D:>docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+postgres            latest              4a82a16ee75c        3 weeks ago         394MB
+rabbitmq            3.8.0-management    8bdbe10dc73e        8 weeks ago         180MB
 ```
 
-
-
-
+<br>
 
 ------
 
 ## 3. RabbitMQ 도커 컨테이너 띄우기
 
 ```powershell
-D:>docker run -d --hostname test-rabbit --name some-rabbit -p 15672:15672 rabbitmq:3.8.0-management
-126bfab692ba2f57d8325098b8aa7df22575b6a51e5e1bd646e53db375484ded
+D:>docker run -d --hostname test-rabbit --name some-rabbit -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin -p 5672:5672 -p 15672:15672 rabbitmq:3.8.0-management
 ```
 
-
-
-
-
-
+<br>
 
 ------
 
 ## 4. RabbitMQ 도커 로그 확인
 
 ```powershell
-D:>docker logs test-rabbit
+D:>docker logs some-rabbit
  
 ...
 
  * rabbitmq_management
  * rabbitmq_web_dispatch
  * rabbitmq_management_agent
+  completed with 3 plugins.
 ```
 
-
+<br>
 
 ------
 
@@ -65,11 +60,12 @@ D:>docker logs test-rabbit
 
 ```powershell
 D:>docker ps --all
-CONTAINER ID        IMAGE                       COMMAND                  CREATED             STATUS                      PORTS                                                                                        NAMES
-8ba1ec682be6        rabbitmq:3.8.0-management   "docker-entrypoint.s…"   3 minutes ago       Up 3 minutes                4369/tcp, 5671/tcp, 0.0.0.0:5672->5672/tcp, 15671/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp   test-rabbit
+CONTAINER ID        IMAGE                       COMMAND                  CREATED              STATUS              PORTS                                                                     NAMES
+a57b1f98de1b        rabbitmq:3.8.0-management   "docker-entrypoint.s…"   About a minute ago   Up About a minute   4369/tcp, 5671-5672/tcp, 15671/tcp, 25672/tcp, 0.0.0.0:15672->15672/tcp   some-rabbit
+8ab61477a39b        postgres                    "docker-entrypoint.s…"   2 days ago           Up 2 days           0.0.0.0:5432->5432/tcp                                                    postgres_boot
 ```
 
-
+<br>
 
 ------
 
@@ -77,8 +73,10 @@ CONTAINER ID        IMAGE                       COMMAND                  CREATED
 
 ```powershell
 URL : http://localhost:15672
-ID / Password : guest/guest
+ID / Password : admin/admin
 ```
+
+![1577548674518](assets/1577548674518.png)
 
 <br>
 
