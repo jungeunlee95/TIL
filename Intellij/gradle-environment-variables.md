@@ -1,6 +1,6 @@
 ![1577092573925](assets/1577092573925.png)
 
-> run/debug configurations > templates > gradle > environment variables에 등록하면 됨
+> run > edit configurations > templates > gradle > environment variables 에 등록
 >
 > ex) AAA-TOKEN=ABCDEFG1234;BBB-TOKEN=ABCDEFG1234;
 
