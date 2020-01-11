@@ -1,6 +1,6 @@
 [TOC]
 
-# AWS Lamda 사용
+# AWS Lambda 사용
 
 ### [1] function 만들기
 

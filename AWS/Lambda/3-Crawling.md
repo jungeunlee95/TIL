@@ -1,6 +1,6 @@
 [TOC]
 
-# AWS Lamda를 사용한 Crawling
+# AWS Lambda를 사용한 Crawling
 
 * AWS Lambda python default libraries
 
@@ -44,7 +44,7 @@ print(result_list)
 
 ### [3] python 에서 사용할 library 설치
 
-BeautifulSoup같은 라이브러리를 AWS Lamda에서 사용하기 위해서는 별도의 폴더에 해당 라이브러리를 모두 다운 받은 후 aws에 올리고, function이 사용할 수 있도록 해야함
+BeautifulSoup같은 라이브러리를 AWS Lambda에서 사용하기 위해서는 별도의 폴더에 해당 라이브러리를 모두 다운 받은 후 aws에 올리고, function이 사용할 수 있도록 해야함
 
 ```powershell
 $ pip install bs4 -t .
