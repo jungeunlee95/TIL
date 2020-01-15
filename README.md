@@ -32,3 +32,6 @@ solidity
 python tutor
 ```
 
+https://subicura.com/2020/01/07/2019-dev-summary.html
+
+
