@@ -1,7 +1,8 @@
-jwt decode
+[TOC]
 
-### npm install
-`npm install jwt-decode`
+### [1] jwt-decode
+
+npm install: `npm install jwt-decode --save`
 
 
 ex)
@@ -21,4 +22,40 @@ console.log(decoded);
  */
 
 ```
+
+<br>
+
+### [2] jsonwebtoken
+
+npm install: `npm install jsonwebtoken --save`
+
+```js
+
+import JsonWebToken from 'jsonwebtoken'
+
+var token = 'eyJ0eXAiO.../// jwt token';
+
+const jwtDecode = JsonWebToken.decode(token)
+console.log(decoded);
+
+/* prints:
+ * { foo: "bar",
+ *   exp: 1393286893,
+ *   iat: 1393268893  }
+ */
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
