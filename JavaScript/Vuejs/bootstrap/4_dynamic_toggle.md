@@ -1,3 +1,27 @@
+[TOC]
+
+---
+
+## table 제공
+
+```html
+<template v-slot:cell(testData)="data">
+    <b-button size="sm" @click="data.toggleDetails">{{ data.detailsShowing ? 'Hide' : 'Show'}} Details</b-button>
+</template>
+
+<template v-slot:row-details="data" v-show="true">
+    <b-alert show variant="dark">
+    </b-alert>
+</template>
+
+```
+
+
+
+
+
+## 수작업
+
 ```html
 <b-table
   show-empty

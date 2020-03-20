@@ -1,8 +1,14 @@
+[TOC]
+
 https://yaminncco.github.io/vue-sidebar-menu/#/
 
 https://github.com/yaminncco/vue-sidebar-menu/blob/master/src/components/SidebarMenu.vue
 
-npm
+https://github.com/yaminncco/vue-sidebar-menu#item-properties
+
+<br>
+
+## npm
 
 `npm i vue-sidebar-menu --save`
 
@@ -12,7 +18,7 @@ npm
 
 
 
-main.js
+## main.js
 
 ```js
 import VueSidebarMenu from 'vue-sidebar-menu'
@@ -25,7 +31,7 @@ Vue.use(VueSidebarMenu)
 
 <br>
 
-component
+## component
 
 ```html
 <sidebar-menu :menu="menu" :theme="theme"/>
@@ -61,4 +67,39 @@ export default {
 ```
 
 
+
+## list로 메뉴 만드는 경우 (match path only)
+
+`exactPath: true` > match path only (ignore query and hash)
+
+```html
+<sidebar-menu 
+              :menu="menus" 
+              class="vsm_white-theme" 
+              style="height: 100%; position: relative; background-color: #f4f4f4">
+    
+    <span slot="toggle-icon" @click="collapse = !collapse">
+        <div style="width: 100%; height: 100%;">
+            <font-awesome-icon icon="arrows-alt-h" class="text-muted mt-3" />
+        </div>
+    </span>
+    
+</sidebar-menu>
+```
+
+```js
+computed: {
+    menus: function () {
+        const menu = []
+        for (let menu of this.$store.getters.getMenus) {
+            menu.push({
+                href: {path: adminMenu.path}, 
+                title: adminMenu.title, 
+                icon: 'icon', 
+                exactPath: true
+            })
+        }
+        return menu
+    }
+```
 
