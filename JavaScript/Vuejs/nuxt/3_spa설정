@@ -1,0 +1,21 @@
+디폴트가 서버사이드 렌더링이기때문에 spa설정 따로 해줘야함
+
+<br>
+
+why? ssr로 인해 새로 고칠 때 서버 측에서 미들웨어가 실행됨
+
+<br>
+
+https://nuxtjs.org/api/configuration-mode#the-mode-property
+
+
+```js
+
+module.exports = {
+  mode: 'spa',
+  
+  ...
+  
+}
+
+```
