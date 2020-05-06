@@ -4,6 +4,7 @@
 
 https://github.com/surmon-china/surmon-china.github.io/tree/source/projects/vue-quill-editor/nuxt
 
+html editor button : https://www.npmjs.com/package/quill-html-edit-button
 <br>
 
 ### npm
