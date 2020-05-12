@@ -103,3 +103,19 @@ computed: {
     }
 ```
 
+
+
+<br>
+
+## Alias (Menu path 추가)
+
+```js
+menu.push({
+    href: {path: menu.path},
+    title: menu.title,
+    icon: 'icon',
+    exactPath: true,
+    alias: ['Side01', 'Side02'].includes(menu.title) ? menu.path + '/:sideMenu' : ''
+})
+```
+
