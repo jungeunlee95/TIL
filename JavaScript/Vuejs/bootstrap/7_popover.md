@@ -1,3 +1,5 @@
+[TOC]
+
 https://bootstrap-vue.js.org/docs/components/popover/
 
 <br>
@@ -14,6 +16,24 @@ https://bootstrap-vue.js.org/docs/components/popover/
 
 <br>
 
+## HTML, Border
+
+```css
+  .popover {
+    border: 1px solid #000000;
+  }
+```
+
+```html
+<i class="icon-refresh fa font-weight-bold font-xl pointer"
+   @click="createNamespaceRetry(namespace.namespaceName, namespace.id)"
+   v-b-popover.hover.top.html="'The process has failed. Press the <b>Retry button.</b>'"></i>
+```
+
+![1591605514819](assets/1591605514819.png)
+
+<br>
+
 ## example 2
 
 > 기본 list 팝업
@@ -21,6 +41,8 @@ https://bootstrap-vue.js.org/docs/components/popover/
 ![1576718959698](assets/1576718959698.png)
 
 ```html
+51
+14.128.137.157
 <template>
     <div class="animated fadeIn">
         <div v-for="list in testList"
