@@ -8,7 +8,8 @@ vuejs bootstrap: https://bootstrap-vue.js.org/docs/components/table
 
 <br>
 ## 2. tbody > tr 색 다르게
-:class="조건 ? 'table-danger' : ''"
+
+`:class="조건 ? 'table-danger' : ''"`
 
 ---
 
