@@ -7,7 +7,8 @@ vuejs bootstrap: https://bootstrap-vue.js.org/docs/components/table
 끝판왕 : https://bootstrap-vue.js.org/docs/components/table/#complete-example
 
 <br>
-## 2. tbody > tr 색 다르게
+
+## 0. tbody > tr 색 다르게
 
 `:class="조건 ? 'table-danger' : ''"`
 
