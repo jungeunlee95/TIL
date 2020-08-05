@@ -1,15 +1,23 @@
 [TOC]
 
+### Controller
+
+```java
+@PageableDefault(sort = "name", direction = Sort.Direction.ASC, size = 20) Pageable pageable
+```
+
+
+
 ### Util
 
 ```java
 /**
  * order specifier. querydsl로 pageable sort 처리할 때 사용
- * 객체 그래프를 타야 하는 속성들을 넣으면 오류가 발생한다.(ex) serviceEntity.gitlab.id)
+ * 객체 그래프를 타야 하는 속성들을 넣으면 오류가 발생한다.(ex) parentEntity.childEntity.id)
  *
  * @param property 정렬하고 싶은 속성(QEntity field에 맞춰서 써줘야 함)
  * @param orderDirection 오름차순? 내림차순?
- * @param basePath QEntity 객체(ex) serviceEntity, appEntity, ...)
+ * @param basePath QEntity 객체(ex) testEntity, test02Entity, ...)
  * @return
  */
 public static <T> OrderSpecifier<?> toOrderSpecifier(String property, Sort.Direction orderDirection, PathBuilder<T> basePath) {
@@ -96,14 +104,14 @@ public class QuerydslUtil {
  
         return path.in(value);
     }
- 
+    
     /**
      * order specifier. querydsl로 pageable sort 처리할 때 사용
-     * 객체 그래프를 타야 하는 속성들을 넣으면 오류가 발생한다.(ex) serviceEntity.gitlab.id)
+     * 객체 그래프를 타야 하는 속성들을 넣으면 오류가 발생한다.(ex) parentEntity.childEntity.id)
      *
      * @param property 정렬하고 싶은 속성(QEntity field에 맞춰서 써줘야 함)
      * @param orderDirection 오름차순? 내림차순?
-     * @param basePath QEntity 객체(ex) serviceEntity, appEntity, ...)
+     * @param basePath QEntity 객체(ex) testEntity, test02Entity, ...)
      * @return
      */
     public static <T> OrderSpecifier<?> toOrderSpecifier(String property, Sort.Direction orderDirection, PathBuilder<T> basePath) {
