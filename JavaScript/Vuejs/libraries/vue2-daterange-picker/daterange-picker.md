@@ -2,6 +2,12 @@ docs: https://innologica.github.io/vue2-daterange-picker/#usage
 
 ![1597122786516](assets/1597122786516.png)
 
+
+
+- time-picker
+
+![1597135127706](assets/1597135127706.png)
+
 ## npm
 
 `npm i vue2-daterange-picker --save`
@@ -14,6 +20,7 @@ docs: https://innologica.github.io/vue2-daterange-picker/#usage
 
 ```html
 <date-range-picker
+                   :time-picker="true"
                    class="mr-2"
                    ref="picker"
                    :opens="'false'"
@@ -57,7 +64,7 @@ export default {
     methods: {
         myDateFormat (date) {
             if (!date) date = new Date()
-            return moment(date).format('DD/MM/YYYY')
+            return moment(date).format('YYYY-MM-DD hh:mm:ss')
         },
         getSearchActionLogs() {
             console.log(moment(this.findQuery.date.endDate).format('DD/MM/YYYY'))
