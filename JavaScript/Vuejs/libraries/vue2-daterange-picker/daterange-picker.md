@@ -111,7 +111,12 @@ export default {
 
 
 
+
 <br>
+<br>
+
+### ranges 버그 수정 전
+
 
 **import component**
 
