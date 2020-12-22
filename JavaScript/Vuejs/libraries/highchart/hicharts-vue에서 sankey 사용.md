@@ -67,3 +67,41 @@ export default {
 }
 ```
 
+
+
+<br>
+
+### weight 값 고정
+
+![1608628120091](assets/1608628120091.png)
+
+```
+data = [
+    ['A', 'D', 3.43],
+    ['B', 'E', 4.23],
+    ['C', 'E', 9.43]
+]
+```
+
+```js
+chartOptions: {
+    plotOptions: {
+        series: {
+            dataLabels: {
+                enabled: true,
+                align: 'left',
+                style: {
+                   color: 'black',
+                   fontWeight: 'light'
+                },
+                formatter: function () {
+                    return `${this.point.weight.toFixed(2)} RPS`
+                }
+            }
+        }
+    }
+}
+```
+
+
+
