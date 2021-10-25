@@ -33,4 +33,16 @@ export default {
 
 console.log
 
-![1635172921773](C:\Users\7040_64bit\AppData\Roaming\Typora\typora-user-images\1635172921773.png)
+```
+@@
+--
+@@
+--
+@@
+--
+@@
+--
+@@
+--
+```
+
