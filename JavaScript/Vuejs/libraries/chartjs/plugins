@@ -1,0 +1,31 @@
+## 플러그인 등록
+
+### 1
+
+```js
+plugins: {
+    beforeInit (chart) {
+        chart.legend.afterFit = function () {
+            chart.legend.maxHeight = 100
+            chart.legend.height = 100
+        };
+    }
+}
+```
+
+### 2
+
+```js
+obj.addPlugin({
+    beforeInit (chart) {
+        chart.legend.afterFit = function () {
+            chart.legend.maxHeight = 100;
+            chart.legend.height = 100;
+        };
+    }
+})
+
+obj.renderChart({
+    ...
+```
+
