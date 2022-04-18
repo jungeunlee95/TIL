@@ -1,0 +1,258 @@
+```vue
+
+<template>
+  <div>
+    <canvas id="myMonthlyShortenChart" width="500" height="300"></canvas>
+    <div id="my-monthly-shorten-chart-legend" class="my-monthly-shorten-chart-legend"></div>
+  </div>
+</template>
+<script>
+    import * as moment from 'moment'
+    import Chart from 'chart.js'
+
+    export default {
+        name: 'MonthlyGraphShorten',
+        data: function () {
+            return {
+                labels: [],
+            }
+        },
+        props: {
+            type: String
+        },
+        methods: {
+            getPath () {
+                switch (this.type) {
+                    case 'proxy':
+                        return '/odin/statistics/service/' + this.selectedService + '/proxy/frontend/usage/monthly/graph'
+                    case 'memory':
+                        return '/odin/statistics/service/' + this.selectedService + '/resource/memory/usage/monthly/graph'
+                    case 'cpu':
+                        return '/odin/statistics/service/' + this.selectedService + '/resource/cpu/usage/monthly/graph'
+                    default:
+                        return ''
+                }
+            },
+            getSearchParam () {
+                let tempDate = new Date(this.queryYear, this.queryMonth-1)
+                let setDate = new Date(this.queryYear, this.queryMonth-1)
+                setDate.setMonth(tempDate.getMonth() - 11)
+                let startYearMonth = setDate.getFullYear() + '-' + moment(setDate).format('MM')
+                if (this.queryMonth == 11) startYearMonth = this.queryYear-1 + '-12'
+                let params = {
+                    odinType: this.queryOdinType,
+                    startYearMonth: startYearMonth,
+                    endYearMonth: this.queryYear + '-' + moment(tempDate).format('MM'),
+                }
+                return params
+            },
+            getDynamicColors  () {
+                const r = Math.floor(Math.random() * 255)
+                const g = Math.floor(Math.random() * 255)
+                const b = Math.floor(Math.random() * 255)
+                return "rgb(" + r + "," + g + "," + b + ")"
+            },
+            getData() {
+                if (this.$data._chart) {
+                    this.$data._chart.destroy()
+                }
+                let obj = this
+                obj.loading = true
+                this.$api.get(this.getPath(), {params: this.getSearchParam()}).then(function (response) {
+                    if (response.status === 200) {
+                        const matrix = response.data._embedded.matrix
+                        obj.labels = matrix.months
+                        const datasets = []
+
+                        matrix.namespaces.forEach((item) => {
+                            let color = obj.getDynamicColors()
+                            datasets.push({
+                                type: 'line',
+                                label: item.name,
+                                yAxisID: 'A',
+                                fill: false,
+                                borderColor: color,
+                                backgroundColor: color,
+                                data: item.data,
+                                pointRadius: 0
+                            })
+                        })
+
+                        if (matrix.namespaces.length > 0) {
+                          datasets.push({
+                              label: 'Total',
+                              yAxisID: 'B',
+                              fill: true,
+                              borderColor: '#aec7e8',
+                              backgroundColor: '#aec7e8',
+                              data: matrix.total.data,
+                              pointRadius: 0
+                          })
+                        }
+
+                        var ctx = document.getElementById("myMonthlyShortenChart").getContext('2d')
+                        var myMonthlyShortenChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: obj.labels,
+                                datasets: datasets
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cubicInterpolationMode: 'monotone',
+                                title: {
+                                    display: true,
+                                    text: 'Monthly'
+                                },
+                                legend: {
+                                    display: false,
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 15,
+                                        boxHeight: 2
+                                    }
+
+                                },
+                                tooltips: {
+                                    enabled: true,
+                                    intersect: false,
+                                    titleFontSize: 10,
+                                    bodyFontSize: 10,
+                                    mode: 'label'
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        display: true,
+                                        gridLines: {
+                                            display: false
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        id: 'A',
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Namespace'
+                                        },
+                                        display: true,
+                                        position: 'left',
+                                        ticks: {
+                                            beginAtZero: true,
+                                            callback: function(value) {
+                                                let num = parseInt(value)
+                                                if (num < 1000) return num
+                                                let si = [{v: 1E3, s: "K"}, {v: 1E6, s: "M"}, {v: 1E9, s: "B"}, {v: 1E12, s: "T"}, {v: 1E15, s: "P"}, {v: 1E18, s: "E"}]
+                                                let index
+                                                for (index = si.length - 1; index > 0; index--) if (num >= si[index].v) break
+                                                return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s
+                                            }
+                                        },
+                                        gridLines: {
+                                            display: true
+                                        }
+                                    },{
+                                        id: 'B',
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Total'
+                                        },
+                                        display: true,
+                                        position: 'right',
+                                        ticks: {
+                                            beginAtZero: true,
+                                            callback: function(value) {
+                                                let num = parseInt(value)
+                                                if (num < 1000) return num
+                                                let si = [{v: 1E3, s: "K"}, {v: 1E6, s: "M"}, {v: 1E9, s: "B"}, {v: 1E12, s: "T"}, {v: 1E15, s: "P"}, {v: 1E18, s: "E"}]
+                                                let index
+                                                for (index = si.length - 1; index > 0; index--) if (num >= si[index].v) break
+                                                return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s
+                                            }
+                                        },
+                                        gridLines: {
+                                            display: true
+                                        }
+                                    }]
+                                },
+                                elements: {
+                                    line: {
+                                        borderWidth: 2
+                                    },
+                                    point: {
+                                        radius: 4,
+                                        hitRadius: 10,
+                                        hoverRadius: 4,
+                                        hoverBorderWidth: 3
+                                    }
+                                },
+                                interaction: {
+                                    mode: 'index'
+                                }
+                            },
+                            plugins: {
+                                beforeInit (chart) {
+                                    chart.legend.afterFit = function () {
+                                        chart.legend.maxHeight = 70
+                                        chart.legend.height = 70
+                                    }
+                                }
+                            }
+                        })
+
+                        document.getElementById('my-monthly-shorten-chart-legend').innerHTML = myMonthlyShortenChart.generateLegend()
+                    }
+                    obj.loading = false
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
+        },
+        mounted () {
+            this.getData()
+        },
+        watch: {
+            selectedService: function () {
+                this.getData()
+            },
+        },
+        computed: {
+            selectedService: function () {
+                return this.$route.query.serviceId
+            },
+            queryOdinType: function () {
+                return this.$route.query.odinType
+            },
+            queryYear: function () {
+                return this.$route.query.year
+            },
+            queryMonth: function () {
+                return this.$route.query.month
+            },
+        }
+    }
+</script>
+
+<style>
+  .my-monthly-shorten-chart-legend li  {
+    display: inline-block;
+    margin-right: 10px;
+    color: #6c6c6c;
+    font-size: 11px;
+  }
+  .my-monthly-shorten-chart-legend li span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+  }
+  .my-monthly-shorten-chart-legend {
+    margin-top: -70px;
+    height: 70px;
+    overflow:auto;
+    text-align: center;
+    z-index: -1;
+  }
+</style>
+
+
+```
