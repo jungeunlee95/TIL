@@ -1,0 +1,472 @@
+### 템플릿으로 그리기
+
+```vue
+<template>
+  <div>
+    <canvas id="myChart" width="500" height="300"></canvas>
+    <div id="js-legend" class="chart-legend"></div>
+  </div>
+</template>
+<script>
+    import * as moment from 'moment'
+    import Chart from 'chart.js'
+
+    export default {
+        name: 'MonthlyGraphShorten',
+        data: function () {
+            return {
+                labels: [],
+            }
+        },
+        props: {
+            type: String
+        },
+        methods: {
+            getPath () {
+                switch (this.type) {
+                    case 'proxy':
+                        return '/odin/statistics/service/' + this.selectedService + '/proxy/frontend/usage/monthly/graph'
+                    case 'memory':
+                        return '/odin/statistics/service/' + this.selectedService + '/resource/memory/usage/monthly/graph'
+                    case 'cpu':
+                        return '/odin/statistics/service/' + this.selectedService + '/resource/cpu/usage/monthly/graph'
+                    default:
+                        return ''
+                }
+            },
+            getSearchParam () {
+                let tempDate = new Date(this.queryYear, this.queryMonth-1)
+                let setDate = new Date(this.queryYear, this.queryMonth-1)
+                setDate.setMonth(tempDate.getMonth() - 11)
+                let startYearMonth = setDate.getFullYear() + '-' + moment(setDate).format('MM')
+                if (this.queryMonth == 11) startYearMonth = this.queryYear-1 + '-12'
+                let params = {
+                    odinType: this.queryOdinType,
+                    startYearMonth: startYearMonth,
+                    endYearMonth: this.queryYear + '-' + moment(tempDate).format('MM'),
+                }
+                return params
+            },
+            getDynamicColors  () {
+                const r = Math.floor(Math.random() * 255)
+                const g = Math.floor(Math.random() * 255)
+                const b = Math.floor(Math.random() * 255)
+                return "rgb(" + r + "," + g + "," + b + ")"
+            },
+            getData() {
+                if (this.$data._chart) {
+                    this.$data._chart.destroy()
+                }
+                let obj = this
+                obj.loading = true
+                this.$api.get(this.getPath(), {params: this.getSearchParam()}).then(function (response) {
+                    if (response.status === 200) {
+                        // const matrix = response.data._embedded.matrix
+                        const matrix = {"namespaces":[{"data":[null,null,null,null,null,null,null,null,null,5955080,7688650,14353800],"name":"[k8s-ec-solution-01] ec-prod-01"},{"data":[null,null,null,null,null,null,null,null,null,11860900,5002160,6101170],"name":"[k8s-ec-solution-01] ec-prod-02"},{"data":[null,null,null,null,null,null,null,null,null,698448,1073780,6829400],"name":"[k8s-ec-solution-01] ec-prod-03"},{"data":[null,null,null,null,null,null,null,null,null,34170,48018,1486430],"name":"[k8s-ec-solution-01] ec-prod-04"},{"data":[null,null,null,null,null,null,null,null,null,34277,48081,1816470],"name":"[k8s-ec-solution-01] ec-prod-05"},{"data":[null,null,null,null,null,null,null,null,null,34144,47949,58152],"name":"[k8s-ec-solution-01] ec-prod-06"},{"data":[null,null,null,null,null,null,null,null,null,34173,48089,58035],"name":"[k8s-ec-solution-01] ec-prod-07"},{"data":[null,null,null,null,null,null,null,null,null,34189,47956,58031],"name":"[k8s-ec-solution-01] ec-prod-08"},{"data":[null,null,null,null,null,null,null,null,null,34217,47985,59840],"name":"[k8s-ec-solution-01] ec-prod-09"},{"data":[null,null,null,null,null,null,null,null,null,38308,61770,90418],"name":"[k8s-ec-solution-01] ec-prod-10"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-11"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-12"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-13"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-14"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-15"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-16"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-17"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-18"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-19"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-20"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-21"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-22"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-23"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-24"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-25"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-26"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-27"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-28"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-29"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-30"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-31"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-32"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-33"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-34"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-35"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-36"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-37"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-38"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-39"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-40"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-41"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-42"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-43"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-44"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-45"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-46"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-47"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-48"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-49"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-50"},{"data":[null,null,null,null,null,null,null,null,null,122220,132549,117920],"name":"[k8s-ec-solution-01] ec-stage-01"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-01"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-02"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-03"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-04"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-05"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-06"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-07"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-08"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-09"},{"data":[null,null,null,null,null,null,null,null,null,12,0,1],"name":"[k8s-ec-solution-02] ec-prod-10"}],"total":{"data":[0,0,0,0,0,0,0,0,0,18880142,14246991,31029668],"name":"total"},"months":["2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03"]}
+                        obj.labels = matrix.months
+                        const datasets = []
+
+                        matrix.namespaces.forEach((item) => {
+                            datasets.push({
+                                type: 'line',
+                                label: item.name,
+                                yAxisID: 'A',
+                                fill: false,
+                                borderColor: obj.getDynamicColors(),
+                                data: item.data,
+                                pointRadius: 0
+                            })
+                        })
+
+                        if (matrix.namespaces.length > 0) {
+                          datasets.push({
+                              label: 'Total',
+                              yAxisID: 'B',
+                              fill: true,
+                              borderColor: '#aec7e8',
+                              backgroundColor: '#aec7e8',
+                              data: matrix.total.data,
+                              pointRadius: 0
+                          })
+                        }
+
+                        var ctx = document.getElementById("myChart").getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: obj.labels,
+                                datasets: datasets
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cubicInterpolationMode: 'monotone',
+                                title: {
+                                    display: true,
+                                    text: 'Monthly'
+                                },
+                                legend: {
+                                    display: false,
+                                    position: 'bottom',
+                                    labels: {
+                                        boxWidth: 15,
+                                        boxHeight: 2
+                                    }
+
+                                },
+                                tooltips: {
+                                    enabled: true,
+                                    intersect: false,
+                                    titleFontSize: 10,
+                                    bodyFontSize: 10,
+                                    mode: 'label'
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        display: true,
+                                        gridLines: {
+                                            display: false
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        id: 'A',
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Namespace'
+                                        },
+                                        display: true,
+                                        position: 'left',
+                                        ticks: {
+                                            beginAtZero: true,
+                                            callback: function(value) {
+                                                let num = parseInt(value)
+                                                if (num < 1000) return num
+                                                let si = [{v: 1E3, s: "K"}, {v: 1E6, s: "M"}, {v: 1E9, s: "B"}, {v: 1E12, s: "T"}, {v: 1E15, s: "P"}, {v: 1E18, s: "E"}]
+                                                let index
+                                                for (index = si.length - 1; index > 0; index--) if (num >= si[index].v) break
+                                                return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s
+                                            }
+                                        },
+                                        gridLines: {
+                                            display: true
+                                        }
+                                    },{
+                                        id: 'B',
+                                        scaleLabel: {
+                                            display: true,
+                                            labelString: 'Total'
+                                        },
+                                        display: true,
+                                        position: 'right',
+                                        ticks: {
+                                            beginAtZero: true,
+                                            callback: function(value) {
+                                                let num = parseInt(value)
+                                                if (num < 1000) return num
+                                                let si = [{v: 1E3, s: "K"}, {v: 1E6, s: "M"}, {v: 1E9, s: "B"}, {v: 1E12, s: "T"}, {v: 1E15, s: "P"}, {v: 1E18, s: "E"}]
+                                                let index
+                                                for (index = si.length - 1; index > 0; index--) if (num >= si[index].v) break
+                                                return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s
+                                            }
+                                        },
+                                        gridLines: {
+                                            display: true
+                                        }
+                                    }]
+                                },
+                                elements: {
+                                    line: {
+                                        borderWidth: 2
+                                    },
+                                    point: {
+                                        radius: 4,
+                                        hitRadius: 10,
+                                        hoverRadius: 4,
+                                        hoverBorderWidth: 3
+                                    }
+                                },
+                                interaction: {
+                                    mode: 'index'
+                                }
+                            }
+                        })
+
+                        document.getElementById('js-legend').innerHTML = myChart.generateLegend();
+                    }
+                    obj.loading = false
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
+        },
+        mounted () {
+            this.getData()
+        },
+        watch: {
+            selectedService: function () {
+                this.getData()
+            },
+        },
+        computed: {
+            selectedService: function () {
+                return this.$route.query.serviceId
+            },
+            queryOdinType: function () {
+                return this.$route.query.odinType
+            },
+            queryYear: function () {
+                return this.$route.query.year
+            },
+            queryMonth: function () {
+                return this.$route.query.month
+            },
+        }
+    }
+</script>
+
+<style>
+  .chart-legend li span{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+  }
+  .chart-legend {
+    height:250px;
+    overflow:auto;
+  }
+</style>
+
+```
+
+
+
+### js로 그리기
+
+```vue
+<script>
+    import * as moment from 'moment'
+    import { Bar } from 'vue-chartjs'
+
+    export default {
+        name: 'MonthlyGraphShorten',
+        extends: Bar,
+        data: function () {
+            return {
+                labels: [],
+            }
+        },
+        props: {
+            type: String
+        },
+        methods: {
+            getPath () {
+                switch (this.type) {
+                    case 'proxy':
+                        return '/odin/statistics/service/' + this.selectedService + '/proxy/frontend/usage/monthly/graph'
+                    case 'memory':
+                        return '/odin/statistics/service/' + this.selectedService + '/resource/memory/usage/monthly/graph'
+                    case 'cpu':
+                        return '/odin/statistics/service/' + this.selectedService + '/resource/cpu/usage/monthly/graph'
+                    default:
+                        return ''
+                }
+            },
+            getSearchParam () {
+                let tempDate = new Date(this.queryYear, this.queryMonth-1)
+                let setDate = new Date(this.queryYear, this.queryMonth-1)
+                setDate.setMonth(tempDate.getMonth() - 11)
+                let startYearMonth = setDate.getFullYear() + '-' + moment(setDate).format('MM')
+                if (this.queryMonth == 11) startYearMonth = this.queryYear-1 + '-12'
+                let params = {
+                    odinType: this.queryOdinType,
+                    startYearMonth: startYearMonth,
+                    endYearMonth: this.queryYear + '-' + moment(tempDate).format('MM'),
+                }
+                return params
+            },
+            getDynamicColors  () {
+                const r = Math.floor(Math.random() * 255)
+                const g = Math.floor(Math.random() * 255)
+                const b = Math.floor(Math.random() * 255)
+                return "rgb(" + r + "," + g + "," + b + ")"
+            },
+            getData() {
+                if (this.$data._chart) {
+                    this.$data._chart.destroy()
+                }
+                let obj = this
+                obj.loading = true
+                this.$api.get(this.getPath(), {params: this.getSearchParam()}).then(function (response) {
+                    if (response.status === 200) {
+                        // const matrix = response.data._embedded.matrix
+                        const matrix = {"namespaces":[{"data":[null,null,null,null,null,null,null,null,null,5955080,7688650,14353800],"name":"[k8s-ec-solution-01] ec-prod-01"},{"data":[null,null,null,null,null,null,null,null,null,11860900,5002160,6101170],"name":"[k8s-ec-solution-01] ec-prod-02"},{"data":[null,null,null,null,null,null,null,null,null,698448,1073780,6829400],"name":"[k8s-ec-solution-01] ec-prod-03"},{"data":[null,null,null,null,null,null,null,null,null,34170,48018,1486430],"name":"[k8s-ec-solution-01] ec-prod-04"},{"data":[null,null,null,null,null,null,null,null,null,34277,48081,1816470],"name":"[k8s-ec-solution-01] ec-prod-05"},{"data":[null,null,null,null,null,null,null,null,null,34144,47949,58152],"name":"[k8s-ec-solution-01] ec-prod-06"},{"data":[null,null,null,null,null,null,null,null,null,34173,48089,58035],"name":"[k8s-ec-solution-01] ec-prod-07"},{"data":[null,null,null,null,null,null,null,null,null,34189,47956,58031],"name":"[k8s-ec-solution-01] ec-prod-08"},{"data":[null,null,null,null,null,null,null,null,null,34217,47985,59840],"name":"[k8s-ec-solution-01] ec-prod-09"},{"data":[null,null,null,null,null,null,null,null,null,38308,61770,90418],"name":"[k8s-ec-solution-01] ec-prod-10"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-11"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-12"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-13"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-14"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-15"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-16"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-17"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-18"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-19"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-20"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-21"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-22"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-23"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-24"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-25"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-26"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-27"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-28"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-29"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-30"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-31"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-32"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-33"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-34"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-35"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-36"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-37"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-38"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-39"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-40"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-41"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-42"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-43"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-44"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-45"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-46"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-47"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-48"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-49"},{"data":[null,null,null,null,null,null,null,null,null,0,0,null],"name":"[k8s-ec-solution-01] ec-prod-50"},{"data":[null,null,null,null,null,null,null,null,null,122220,132549,117920],"name":"[k8s-ec-solution-01] ec-stage-01"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-01"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-02"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-03"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-04"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-05"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-06"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-07"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-08"},{"data":[null,null,null,null,null,null,null,null,null,0,0,0],"name":"[k8s-ec-solution-02] ec-prod-09"},{"data":[null,null,null,null,null,null,null,null,null,12,0,1],"name":"[k8s-ec-solution-02] ec-prod-10"}],"total":{"data":[0,0,0,0,0,0,0,0,0,18880142,14246991,31029668],"name":"total"},"months":["2021-04","2021-05","2021-06","2021-07","2021-08","2021-09","2021-10","2021-11","2021-12","2022-01","2022-02","2022-03"]}
+                        obj.labels = matrix.months
+                        const datasets = []
+
+                        matrix.namespaces.forEach((item) => {
+                            datasets.push({
+                                type: 'line',
+                                label: item.name,
+                                yAxisID: 'A',
+                                fill: false,
+                                borderColor: obj.getDynamicColors(),
+                                data: item.data,
+                                pointRadius: 0
+                            })
+                        })
+
+                        if (matrix.namespaces.length > 0) {
+                          datasets.push({
+                              label: 'Total',
+                              yAxisID: 'B',
+                              fill: true,
+                              borderColor: '#aec7e8',
+                              backgroundColor: '#aec7e8',
+                              data: matrix.total.data,
+                              pointRadius: 0
+                          })
+                        }
+                        obj.addPlugin({
+                            beforeInit (chart) {
+                                chart.legend.afterFit = function () {
+                                    chart.legend.maxHeight = 100;
+                                    chart.legend.height = 100;
+                                };
+                            }
+                        })
+                        obj.renderChart({
+                            labels: obj.labels,
+                            datasets: datasets
+                        }, {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cubicInterpolationMode: 'monotone',
+                            title: {
+                                display: true,
+                                text: 'Monthly'
+                            },
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    boxWidth: 15,
+                                    boxHeight: 2
+                                }
+
+                            },
+                            tooltips: {
+                                enabled: true,
+                                intersect: false,
+                                titleFontSize: 10,
+                                bodyFontSize: 10,
+                                mode: 'label'
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    id: 'A',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Namespace'
+                                    },
+                                    display: true,
+                                    position: 'left',
+                                    ticks: {
+                                        beginAtZero: true,
+                                        callback: function(value) {
+                                            let num = parseInt(value)
+                                            if (num < 1000) return num
+                                            let si = [{v: 1E3, s: "K"}, {v: 1E6, s: "M"}, {v: 1E9, s: "B"}, {v: 1E12, s: "T"}, {v: 1E15, s: "P"}, {v: 1E18, s: "E"}]
+                                            let index
+                                            for (index = si.length - 1; index > 0; index--) if (num >= si[index].v) break
+                                            return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s
+                                        }
+                                    },
+                                    gridLines: {
+                                        display: true
+                                    }
+                                },{
+                                    id: 'B',
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: 'Total'
+                                    },
+                                    display: true,
+                                    position: 'right',
+                                    ticks: {
+                                        beginAtZero: true,
+                                        callback: function(value) {
+                                            let num = parseInt(value)
+                                            if (num < 1000) return num
+                                            let si = [{v: 1E3, s: "K"}, {v: 1E6, s: "M"}, {v: 1E9, s: "B"}, {v: 1E12, s: "T"}, {v: 1E15, s: "P"}, {v: 1E18, s: "E"}]
+                                            let index
+                                            for (index = si.length - 1; index > 0; index--) if (num >= si[index].v) break
+                                            return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s
+                                        }
+                                    },
+                                    gridLines: {
+                                        display: true
+                                    }
+                                }]
+                            },
+                            elements: {
+                                line: {
+                                    borderWidth: 2
+                                },
+                                point: {
+                                    radius: 4,
+                                    hitRadius: 10,
+                                    hoverRadius: 4,
+                                    hoverBorderWidth: 3
+                                }
+                            },
+                            interaction: {
+                                mode: 'index'
+                            }
+                        })
+                    }
+                    console.log(obj.$data._chart.legend.afterFit())
+                    obj.$data._chart.legend.afterFit = function () {
+                        chart.legend.maxHeight = 100;
+                        // chart.height += 30;
+                    };
+                    obj.loading = false
+                }).catch(function (error) {
+                    console.log(error)
+                })
+            }
+        },
+        mounted () {
+            this.getData()
+        },
+        watch: {
+            selectedService: function () {
+                this.getData()
+            },
+        },
+        computed: {
+            selectedService: function () {
+                return this.$route.query.serviceId
+            },
+            queryOdinType: function () {
+                return this.$route.query.odinType
+            },
+            queryYear: function () {
+                return this.$route.query.year
+            },
+            queryMonth: function () {
+                return this.$route.query.month
+            },
+        }
+    }
+</script>
+
+
+```
+
