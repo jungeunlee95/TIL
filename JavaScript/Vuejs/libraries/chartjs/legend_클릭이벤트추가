@@ -1,0 +1,352 @@
+참고: https://stackoverflow.com/questions/43229626/how-to-fix-chart-legends-width-height-with-overflow-scroll-in-chartjs 
+
+<br>
+demo: https://jsfiddle.net/5um78rbk/7/
+
+<br>
+
+코드
+
+```js
+
+          document.getElementById('my-ns-cpu-legend').innerHTML = obj.chart.generateLegend()
+
+          const test = document.getElementById('my-ns-cpu-legend').getElementsByTagName('li')
+          for (let i = 0; i < test.length; i++) {
+            test[i].addEventListener('click', function (e) {
+              test[i].classList.toggle('strike')
+              const curr = obj.chart.data.datasets[i]
+              curr.hidden = !curr.hidden
+              obj.chart.update()
+            })
+          }
+
+
+```
+
+<br>
+
+전체코드 
+
+```html
+
+<template>
+    <div class="card p-3">
+      <div class="row">
+        <b-col cols="5">
+          <b-form inline class="mb-3">
+            <b-form-select v-model="appnodeLabel" class="mr-1" style="min-width: 100px;">
+              <option value="">Select node label</option>
+              <option v-for="label in appnodeLabels" v-bind:key="label" :value=label>{{label}}</option>
+            </b-form-select>
+          </b-form>
+        </b-col>
+        <div class="col">
+          <b-form inline class="float-right">
+            <b-form-select v-model="selectMyRange">
+              <option v-for="range in $store.state.RangeOptions" v-bind:key="range.id" :value=range.value>{{range.text}}
+              </option>
+            </b-form-select>
+          </b-form>
+        </div>
+      </div>
+      <div class="text-center">
+          <b-spinner v-if="loading" label="Loading..."></b-spinner>
+          <div>
+              <canvas id="myNamespaceCpuChart" width="500" height="700"></canvas>
+              <div id="my-ns-cpu-legend" class="my-ns-cpu-legend"></div>
+          </div>
+      </div>
+    </div>
+</template>
+
+<script>
+import * as Api from '@/api/index.js'
+import * as moment from 'moment'
+import Chart from 'chart.js'
+
+export default {
+  name: 'K8SClusterCPU',
+  props: {
+    appnodeLabels: Array,
+    prometheusId: Number,
+    selectRange: String
+  },
+  data: function () {
+    return {
+      appnodeLabel: '',
+      selectMyRange: '7:day:2400',
+      loading: false,
+      selectTime: 7,
+      selectType: 'day',
+      selectStep: 2400,
+      chart: null
+    }
+  },
+  methods: {
+    setAppNodeLabel (appnodeLabel) {
+      this.appnodeLabel = appnodeLabel
+      this.setVisible()
+    },
+    setVisible () {
+      if (this.appnodeLabel !== '') this.chartOptions.series = this.existKeyword()
+      else this.chartOptions.series = this.notExistKeyword()
+    },
+    existKeyword () {
+      const series = this.chartOptions.series
+      const seriesTemp = []
+      for (let i = 0; i < series.length; i++) {
+        if (this.checkAppnodeLabelNodeName(series[i].name)) {
+          seriesTemp.push({data: series[i].data, name: series[i].name, visible: true})
+        } else {
+          seriesTemp.push({data: series[i].data, name: series[i].name, visible: false})
+        }
+      }
+      return seriesTemp
+    },
+    notExistKeyword () {
+      const series = this.chartOptions.series
+      const seriesTemp = []
+      for (let i = 0; i < series.length; i++) {
+        seriesTemp.push({data: series[i].data, name: series[i].name, visible: true})
+      }
+      return seriesTemp
+    },
+    checkAppnodeLabelNodeName (name) {
+      const exist = this.$parent.getNodeList().filter(item => item.name === name && item.appnodeLabel === this.appnodeLabel)[0]
+      if (exist === undefined) return false
+      return true
+    },
+    pollData () {
+      this.polling = setInterval(() => {
+        this.getGraph()
+      }, 30000)
+    },
+    getDynamicColors () {
+      const r = Math.floor(Math.random() * 255)
+      const g = Math.floor(Math.random() * 255)
+      const b = Math.floor(Math.random() * 255)
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
+    },
+    getGraph () {
+      if (this.prometheusId === undefined) return
+      let obj = this
+      if (obj.chart !== null) obj.chart.destroy()
+
+      obj.loading = true
+
+      let queryParam = {
+        query: encodeURIComponent('100 - (avg by (instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100)'),
+        start: moment().subtract(this.selectTime, this.selectType).unix(),
+        end: moment().unix(),
+        legendFormat: 'instance',
+        step: this.selectStep
+      }
+      Api.get('/prometheus/' + this.prometheusId + '/queryRange', queryParam).then(function (response) {
+        if (response.status === 200) {
+          let matrix = response.data._embedded.matrix
+          const labels = []
+          const datasets = []
+          matrix.forEach((item, index) => {
+            if (index === 0) {
+              // set labels
+              item.data.forEach(item => {
+                labels.push(item[0])
+              })
+            }
+            let tempData = []
+            item.data.forEach(item => {
+              tempData.push(Math.abs(item[1]))
+            })
+            let color = obj.getDynamicColors()
+            datasets.push({
+              label: obj.getNodeName(item.name),
+              fill: false,
+              borderColor: color,
+              backgroundColor: color,
+              data: tempData,
+              pointRadius: 0
+            })
+          })
+          var ctx = document.getElementById('myNamespaceCpuChart').getContext('2d')
+          obj.chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: datasets
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              cubicInterpolationMode: 'monotone',
+              title: {
+                display: true,
+                text: 'CPU Usage'
+              },
+              legend: {
+                display: false,
+                position: 'bottom',
+                labels: {
+                  boxWidth: 15,
+                  boxHeight: 2
+                }
+              },
+              tooltips: {
+                yAlign: 'bottom',
+                enabled: true,
+                intersect: false,
+                titleFontSize: 9,
+                bodyFontSize: 10,
+                mode: 'label',
+                callbacks: {
+                  title: function (tooltipItems) {
+                    const date = new Date(0)
+                    date.setUTCMilliseconds(tooltipItems[0].label)
+                    return moment(date).format('YYYY-MM-DD HH:mm:ss')
+                  }
+                }
+              },
+              scales: {
+                xAxes: [{
+                  display: true,
+                  gridLines: {
+                    display: false
+                  },
+                  ticks: {
+                    beginAtZero: true,
+                    callback: function (value) {
+                      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                      const date = new Date(value)
+                      if (obj.selectType === 'day' || obj.selectType === 'days') return date.getDate() + '. ' + monthNames[date.getMonth()]
+                      else return moment(date).format('HH:mm')
+                    }
+                  }
+                }],
+                yAxes: [{
+                  id: 'A',
+                  scaleLabel: {
+                    display: false
+                  },
+                  display: true,
+                  position: 'left',
+                  ticks: {
+                    beginAtZero: true,
+                    callback: function (value) {
+                      return value + ' %'
+                    }
+                  },
+                  gridLines: {
+                    display: true
+                  }
+                }]
+              },
+              elements: {
+                line: {
+                  borderWidth: 2
+                },
+                point: {
+                  radius: 4,
+                  hitRadius: 10,
+                  hoverRadius: 4,
+                  hoverBorderWidth: 3
+                }
+              },
+              interaction: {
+                mode: 'index'
+              },
+              plugins: {
+                datalabels: {
+                  formatter: function () {
+                    return ''
+                  }
+                }
+              }
+            },
+            plugins: {
+              beforeInit (chart) {
+                chart.legend.afterFit = function () {
+                  chart.legend.maxHeight = 80
+                  chart.legend.height = 80
+                }
+              }
+            }
+          })
+          document.getElementById('my-ns-cpu-legend').innerHTML = obj.chart.generateLegend()
+
+          const test = document.getElementById('my-ns-cpu-legend').getElementsByTagName('li')
+          for (let i = 0; i < test.length; i++) {
+            test[i].addEventListener('click', function (e) {
+              test[i].classList.toggle('strike')
+              const curr = obj.chart.data.datasets[i]
+              curr.hidden = !curr.hidden
+              obj.chart.update()
+            })
+          }
+        }
+        obj.loading = false
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    setRange (time, type, step) {
+      this.selectTime = time
+      this.selectType = type
+      this.selectStep = step
+    },
+    getNodeName (name) {
+      const exist = this.$parent.getNodeList().filter(item => item.internalIp === name.split(':')[0])[0]
+      if (exist === undefined) return name
+      return exist.name
+    }
+  },
+  created () {
+    this.getGraph()
+  },
+  watch: {
+    prometheusId: function () {
+      this.getGraph()
+    },
+    appnodeLabel: function () {
+      this.setVisible()
+    },
+    selectRange: function () {
+      this.selectMyRange = this.selectRange
+    },
+    selectMyRange: function () {
+      const rangeList = this.selectMyRange.split(':')
+      this.setRange(rangeList[0], rangeList[1], rangeList[2])
+      this.getGraph()
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.polling)
+  }
+}
+</script>
+
+<style>
+  .my-ns-cpu-legend li {
+      display: inline-block;
+      margin-right: 10px;
+      color: #6c6c6c;
+      font-size: 11px;
+  }
+
+  .my-ns-cpu-legend li span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+  }
+
+  .my-ns-cpu-legend {
+      margin-top: -80px;
+      height: 80px;
+      overflow: auto;
+      text-align: center;
+  }
+</style>
+
+
+
+```
