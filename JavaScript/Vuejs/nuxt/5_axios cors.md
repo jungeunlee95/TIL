@@ -9,14 +9,22 @@ nuxt axios cors
 #### nuxt.config.js proxy 추가
 
 ```js
+  // axios proxy 추가
+  axios: {
+    // See https://github.com/nuxt-community/axios-module#options
+    // baseURL: process.env.apiUrl
+    proxy: true
+  },
+  
+  // proxy 추가
   proxy: {
     "/dev": {
-      target: "https://api-dev.test.com",
-      pathRewrite: { "^/dev": "" }
+      target: "https://api-dev.test.com", // target api
+      pathRewrite: { "^/dev": "" }  // /dev를 ""로
     },
     "/prod": {
-      target: "https://api.test.com",
-      pathRewrite: { "^/prod": "" }
+      target: "https://api.test.com", // target api
+      pathRewrite: { "^/prod": "" } // /prod를 ""로
     },
   },
 ```
@@ -24,7 +32,7 @@ nuxt axios cors
 
 
 #### plugins/axios.js proxy 추가
-
+> proxy 허용 axios는 baseUrl 설정X -> proxy target으로 호출
 ```js
   // CORS 허용을 위한 proxy 설정 axios
   const api2 = $axios.create({
