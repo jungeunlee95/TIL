@@ -9,7 +9,7 @@
 
 
 	<properties>
-		<org.springframework-version>4.2.1.RELEASE</org.springframework-version>
+		<org.springframework-version>4.2.7.RELEASE</org.springframework-version>
 	</properties>
 
 	<!-- library 설정( Depnedency 설정 ) -->
